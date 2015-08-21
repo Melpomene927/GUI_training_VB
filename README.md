@@ -1,2 +1,2 @@
 # GUI_training_VB
-New Coming Employee Training Lecture 
+Freshman's Training Lecture  & Practice
