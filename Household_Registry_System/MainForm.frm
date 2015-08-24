@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form MainForm 
-   Caption         =   "MainForn(Loading)"
+   Caption         =   "System Login"
    ClientHeight    =   2850
    ClientLeft      =   120
    ClientTop       =   450
@@ -107,17 +107,24 @@ End Sub
 Friend Function LinkDB() As Boolean
     frmLoading.AdvProccess
     Dim RS As Recordset
-    Set Me.HRDB = OpenDatabase("", False, False, "ODBC;DSN=FamilyGroup;UID=SA;PWD=7669588")
-    Set RS = HRDB.OpenRecordset( _
-        "Select * from [E_Personal_information]", _
-        dbOpenSnapshot)
+    Dim ret As Boolean
+    
+    ret = False
+    
+    On Error GoTo ErrHandler
+    Set Me.HRDB = OpenDatabase("", False, False, _
+        "ODBC;DSN=FamilyGroup;UID=SA;PWD=7669588")
+    
+    
+
+    LinkDB = ret
+    Exit Function
+ErrHandler:
+    Dim sMsg As String
+    If Err.Number <> 0 Then
         
-    If RS.BOF Or RS.EOF Then
-        LinkDB = False
-        Exit Function
+        MsgBox "Error Occur While Access Database", vbCritical, "Error"
     End If
-    LinkDB = True
-    RS.Close
 End Function
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -136,12 +143,10 @@ End Sub
 Private Sub ticktock_Timer()
     If Me.LinkDB Then
         frmLoading.AdvProccess
-    Else
-        MsgBox "Error Occur While Access Database", , "Error", False, ""
     End If
     
     If frmLoading.LoadFin Then
-        frmLoading.OKButton.Enabled = True
+        frmLoading.OkButton.Enabled = True
         ticktock.Enabled = False
     End If
 End Sub
