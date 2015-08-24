@@ -93,7 +93,7 @@ Private Sub Form_Load()
     frmLoading.Show
     frmLoading.SetCheckPoint (3)
     frmLoading.ShowMsg ("Connect To System Database")
-    ticktock.Interval = 1000
+    ticktock.Interval = 150
     ticktock.Enabled = True
     frmLoading.AdvProccess
     
@@ -103,29 +103,6 @@ Public Sub Abort()
     Unload Me
 End Sub
 
-
-Friend Function LinkDB() As Boolean
-    frmLoading.AdvProccess
-    Dim RS As Recordset
-    Dim ret As Boolean
-    
-    ret = False
-    
-    On Error GoTo ErrHandler
-    Set Me.HRDB = OpenDatabase("", False, False, _
-        "ODBC;DSN=FamilyGroup;UID=SA;PWD=7669588")
-    
-    
-
-    LinkDB = ret
-    Exit Function
-ErrHandler:
-    Dim sMsg As String
-    If Err.Number <> 0 Then
-        
-        MsgBox "Error Occur While Access Database", vbCritical, "Error"
-    End If
-End Function
 
 Private Sub Form_Unload(Cancel As Integer)
     Dim frm As Form
@@ -150,3 +127,29 @@ Private Sub ticktock_Timer()
         ticktock.Enabled = False
     End If
 End Sub
+
+
+
+Public Function LinkDB() As Boolean
+    frmLoading.AdvProccess
+    Dim RS As Recordset
+    Dim ret As Boolean
+    
+    ret = False
+    
+    On Error GoTo ErrHandler
+    Set Me.HRDB = OpenDatabase("", False, False, _
+        "ODBC;DSN=FamilyGroup;UID=SA;PWD=7669588")
+    
+    
+
+    LinkDB = ret
+    Exit Function
+ErrHandler:
+    Dim sMsg As String
+    If Err.Number <> 0 Then
+        
+        MsgBox "Error Occur While Access Database", vbCritical, "Error"
+    End If
+End Function
+

@@ -2,17 +2,25 @@ VERSION 5.00
 Begin VB.Form frmCreateAccount 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Create New User"
-   ClientHeight    =   1695
+   ClientHeight    =   2160
    ClientLeft      =   2760
    ClientTop       =   3750
-   ClientWidth     =   6030
+   ClientWidth     =   5430
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   1695
-   ScaleWidth      =   6030
+   ScaleHeight     =   2160
+   ScaleWidth      =   5430
    ShowInTaskbar   =   0   'False
+   Begin VB.ComboBox cmb_type 
+      Height          =   315
+      ItemData        =   "CreateAccount.frx":0000
+      Left            =   1455
+      List            =   "CreateAccount.frx":0002
+      TabIndex        =   9
+      Top             =   1598
+      Width           =   1455
+   End
    Begin VB.TextBox txtRetypePw 
       Height          =   345
       IMEMode         =   3  'DISABLE
@@ -41,21 +49,32 @@ Begin VB.Form frmCreateAccount
    Begin VB.CommandButton CancelButton 
       Caption         =   "Cancel"
       Height          =   375
-      Left            =   4680
+      Left            =   3960
       TabIndex        =   1
-      Top             =   600
+      Top             =   810
       Width           =   1215
    End
    Begin VB.CommandButton OKButton 
       Caption         =   "OK"
       Height          =   375
-      Left            =   4680
+      Left            =   3960
       TabIndex        =   0
-      Top             =   120
+      Top             =   330
       Width           =   1215
    End
+   Begin VB.Label lbl_type 
+      Alignment       =   1  'Right Justify
+      Caption         =   "Accout &Type:"
+      Height          =   270
+      Index           =   3
+      Left            =   270
+      TabIndex        =   8
+      Top             =   1620
+      Width           =   1080
+   End
    Begin VB.Label lblLabels 
-      Caption         =   "&Retype Password:"
+      Alignment       =   1  'Right Justify
+      Caption         =   "&Retype     Password:"
       Height          =   450
       Index           =   2
       Left            =   270
@@ -64,6 +83,7 @@ Begin VB.Form frmCreateAccount
       Width           =   1080
    End
    Begin VB.Label lblLabels 
+      Alignment       =   1  'Right Justify
       Caption         =   "&Password:"
       Height          =   270
       Index           =   1
@@ -73,6 +93,7 @@ Begin VB.Form frmCreateAccount
       Width           =   1080
    End
    Begin VB.Label lblLabels 
+      Alignment       =   1  'Right Justify
       Caption         =   "&User Name:"
       Height          =   270
       Index           =   0
@@ -89,10 +110,20 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Public acType As Variant
 Public RS As Recordset
+
 
 Private Sub CancelButton_Click()
     Unload Me
+End Sub
+
+Private Sub Form_Load()
+Dim i As Integer
+    Me.acType = Array("Administrator", "User")
+    For i = 0 To UBound(acType)
+        Me.cmb_type.AddItem acType(i)
+    Next
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -100,9 +131,22 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub OKButton_Click()
+Dim auth$
+    'Check information Fulfill
     If Me.checkDataComplete Then
-        MainForm.HRDB.Execute "Insert into User_login values ('" _
-            & Me.txtUserName.Text & "','" & Me.txtPassword.Text & "')"
+        'check acount type
+        Select Case Me.cmb_type.Text
+            Case acType(0) 'Administrator
+                auth = "rwx"
+            Case acType(1) 'User
+                auth = "r__"
+            Case Else
+                auth = "___"
+        End Select
+        
+        MainForm.HRDB.Execute "INSERT INTO User_login values ('" _
+            & Me.txtUserName.Text & "','" & Me.txtPassword.Text & "','" _
+            & auth & "')"
         
         Set RS = MainForm.HRDB.OpenRecordset("Select * From User_login Where UID = '" _
             & Me.txtUserName.Text & "'", dbOpenSnapshot)
@@ -119,7 +163,7 @@ Private Sub OKButton_Click()
         End If
     End If
     
-    MsgBox "User Information not Completed", , "Error"
+    MsgBox "User Information not Completed", vbCritical + vbOKOnly, "Error"
 End Sub
 
 
@@ -185,6 +229,8 @@ Public Function checkDataComplete() As Boolean
     ElseIf Me.txtRetypePw.Text = "" Then
         'do nothing
     ElseIf Me.txtPassword.Text <> Me.txtRetypePw.Text Then
+        'do nothing
+    ElseIf Me.cmb_type.Text = "" Then
         'do nothing
     Else
         ret = True

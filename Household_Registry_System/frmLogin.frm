@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmLogin 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Login"
-   ClientHeight    =   1545
+   ClientHeight    =   1965
    ClientLeft      =   2835
    ClientTop       =   3480
    ClientWidth     =   3750
@@ -10,11 +10,37 @@ Begin VB.Form frmLogin
    LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   912.837
+   ScaleHeight     =   1160.987
    ScaleMode       =   0  'User
    ScaleWidth      =   3521.047
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Frame fm_keep 
+      Height          =   465
+      Left            =   1290
+      TabIndex        =   6
+      Top             =   870
+      Width           =   1905
+      Begin VB.OptionButton opt_keep 
+         Caption         =   "No"
+         Height          =   255
+         Index           =   1
+         Left            =   1110
+         TabIndex        =   9
+         Top             =   150
+         Width           =   765
+      End
+      Begin VB.OptionButton opt_keep 
+         Caption         =   "Yes"
+         Height          =   255
+         Index           =   0
+         Left            =   180
+         TabIndex        =   8
+         Top             =   150
+         Value           =   -1  'True
+         Width           =   765
+      End
+   End
    Begin VB.TextBox txtUserName 
       Height          =   345
       Left            =   1290
@@ -26,18 +52,18 @@ Begin VB.Form frmLogin
       Caption         =   "OK"
       Default         =   -1  'True
       Height          =   390
-      Left            =   495
+      Left            =   465
       TabIndex        =   4
-      Top             =   1020
+      Top             =   1440
       Width           =   1140
    End
    Begin VB.CommandButton cmdCancel 
       Cancel          =   -1  'True
       Caption         =   "Cancel"
       Height          =   390
-      Left            =   2100
+      Left            =   2070
       TabIndex        =   5
-      Top             =   1020
+      Top             =   1440
       Width           =   1140
    End
    Begin VB.TextBox txtPassword 
@@ -48,6 +74,15 @@ Begin VB.Form frmLogin
       TabIndex        =   3
       Top             =   525
       Width           =   2325
+   End
+   Begin VB.Label lblLabels 
+      Caption         =   "&Keep:"
+      Height          =   270
+      Index           =   2
+      Left            =   120
+      TabIndex        =   7
+      Top             =   1020
+      Width           =   1080
    End
    Begin VB.Label lblLabels 
       Caption         =   "&User Name:"
@@ -76,6 +111,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public LoginSucceeded As Boolean
+Public keepData As Boolean
 
 Private Sub cmdCancel_Click()
     'set the global var to false
@@ -86,21 +122,23 @@ Private Sub cmdCancel_Click()
 End Sub
 
 Private Sub cmdOK_Click()
-    Dim RS As Recordset
-    Set RS = MainForm.HRDB.OpenRecordset("Select * from User_login", dbOpenSnapshot)
+Dim RS As Recordset
+    'Retreive User Data
+    Set RS = MainForm.HRDB.OpenRecordset("Select * from User_login " & _
+       "Where UID='" & Me.txtUserName.Text & _
+       "' And PW='" & Me.txtPassword.Text & "'" _
+       , dbOpenSnapshot)
     
-    Do While Not RS.EOF
-        If RS.Fields("UID") = Me.txtUserName.Text And _
-            RS.Fields("PW") = Me.txtPassword.Text Then
-            LoginSucceeded = True
-            MsgBox "Login Success", , "Login"
-            Me.Hide
-            frmOperation.Show
-            Exit Do
-        End If
-        RS.MoveNext
-    Loop
-    
+    'Check login succeed
+    If Not (RS.BOF And RS.EOF) Then
+        LoginSucceeded = True
+        MsgBox "Login Success", vbInformation, "Login"
+        keep_data
+        Me.Hide
+        frmOperation.Show
+    End If
+
+    'If not succeeded
     If Not LoginSucceeded Then
         MsgBox "Invalid Password Or UID, try again!", , "Login"
         txtPassword.Text = ""
@@ -108,10 +146,108 @@ Private Sub cmdOK_Click()
         SendKeys "{Home}+{End}"
     End If
     
+    If Not RS Is Nothing Then
+        RS.Close
+    End If
+End Sub
+
+Private Sub Form_Load()
+    If Me.opt_keep(0).Value = True Then
+        Me.keepData = True
+    End If
     
-    RS.Close
+    If Me.keepData Then
+        Me.Load_kept_data
+    End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     MainForm.Show
+End Sub
+
+Private Sub opt_keep_Click(Index As Integer)
+    If Index = 0 Then
+        Me.keepData = True
+    Else
+        Me.keepData = False
+    End If
+End Sub
+
+Public Sub Load_kept_data()
+Dim file_name As String
+Dim fnum As Integer
+Dim whole_file As String
+Dim lines As Variant
+Dim one_line As Variant
+Dim num_rows As Integer
+Dim i As Integer
+
+    'build file path
+    file_name = App.Path
+    If Right$(file_name, 1) <> "\" Then file_name = _
+        file_name & "\"
+    file_name = file_name & "login.ini"
+    
+    ' Load the file.
+    fnum = FreeFile
+    Open file_name For Input As fnum
+    whole_file = Input$(LOF(fnum), #fnum)
+    Close fnum
+    
+    ' Break the file into lines.
+    lines = Split(whole_file, vbCrLf)
+    
+    ' Get Number of Rows
+    num_rows = UBound(lines)
+    
+    For i = 0 To num_rows
+        If Len(lines(i)) > 0 Then
+            one_line = Split(lines(i), "=")
+            If UBound(one_line) = 0 Then
+                Exit For
+            End If
+            Select Case Trim(one_line(0))
+                Case "UID"
+                    Me.txtUserName.Text = Trim(one_line(1))
+                Case "PW"
+                    Me.txtPassword.Text = Trim(one_line(1))
+                    
+            End Select
+        End If
+    Next
+    
+End Sub
+
+Public Sub keep_data()
+Dim strEmpFileName As String
+Dim strBackSlash As String
+Dim intEmpFileNbr As Integer
+Dim strEmpName$, strUID$, strPW$
+
+
+    'Open File by function: FreeFile()
+    strBackSlash = IIf(Right$(App.Path, 1) = "\", "", "\")
+    strEmpFileName = App.Path & strBackSlash & "EMPLOYEE.DAT"
+    intEmpFileNbr = FreeFile
+    
+    
+    Open strEmpFileName For Output As #intEmpFileNbr
+    
+    If Me.keepData Then
+        strUID = Me.txtUserName.Text
+        strPW = Me.txtPassword.Text
+    Else
+        strUID = ""
+        strPW = ""
+    End If
+    
+    strEmpName = "UID = " & strUID & _
+        vbCrLf & "PW = " & strPW
+    
+    Write #intEmpFileNbr, strEmpName
+        
+    Close #intEmpFileNbr
+    
+    
+    
 End Sub

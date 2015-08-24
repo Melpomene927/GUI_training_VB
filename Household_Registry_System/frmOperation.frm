@@ -6,25 +6,25 @@ Begin VB.Form frmOperation
    ClientTop       =   450
    ClientWidth     =   6915
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    ScaleHeight     =   4710
    ScaleWidth      =   6915
    StartUpPosition =   3  'Windows Default
    Begin VB.Frame fm_txt 
       Caption         =   "Welcom"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   2745
       Left            =   390
       TabIndex        =   1
       Top             =   1530
       Width           =   4065
+      Begin VB.Label lbl_intro 
+         Caption         =   "------------------------------------------------------------------------"
+         Height          =   2055
+         Left            =   390
+         TabIndex        =   8
+         Top             =   390
+         Width           =   3315
+      End
    End
    Begin VB.Frame fm_Functions 
       Caption         =   "Functions"
@@ -100,6 +100,12 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub cmd_info_Click()
+    Me.Hide
+    frm_op_info.Show
+End Sub
+
 Private Sub Form_Unload(Cancel As Integer)
+    Unload Me
     MainForm.Show
 End Sub
