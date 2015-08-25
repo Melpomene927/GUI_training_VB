@@ -108,17 +108,19 @@ Option Explicit
 Dim listItem() As Variant
 
 Private Sub Combo1_Click()
-    Dim splitSize&
+    Dim strLine As Variant
     
-    splitSize = Int(Len(Combo1.Text) / 2)
-    
-    SSPanel1.Caption = Left(Combo1.Text, splitSize)
-    SSPanel2.Caption = Right(Combo1.Text, Len(Combo1.Text) - splitSize)
+    strLine = Split(Combo1.Text, " ")
+    If UBound(strLine) < 1 Then
+        Exit Sub
+    End If
+    SSPanel1.Caption = strLine(0)
+    SSPanel2.Caption = strLine(1)
 End Sub
 
 Private Sub Form_Load()
     
-    listItem = Array("萬泰", "金旭", "龍巖", "資生堂", "天漢", "統一期貨")
+    listItem = Array("1 萬泰", "2 金旭", "3 龍巖", "4 資生堂", "5 天漢", "6 統一期貨")
     
     Me.load_list Combo1
 End Sub

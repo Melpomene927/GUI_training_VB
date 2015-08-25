@@ -141,10 +141,17 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim SortAsc As Boolean
+Public SortAsc As Boolean
 Dim num_rows As Long
 Dim num_cols As Long
 Dim the_array() As String
+
+Const SS_SORT_BY_ROW = 0
+Const SS_SORT_BY_COL = 1
+Const SS_SORT_ORDER_ASCENDING = 1
+Const SS_SORT_ORDER_DESCENDING = 2
+Const SS_ACTION_SORT = 25
+
 
 Private Sub Form_Activate()
     loadData
@@ -196,29 +203,41 @@ Private Sub SSOption_Desc_Click(Value As Integer)
 End Sub
 
 Private Sub vaSpread1_BlockSelected(ByVal BlockCol As Long, ByVal BlockRow As Long, ByVal BlockCol2 As Long, ByVal BlockRow2 As Long)
-Dim strAsc As String
-    If SortAsc Then
-        strAsc = " Asc"
-    Else
-        strAsc = " Desc"
-    End If
-    
-    If (BlockRow = -1 And BlockRow2 = -1) Then
-        MsgBox "hit col: " + Str(BlockCol) + strAsc + _
-            "¡]¢Xo¢X¡F¡^", vbInformation + vbOKOnly, "(¡¦¡ó£s¡ó`)¡I"
-        
-        bubbleSort BlockCol
-        
-    End If
-    
+'Dim strAsc As String
+'    If SortAsc Then
+'        strAsc = " Asc"
+'    Else
+'        strAsc = " Desc"
+'    End If
+'
+'    If (BlockRow = -1 And BlockRow2 = -1) Then
+'        MsgBox "hit col: " + Str(BlockCol) + strAsc + _
+'            "¡]¢Xo¢X¡F¡^", vbInformation + vbOKOnly, "(¡¦¡ó£s¡ó`)¡I"
+'
+'        bubbleSort BlockCol
+'
+'    End If
+
 End Sub
 
 Private Sub vaSpread1_Click(ByVal col As Long, ByVal Row As Long)
-    
-'    Debug.Print "vaSpread1_Click"
-'    Debug.Print "Col: " + Str(Col)
-'    Debug.Print "Row: " + Str(Row)
-'    Debug.Print "-----------"
+    If Row = 0 Then
+        
+        vaSpread1.Row = 1
+        vaSpread1.row2 = num_rows
+        vaSpread1.col = 1
+        vaSpread1.Col2 = num_cols + 1
+        
+        vaSpread1.SortBy = SS_SORT_BY_ROW
+        vaSpread1.SortKey(1) = col
+        vaSpread1.SortKeyOrder(1) = IIf(Me.SortAsc, SS_SORT_ORDER_ASCENDING, _
+            SS_SORT_ORDER_DESCENDING)
+        vaSpread1.Action = SS_ACTION_SORT
+    End If
+    Debug.Print "vaSpread1_Click"
+    Debug.Print "Col: " + Str(col)
+    Debug.Print "Row: " + Str(Row)
+    Debug.Print "-----------"
 
 End Sub
 
