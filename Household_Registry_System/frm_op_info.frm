@@ -1,17 +1,34 @@
 VERSION 5.00
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Object = "{0BA686C6-F7D3-101A-993E-0000C0EF6F5E}#1.0#0"; "THREED32.OCX"
+Object = "{2037E3AD-18D6-101C-8158-221E4B551F8E}#5.0#0"; "Vsocx32.OCX"
 Begin VB.Form frm_op_info 
    Caption         =   "Personal Information Register"
-   ClientHeight    =   5445
+   ClientHeight    =   5700
    ClientLeft      =   120
    ClientTop       =   450
    ClientWidth     =   5865
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
-   ScaleHeight     =   5445
+   ScaleHeight     =   5700
    ScaleWidth      =   5865
    StartUpPosition =   3  'Windows Default
+   Begin MSComctlLib.StatusBar Sts_MsgLine 
+      Align           =   2  'Align Bottom
+      Height          =   345
+      Left            =   0
+      TabIndex        =   28
+      Top             =   5355
+      Width           =   5865
+      _ExtentX        =   10345
+      _ExtentY        =   609
+      _Version        =   393216
+      BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
+         NumPanels       =   1
+         BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
+         EndProperty
+      EndProperty
+   End
    Begin VB.Frame fm_born 
       Caption         =   "Born Place"
       BeginProperty Font 
@@ -163,7 +180,7 @@ Begin VB.Form frm_op_info
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   108986369
+         Format          =   109248513
          CurrentDate     =   32874
          MaxDate         =   401768
       End
@@ -297,6 +314,20 @@ Begin VB.Form frm_op_info
          Width           =   1335
       End
    End
+   Begin VsOcxLib.VideoSoftElastic Vse_background 
+      Height          =   5415
+      Left            =   0
+      TabIndex        =   29
+      Top             =   0
+      Width           =   5895
+      _Version        =   327680
+      _ExtentX        =   10398
+      _ExtentY        =   9551
+      _StockProps     =   70
+      ConvInfo        =   1418783674
+      Picture         =   "frm_op_info.frx":001C
+      MouseIcon       =   "frm_op_info.frx":0038
+   End
 End
 Attribute VB_Name = "frm_op_info"
 Attribute VB_GlobalNameSpace = False
@@ -304,9 +335,17 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
 Public RS As Recordset
-Public countryChosen As Boolean
+
 Public place_id As Long
+Public mother As Variant
+
+Const R_PID = 0
+Const R_FNAME = 1
+Const R_LNAME = 2
+Const R_GENDER = 3
+Const R_IDCARD = 4
 
 
 Private Sub cmb_city_Click()
@@ -368,12 +407,27 @@ Dim i%
 End Sub
 
 Private Sub cmd_find_mom_Click()
-    frm_op_info_find.Show
+    Me.Hide
+    mother = frm_op_info_find.showDialog
+    Me.Show
+    
+    If UBound(mother) < 4 Then
+        Exit Sub
+    End If
+    
+    Me.pnl_mom_ssid = mother(R_IDCARD)
+    Me.pnl_mon_name = mother(R_FNAME) & "  " & mother(R_LNAME)
 End Sub
 
 Private Sub Form_Load()
-
 Dim i%
+    'Initialize
+    Me.mother(R_PID) = "0"
+    Me.mother(R_FNAME) = ""
+    Me.mother(R_LNAME) = ""
+    Me.mother(R_GENDER) = "F"
+    Me.mother(R_IDCARD) = ""
+    
     'Load Country Data From databasse
     Set RS = MainForm.HRDB.OpenRecordset( _
         "Select Distinct Country From E_Place" _

@@ -1,6 +1,2 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "CommonModule"
 Option Explicit
-
-Public Function CheckAccount(nms As String) As Boolean
-    
-End Function
