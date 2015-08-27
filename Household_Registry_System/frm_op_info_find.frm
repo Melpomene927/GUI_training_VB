@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frm_op_info_find 
+Begin VB.Form Frm_op_info_find 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Find Person"
    ClientHeight    =   5130
@@ -49,9 +49,9 @@ Begin VB.Form frm_op_info_find
    End
    Begin VB.ListBox lst 
       Height          =   2205
-      ItemData        =   "frm_op_info_find.frx":0000
+      ItemData        =   "Frm_op_info_find.frx":0000
       Left            =   210
-      List            =   "frm_op_info_find.frx":0002
+      List            =   "Frm_op_info_find.frx":0002
       TabIndex        =   6
       Top             =   2610
       Width           =   4875
@@ -120,7 +120,7 @@ Begin VB.Form frm_op_info_find
       Width           =   855
    End
 End
-Attribute VB_Name = "frm_op_info_find"
+Attribute VB_Name = "Frm_op_info_find"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -208,7 +208,7 @@ Dim whereClause$
 
         'get data
         
-        Set RS = MainForm.HRDB.OpenRecordset( _
+        Set RS = HRDB.OpenRecordset( _
             "Select * " & _
             "From E_Personal_information " & whereClause _
             , dbOpenSnapshot)

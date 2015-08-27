@@ -11,19 +11,13 @@ Begin VB.Form MainForm
    ScaleHeight     =   3015
    ScaleWidth      =   4980
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Timer ticktock 
-      Enabled         =   0   'False
-      Interval        =   1000
-      Left            =   4410
-      Top             =   720
-   End
-   Begin VB.Frame Frame_main_msg 
+   Begin VB.Frame Fm_main_msg 
       Height          =   1665
       Left            =   210
       TabIndex        =   2
       Top             =   840
       Width           =   2805
-      Begin VB.Label Label_msg 
+      Begin VB.Label Lbl_msg 
          Caption         =   "       Welcome, Please Login as User or Create A New Account"
          Height          =   945
          Left            =   270
@@ -33,7 +27,7 @@ Begin VB.Form MainForm
          WordWrap        =   -1  'True
       End
    End
-   Begin VB.CommandButton Command_login 
+   Begin VB.CommandButton Cmd_login 
       Caption         =   "Login"
       Height          =   525
       Left            =   3270
@@ -41,15 +35,15 @@ Begin VB.Form MainForm
       Top             =   1980
       Width           =   1545
    End
-   Begin VB.CommandButton Command_create 
+   Begin VB.CommandButton Cmd_create 
       Caption         =   "Create"
       Height          =   525
       Left            =   3270
       TabIndex        =   0
-      Top             =   1200
+      Top             =   1170
       Width           =   1545
    End
-   Begin ComctlLib.StatusBar StatusBar1 
+   Begin ComctlLib.StatusBar stsBar_main 
       Align           =   2  'Align Bottom
       Height          =   315
       Left            =   0
@@ -63,17 +57,16 @@ Begin VB.Form MainForm
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   1
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            TextSave        =   ""
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
    End
-   Begin VsOcxLib.VideoSoftElastic VideoSoftElastic1 
+   Begin VsOcxLib.VideoSoftElastic Vse_background 
       Height          =   2715
-      Left            =   0
+      Left            =   30
       TabIndex        =   5
-      Top             =   0
+      Top             =   -30
       Width           =   5055
       _Version        =   327680
       _ExtentX        =   8916
@@ -82,7 +75,7 @@ Begin VB.Form MainForm
       ConvInfo        =   1418783674
       Picture         =   "MainForm.frx":0000
       MouseIcon       =   "MainForm.frx":001C
-      Begin VB.Label Label_title 
+      Begin VB.Label Lbl_title 
          Alignment       =   2  'Center
          Caption         =   "Household Regestry System"
          BeginProperty Font 
@@ -108,83 +101,63 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Option Compare Text
 
-Public HRDB As Database
 
-
-Private Sub Command_create_Click()
+'========================================================================
+' Procedure : Cmd_create_Click
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
+Private Sub Cmd_create_Click()
     frmCreateAccount.Show
     Me.Hide
 End Sub
 
-Private Sub Command_login_Click()
+'========================================================================
+' Procedure : Cmd_login_Click
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
+Private Sub Cmd_login_Click()
     frmLogin.Show
     Me.Hide
 End Sub
 
+'========================================================================
+' Procedure : Form_Load
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub Form_Load()
     
-    Me.Hide
-    frmLoading.Show
-    frmLoading.SetCheckPoint (3)
-    frmLoading.ShowMsg ("Connect To System Database")
-    ticktock.Interval = 150
-    ticktock.Enabled = True
-    frmLoading.AdvProccess
+    
     
 End Sub
 
-Public Sub Abort()
-    Unload Me
-End Sub
-
-
+'========================================================================
+' Procedure : Form_Unload
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub Form_Unload(Cancel As Integer)
-    Dim frm As Form
+    Dim Frm As Form
     
-    If Not Me.HRDB Is Nothing Then
-        Me.HRDB.Close
+    If Not HRDB Is Nothing Then
+        HRDB.Close
     End If
     
-    For Each frm In Forms
-        Unload frm
-        Set frm = Nothing
+    For Each Frm In Forms
+        Unload Frm
+        Set Frm = Nothing
     Next
 End Sub
-
-Private Sub ticktock_Timer()
-    If Me.LinkDB Then
-        frmLoading.AdvProccess
-    End If
-    
-    If frmLoading.LoadFin Then
-        frmLoading.OkButton.Enabled = True
-        ticktock.Enabled = False
-    End If
-End Sub
-
-
-
-Public Function LinkDB() As Boolean
-    frmLoading.AdvProccess
-    Dim RS As Recordset
-    Dim ret As Boolean
-    
-    ret = False
-    
-    On Error GoTo ErrHandler
-    Set Me.HRDB = OpenDatabase("", False, False, _
-        "ODBC;DSN=FamilyGroup;UID=SA;PWD=7669588")
-    
-    
-
-    LinkDB = ret
-    Exit Function
-ErrHandler:
-    Dim sMsg As String
-    If Err.Number <> 0 Then
-        
-        MsgBox "Error Occur While Access Database", vbCritical, "Error"
-    End If
-End Function
 

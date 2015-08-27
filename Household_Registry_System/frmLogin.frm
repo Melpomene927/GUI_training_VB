@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frmLogin 
+Begin VB.Form FrmLogin 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Login"
    ClientHeight    =   1965
@@ -21,7 +21,7 @@ Begin VB.Form frmLogin
       TabIndex        =   6
       Top             =   870
       Width           =   1905
-      Begin VB.OptionButton opt_keep 
+      Begin VB.OptionButton Opt_keep 
          Caption         =   "No"
          Height          =   255
          Index           =   1
@@ -30,7 +30,7 @@ Begin VB.Form frmLogin
          Top             =   150
          Width           =   765
       End
-      Begin VB.OptionButton opt_keep 
+      Begin VB.OptionButton Opt_keep 
          Caption         =   "Yes"
          Height          =   255
          Index           =   0
@@ -41,14 +41,14 @@ Begin VB.Form frmLogin
          Width           =   765
       End
    End
-   Begin VB.TextBox txtUserName 
+   Begin VB.TextBox Txt_UID 
       Height          =   345
       Left            =   1290
       TabIndex        =   1
       Top             =   135
       Width           =   2325
    End
-   Begin VB.CommandButton cmdOK 
+   Begin VB.CommandButton Cmd_ok 
       Caption         =   "OK"
       Default         =   -1  'True
       Height          =   390
@@ -57,7 +57,7 @@ Begin VB.Form frmLogin
       Top             =   1440
       Width           =   1140
    End
-   Begin VB.CommandButton cmdCancel 
+   Begin VB.CommandButton Cmd_cancel 
       Cancel          =   -1  'True
       Caption         =   "Cancel"
       Height          =   390
@@ -66,7 +66,7 @@ Begin VB.Form frmLogin
       Top             =   1440
       Width           =   1140
    End
-   Begin VB.TextBox txtPassword 
+   Begin VB.TextBox Txt_PW 
       Height          =   345
       IMEMode         =   3  'DISABLE
       Left            =   1290
@@ -75,7 +75,7 @@ Begin VB.Form frmLogin
       Top             =   525
       Width           =   2325
    End
-   Begin VB.Label lblLabels 
+   Begin VB.Label Lbl_info 
       Caption         =   "&Keep:"
       Height          =   270
       Index           =   2
@@ -84,7 +84,7 @@ Begin VB.Form frmLogin
       Top             =   1020
       Width           =   1080
    End
-   Begin VB.Label lblLabels 
+   Begin VB.Label Lbl_info 
       Caption         =   "&User Name:"
       Height          =   270
       Index           =   0
@@ -93,7 +93,7 @@ Begin VB.Form frmLogin
       Top             =   150
       Width           =   1080
    End
-   Begin VB.Label lblLabels 
+   Begin VB.Label Lbl_info 
       Caption         =   "&Password:"
       Height          =   270
       Index           =   1
@@ -103,17 +103,24 @@ Begin VB.Form frmLogin
       Width           =   1080
    End
 End
-Attribute VB_Name = "frmLogin"
+Attribute VB_Name = "FrmLogin"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'========================================================================
+' Module    : FrmLogin
+' Author    : Mike_chang
+' Date      : 2015/8/26
+' Purpose   :
+'========================================================================
 Option Explicit
+Option Compare Text
 
 Public LoginSucceeded As Boolean
 Public keepData As Boolean
 
-Private Sub cmdCancel_Click()
+Private Sub Cmd_cancel_Click()
     'set the global var to false
     'to denote a failed login
     LoginSucceeded = False
@@ -121,12 +128,12 @@ Private Sub cmdCancel_Click()
     MainForm.Show
 End Sub
 
-Private Sub cmdOK_Click()
+Private Sub Cmd_ok_Click()
 Dim RS As Recordset
     'Retreive User Data
-    Set RS = MainForm.HRDB.OpenRecordset("Select * from User_login " & _
-       "Where UID='" & Me.txtUserName.Text & _
-       "' And PW='" & Me.txtPassword.Text & "'" _
+    Set RS = HRDB.OpenRecordset("Select * from User_login " & _
+       "Where UID='" & Me.Txt_UID.Text & _
+       "' And PW='" & Me.Txt_PW.Text & "'" _
        , dbOpenSnapshot)
     
     'Check login succeed
@@ -135,14 +142,14 @@ Dim RS As Recordset
         MsgBox "Login Success", vbInformation, "Login"
         keep_data
         Me.Hide
-        frmOperation.Show
+        FrmOperation.Show
     End If
 
     'If not succeeded
     If Not LoginSucceeded Then
         MsgBox "Invalid Password Or UID, try again!", , "Login"
-        txtPassword.Text = ""
-        Me.txtUserName.SetFocus
+        Txt_PW.Text = ""
+        Me.Txt_UID.SetFocus
         SendKeys "{Home}+{End}"
     End If
     
@@ -152,7 +159,7 @@ Dim RS As Recordset
 End Sub
 
 Private Sub Form_Load()
-    If Me.opt_keep(0).Value = True Then
+    If Me.Opt_keep(0).Value = True Then
         Me.keepData = True
     End If
     
@@ -208,9 +215,9 @@ Dim i As Integer
             End If
             Select Case Trim(one_line(0))
                 Case "UID"
-                    Me.txtUserName.Text = Trim(one_line(1))
+                    Me.Txt_UID.Text = Trim(one_line(1))
                 Case "PW"
-                    Me.txtPassword.Text = Trim(one_line(1))
+                    Me.Txt_PW.Text = Trim(one_line(1))
                     
             End Select
         End If
@@ -234,8 +241,8 @@ Dim strEmpName$, strUID$, strPW$
     Open strEmpFileName For Output As #intEmpFileNbr
     
     If Me.keepData Then
-        strUID = Me.txtUserName.Text
-        strPW = Me.txtPassword.Text
+        strUID = Me.Txt_UID.Text
+        strPW = Me.Txt_PW.Text
     Else
         strUID = ""
         strPW = ""

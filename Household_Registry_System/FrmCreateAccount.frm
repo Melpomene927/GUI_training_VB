@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frmCreateAccount 
+Begin VB.Form FrmCreateAccount 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Create New User"
    ClientHeight    =   2160
@@ -103,12 +103,19 @@ Begin VB.Form frmCreateAccount
       Width           =   1080
    End
 End
-Attribute VB_Name = "frmCreateAccount"
+Attribute VB_Name = "FrmCreateAccount"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'========================================================================
+' Module    : FrmCreateAccount
+' Author    : Mike_chang
+' Date      : 2015/8/26
+' Purpose   :
+'========================================================================
 Option Explicit
+Option Compare Text
 
 Public acType As Variant
 Public RS As Recordset
@@ -144,11 +151,11 @@ Dim auth$
                 auth = "___"
         End Select
         
-        MainForm.HRDB.Execute "INSERT INTO User_login values ('" _
+        HRDB.Execute "INSERT INTO User_login values ('" _
             & Me.txtUserName.Text & "','" & Me.txtPassword.Text & "','" _
             & auth & "')"
         
-        Set RS = MainForm.HRDB.OpenRecordset("Select * From User_login Where UID = '" _
+        Set RS = HRDB.OpenRecordset("Select * From User_login Where UID = '" _
             & Me.txtUserName.Text & "'", dbOpenSnapshot)
             
         If Not (RS.BOF Or RS.EOF) Then
@@ -183,7 +190,7 @@ Private Sub txtUserName_LostFocus()
     
     collision = False
     
-    Set RS = MainForm.HRDB.OpenRecordset("Select * from User_login", dbOpenSnapshot)
+    Set RS = HRDB.OpenRecordset("Select * from User_login", dbOpenSnapshot)
     
     If Not (RS.BOF Or RS.EOF) Then
         RS.MoveFirst
@@ -206,7 +213,7 @@ Private Sub txtUserName_LostFocus()
 '        strCheck = "Select [FamilyGroup].[dbo].Check_user_id_valid('" _
 '            & Me.txtUserName.Text & "') AS ans"
 '
-'        Set RS = MainForm.HRDB.OpenRecordset(strCheck, dbOpenSnapshot)
+'        Set RS = HRDB.OpenRecordset(strCheck, dbOpenSnapshot)
 '
 '        If Not (RS.BOF Or RS.EOF) Then
 '            If RS.Fields("ans") > 0 Then

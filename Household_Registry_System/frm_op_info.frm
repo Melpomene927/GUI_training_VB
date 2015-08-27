@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Object = "{0BA686C6-F7D3-101A-993E-0000C0EF6F5E}#1.0#0"; "THREED32.OCX"
 Object = "{2037E3AD-18D6-101C-8158-221E4B551F8E}#5.0#0"; "Vsocx32.OCX"
-Begin VB.Form frm_op_info 
+Begin VB.Form Frm_op_info 
    Caption         =   "Personal Information Register"
    ClientHeight    =   5700
    ClientLeft      =   120
@@ -121,7 +121,7 @@ Begin VB.Form frm_op_info
             BackColor       =   15790320
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "MS Sans Serif"
-               Size            =   8.26
+               Size            =   8.25
                Charset         =   0
                Weight          =   400
                Underline       =   0   'False
@@ -143,7 +143,7 @@ Begin VB.Form frm_op_info
             BackColor       =   15790320
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "MS Sans Serif"
-               Size            =   8.26
+               Size            =   8.25
                Charset         =   0
                Weight          =   400
                Underline       =   0   'False
@@ -180,7 +180,7 @@ Begin VB.Form frm_op_info
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   109248513
+         Format          =   62193665
          CurrentDate     =   32874
          MaxDate         =   401768
       End
@@ -194,9 +194,9 @@ Begin VB.Form frm_op_info
       End
       Begin VB.ComboBox cmb_gend 
          Height          =   315
-         ItemData        =   "frm_op_info.frx":0000
+         ItemData        =   "Frm_op_info.frx":0000
          Left            =   1380
-         List            =   "frm_op_info.frx":000A
+         List            =   "Frm_op_info.frx":000A
          TabIndex        =   5
          Text            =   "Male"
          Top             =   1470
@@ -325,29 +325,36 @@ Begin VB.Form frm_op_info
       _ExtentY        =   9551
       _StockProps     =   70
       ConvInfo        =   1418783674
-      Picture         =   "frm_op_info.frx":001C
-      MouseIcon       =   "frm_op_info.frx":0038
+      Picture         =   "Frm_op_info.frx":001C
+      MouseIcon       =   "Frm_op_info.frx":0038
    End
 End
-Attribute VB_Name = "frm_op_info"
+Attribute VB_Name = "Frm_op_info"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'========================================================================
+' Module    : Frm_op_info
+' Author    : Mike_chang
+' Date      : 2015/8/26
+' Purpose   :
+'========================================================================
 Option Explicit
+Option Compare Text
 
 Public RS As Recordset
 
 Public place_id As Long
-Public mother As Variant
+Private mother As Variant
 
-Const R_PID = 0
-Const R_FNAME = 1
-Const R_LNAME = 2
-Const R_GENDER = 3
-Const R_IDCARD = 4
-
-
+'========================================================================
+' Procedure : cmb_city_Click
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub cmb_city_Click()
 
     'Check Place select complete
@@ -356,7 +363,7 @@ Private Sub cmb_city_Click()
     End If
 
     'Retrieve Place_id from DB
-    Set RS = MainForm.HRDB.OpenRecordset( _
+    Set RS = HRDB.OpenRecordset( _
         "Select Place_id From E_Place " & _
         "Where Country = '" & Me.cmb_country.Text & "' And " & _
         "City = '" & Me.cmb_city.Text & "'" _
@@ -375,6 +382,13 @@ Private Sub cmb_city_Click()
     
 End Sub
 
+'========================================================================
+' Procedure : cmb_country_Click
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub cmb_country_Click()
 
 Dim i%
@@ -384,7 +398,7 @@ Dim i%
     End If
 
     'Load City Data From database
-    Set RS = MainForm.HRDB.OpenRecordset( _
+    Set RS = HRDB.OpenRecordset( _
         "Select City From E_Place " & _
         "Where Country = '" & Me.cmb_country.Text & "'" _
         , dbOpenSnapshot)
@@ -406,9 +420,16 @@ Dim i%
     End If
 End Sub
 
+'========================================================================
+' Procedure : cmd_find_mom_Click
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub cmd_find_mom_Click()
     Me.Hide
-    mother = frm_op_info_find.showDialog
+    mother = Frm_op_info_find.showDialog
     Me.Show
     
     If UBound(mother) < 4 Then
@@ -419,17 +440,20 @@ Private Sub cmd_find_mom_Click()
     Me.pnl_mon_name = mother(R_FNAME) & "  " & mother(R_LNAME)
 End Sub
 
+'========================================================================
+' Procedure : Form_Load
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub Form_Load()
 Dim i%
     'Initialize
-    Me.mother(R_PID) = "0"
-    Me.mother(R_FNAME) = ""
-    Me.mother(R_LNAME) = ""
-    Me.mother(R_GENDER) = "F"
-    Me.mother(R_IDCARD) = ""
+    mother = Array("0", "", "", "F", "")
     
     'Load Country Data From databasse
-    Set RS = MainForm.HRDB.OpenRecordset( _
+    Set RS = HRDB.OpenRecordset( _
         "Select Distinct Country From E_Place" _
         , dbOpenSnapshot)
     
@@ -448,15 +472,28 @@ Dim i%
     End If
 End Sub
 
+'========================================================================
+' Procedure : Form_Unload
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub Form_Unload(Cancel As Integer)
     Unload Me
-    frmOperation.Show
+    FrmOperation.Show
 End Sub
 
-
+'========================================================================
+' Procedure : txt_ssid_LostFocus
+' @ Author  : Mike_chang
+' @ Date    : 2015/8/26
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub txt_ssid_LostFocus()
     'Check if SSID already exist
-    Set RS = MainForm.HRDB.OpenRecordset( _
+    Set RS = HRDB.OpenRecordset( _
         "Select * From [E_Personal_information] " & _
         "Where [ID_card_num] = '" & Me.txt_ssid.Text & "'" _
         , dbOpenSnapshot)
@@ -471,3 +508,4 @@ Private Sub txt_ssid_LostFocus()
         RS.Close
     End If
 End Sub
+

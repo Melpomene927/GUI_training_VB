@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form frmOperation 
+Begin VB.Form FrmOperation 
    Caption         =   "Operations"
    ClientHeight    =   4710
    ClientLeft      =   120
@@ -93,16 +93,17 @@ Begin VB.Form frmOperation
       Width           =   4065
    End
 End
-Attribute VB_Name = "frmOperation"
+Attribute VB_Name = "FrmOperation"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Option Compare Text
 
 Private Sub cmd_info_Click()
     Me.Hide
-    frm_op_info.Show
+    Frm_op_info.Show
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
