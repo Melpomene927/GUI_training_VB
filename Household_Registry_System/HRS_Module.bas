@@ -17,6 +17,10 @@ Global Const R_LNAME = 2
 Global Const R_GENDER = 3
 Global Const R_IDCARD = 4
 
+' SQL Server configeration
+Global Const SQL_SERVER_DSN = "FamilyGroup"
+Global Const SQL_SERVER_UID = "SA"
+Global Const SQL_SERVER_PWD = "7669588"
 
 ' Button parameter masks
 Global Const LEFT_BUTTON = 1
@@ -135,15 +139,21 @@ Global Const WHITE = &HFFFFFF
 ' Details   :
 '========================================================================
 Public Function LinkDB() As Boolean
-    frmLoading.AdvProccess
-    Dim RS As Recordset
-    Dim ret As Boolean
-    
+On Error GoTo ErrHandler
+Dim RS As Recordset
+Dim ret As Boolean
+Dim connection As String
+
+    'initialize
+    FrmLoading.AdvProccess
     ret = False
+    connection = _
+        "ODBC;DSN=" & SQL_SERVER_DSN & ";" & _
+        "UID=" & SQL_SERVER_UID & ";" & _
+        "PWD=" & SQL_SERVER_PWD
     
-    On Error GoTo ErrHandler
-    Set HRDB = OpenDatabase("", False, False, _
-        "ODBC;DSN=FamilyGroup;UID=SA;PWD=7669588")
+    
+    Set HRDB = OpenDatabase("", False, False, connection)
 
     LinkDB = ret
     Exit Function
@@ -161,10 +171,10 @@ End Function
 ' Procedure : Main
 ' @ Author  : Mike_chang
 ' @ Date    : 2015/8/26
-' Purpose   :
+' Purpose   : Enter Point of This Process
 ' Details   :
 '========================================================================
 Public Sub Main()
-    frmLoading.Show
+    FrmLoading.Show
     
 End Sub
