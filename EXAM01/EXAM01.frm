@@ -896,14 +896,14 @@ Dim A_A16121$, A_A16122$, A_A16123$
 Dim I&
 
     'split client address to 3 fields
-    If Len(Txt_A1612) > 40 Then
-        A_A16123$ = Mid(Txt_A1612, 41, Len(Txt_A1612))
-        A_A16122$ = Mid(Txt_A1612, 21, 40)
-        A_A16121$ = Mid(Txt_A1612, 1, 20)
-    ElseIf Len(Txt_A1612) > 20 And Len(Txt_A1612) <= 40 Then
+    If Len(Txt_A1612) > 80 Then
+        A_A16123$ = Mid(Txt_A1612, 81, 40)
+        A_A16122$ = Mid(Txt_A1612, 41, 40)
+        A_A16121$ = Mid(Txt_A1612, 1, 40)
+    ElseIf Len(Txt_A1612) > 40 And Len(Txt_A1612) <= 80 Then
         A_A16123$ = ""
-        A_A16122$ = Mid(Txt_A1612, 21, Len(Txt_A1612))
-        A_A16121$ = Mid(Txt_A1612, 1, 20)
+        A_A16122$ = Mid(Txt_A1612, 41, Len(Txt_A1612))
+        A_A16121$ = Mid(Txt_A1612, 1, 40)
     Else
         A_A16123$ = ""
         A_A16122$ = ""
