@@ -1,0 +1,14 @@
+A1609 15 統一編號 PanelDescpt unifyno
+A1617 10 負責業務 X (to A0802)
+A1601 10 客戶編號 PanelDescpt buyerid
+A1602 12 客戶簡稱 paneldescpt custmer
+A1614 20 聯絡人   PanelDescpt liaison
+A1605 15 電話號碼 PanelDescpt telno
+A1606 15 傳真號碼 PanelDescpt faxno
+A1620  8 授信額度 PanelDescpt credit_limit
+A1621  8 應收帳款 PanelDescpt current_credit
+A1643  8 應收票據 PanelDescpt nr
+credit 可用額度 = A1620 - A1621 -A1643
+
+A0801 10 = A1617
+A0802 12
