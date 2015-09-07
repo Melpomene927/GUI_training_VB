@@ -7,7 +7,7 @@ Begin VB.Form frm_TSR03
    Appearance      =   0  'Flat
    BackColor       =   &H00C0C0C0&
    Caption         =   "使用記錄列印"
-   ClientHeight    =   5970
+   ClientHeight    =   6420
    ClientLeft      =   30
    ClientTop       =   375
    ClientWidth     =   9480
@@ -26,10 +26,10 @@ Begin VB.Form frm_TSR03
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
    PaletteMode     =   1  'UseZOrder
-   ScaleHeight     =   5970
+   ScaleHeight     =   6420
    ScaleWidth      =   9480
    Begin VsOcxLib.VideoSoftElastic Vse_Background 
-      Height          =   5595
+      Height          =   6045
       Left            =   0
       TabIndex        =   11
       TabStop         =   0   'False
@@ -37,7 +37,7 @@ Begin VB.Form frm_TSR03
       Width           =   9480
       _Version        =   327680
       _ExtentX        =   16722
-      _ExtentY        =   9869
+      _ExtentY        =   10663
       _StockProps     =   70
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
@@ -54,19 +54,19 @@ Begin VB.Form frm_TSR03
       Picture         =   "TSR03.frx":030A
       BevelOuterDir   =   1
       MouseIcon       =   "TSR03.frx":0326
-      Begin FPSpread.vaSpread Spd_PATTERNR2 
+      Begin FPSpread.vaSpread Spd_TSR03 
          Height          =   4665
          Left            =   60
          OleObjectBlob   =   "TSR03.frx":0342
          TabIndex        =   0
-         Top             =   90
+         Top             =   540
          Width           =   7860
       End
       Begin ComctlLib.ProgressBar Prb_Percent 
          Height          =   210
          Left            =   1290
          TabIndex        =   13
-         Top             =   4800
+         Top             =   5250
          Width           =   6645
          _ExtentX        =   11721
          _ExtentY        =   370
@@ -87,7 +87,7 @@ Begin VB.Form frm_TSR03
          Height          =   735
          Left            =   60
          TabIndex        =   14
-         Top             =   4770
+         Top             =   5220
          Width           =   7875
          Begin VB.TextBox Txt_FileName 
             BackColor       =   &H00FFFFFF&
@@ -260,7 +260,7 @@ Begin VB.Form frm_TSR03
          Height          =   405
          Left            =   8010
          TabIndex        =   10
-         Top             =   5100
+         Top             =   5550
          Width           =   1425
          _Version        =   65536
          _ExtentX        =   2514
@@ -298,13 +298,74 @@ Begin VB.Form frm_TSR03
             Strikethrough   =   0   'False
          EndProperty
       End
+      Begin Threed.SSPanel Pnl_A1501 
+         Height          =   390
+         Left            =   1035
+         TabIndex        =   15
+         Top             =   90
+         Width           =   465
+         _Version        =   65536
+         _ExtentX        =   820
+         _ExtentY        =   688
+         _StockProps     =   15
+         BackColor       =   15790320
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         BevelOuter      =   1
+      End
+      Begin Threed.SSPanel Pnl_A1501n 
+         Height          =   390
+         Left            =   1485
+         TabIndex        =   16
+         Top             =   90
+         Width           =   1860
+         _Version        =   65536
+         _ExtentX        =   3281
+         _ExtentY        =   688
+         _StockProps     =   15
+         BackColor       =   15790320
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         BevelOuter      =   1
+      End
+      Begin VB.Label Lbl_A1501 
+         Caption         =   "公司別"
+         BeginProperty Font 
+            Name            =   "新細明體"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   90
+         TabIndex        =   17
+         Top             =   135
+         Width           =   1635
+      End
    End
    Begin ComctlLib.StatusBar Sts_MsgLine 
       Align           =   2  'Align Bottom
       Height          =   375
       Left            =   0
       TabIndex        =   12
-      Top             =   5595
+      Top             =   6045
       Width           =   9480
       _ExtentX        =   16722
       _ExtentY        =   661
@@ -331,6 +392,9 @@ Attribute VB_Exposed = False
 Option Explicit
 Option Compare Text
 
+'========================================================================
+'   Coding Rule
+'========================================================================
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -338,6 +402,11 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
+'========================================================================
+'自定變數
+'Dim m_aa$
+'Dim m_bb#
+'Dim m_cc&
 
 '必要變數
 Dim m_FieldError%    '此變數在判斷欄位是否有誤, 必須回到該欄位之動作
@@ -345,48 +414,204 @@ Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
 
 
 
-'自定變數
-'Dim m_aa$
-'Dim m_bb#
-'Dim m_cc&
+'========================================================================
+' Procedure : BeforeUnloadForm (frm_TSR03)
+' @ Author  : Mike_chang
+' @ Date    : 2015/9/3
+' Purpose   : 關閉本表單前,須處理的動作在此加入
+' Details   :
+'========================================================================
+Sub BeforeUnloadForm()
+
+
+'??? 取消Spread上的所有標識區塊
+    Spd_TSR03.Action = SS_ACTION_DESELECT_BLOCK
+
+'結束目前視窗,跳出其他處理程序
+    m_ExitTrigger% = True
+
+'??? Keep目前結束的表單名稱至變數中
+    G_FormFrom$ = "TSR03"
+    
+'??? 隱藏V畫面,回到Q畫面
+    DoEvents
+    Me.Hide
+    frm_TSR03q.Show
+End Sub
+
+Private Function CheckRoutine_FileName() As Boolean
+    CheckRoutine_FileName = True
+    
+    If Opt_Printer.Value = True Then Exit Function
+    
+    '設定變數初始值
+    m_FieldError% = -1
+    
+    '若選擇檔案列印,欄位若空白,則帶出 Default Value
+    If Opt_File.Value Then
+        SetDefaultFileName Txt_FileName, G_Print2File
+    ElseIf Opt_Excel.Value Then
+        SetDefaultFileName Txt_FileName, G_Print2Excel
+    End If
+    DoEvents
+    
+    '檢核路徑是否存在
+    Dim a$
+    a$ = Trim(Txt_FileName)
+    If Not CheckDirectoryExist(a$) Then
+       CheckRoutine_FileName = False
+       Sts_MsgLine.Panels(1) = G_PathNotFound$
+       m_FieldError% = Txt_FileName.TabIndex
+       Txt_FileName.SetFocus
+    End If
+End Function
+
+'========================================================================
+' Procedure : IsAllFieldsCheck (frm_TSR03)
+' @ Author  : Mike_chang
+' @ Date    : 2015/9/3
+' Purpose   :
+' Details   :
+'========================================================================
+Private Function IsAllFieldsCheck() As Boolean
+    IsAllFieldsCheck = False
+    If Not CheckRoutine_FileName() Then Exit Function
+    IsAllFieldsCheck = True
+End Function
+
+'========================================================================
+' Procedure : KeepFieldsValue (frm_TSR03)
+' @ Author  : Mike_chang
+' @ Date    : 2015/9/3
+' Purpose   :
+' Details   :
+'========================================================================
+Sub KeepFieldsValue()
+    G_ReportDataFrom = G_FromScreen
+    G_OutFile = Trim$(Txt_FileName)
+    If Opt_Printer.Value Then G_PrintSelect = G_Print2Printer
+    If Opt_File.Value Then G_PrintSelect = G_Print2File
+    If Opt_Excel.Value Then G_PrintSelect = G_Print2Excel
+End Sub
+
+
+'========================================================================
+' Procedure : Set_Property (frm_TSR03)
+' @ Author  : Mike_chang
+' @ Date    : 2015/9/3
+' Purpose   :
+' Details   :
+'========================================================================
+Private Sub Set_Property()
+
+    '??? 設定本Form之標題,字形及色系
+    Form_Property frm_TSR03, G_Form_TSR01$, G_Font_Name
+    
+    '========================================================================
+    '???設定Form中所有TextBox,ComboBox,ListBox之字形及可輸人長度,
+    '   可同時設定其所對應的Label控制項的屬性
+    '
+    '   參數一 : Control Name
+    '   參數二 : 物件的最大長度,非TextBox請輸入0
+    '   參數三 : 對應Label的Control Name,設定其相關屬性
+    '   參數四 : 設定Label的Caption,若自資料庫抓不到Caption則以此設定為Label的Caption
+    '   參數五 : 輸入欄位的格式,用於日期或數值輸入
+    '   參數六 : 數值欄位的上限
+    '   參數七 : 數值欄位的下限
+    '   參數八 : Database Name,於此資料庫下找尋Label的Caption
+    '   參數九 : Table Name,於表格下找尋Label的Caption
+    '   參數十 : Field Name,以此欄位找尋Label的Caption
+    '========================================================================
+    Field_Property Txt_FileName, 60
+    Txt_FileName.Visible = False
+        
+    '========================================================================
+    '??? 設定Form中所有Panel,Label,OptionButton,CheckBox,Frame之標題, 字形及色系
+    '    參數一 : Control Name              參數二 : 設定Control的Caption
+    '    參數三 : 是否顯示                  參數四 : 設定背景顏色
+    '    參數五 : 設定字型大小              參數六 : 設定字型名稱
+    '========================================================================
+    Control_Property Fra_PrintType, G_Pnl_PrtType$
+    Control_Property Opt_Printer, G_Pnl_Printer$
+    Control_Property Opt_File, G_Pnl_File$
+    Control_Property Opt_Excel, G_Pnl_Excel$
+    
+    '========================================================================
+    '   設Form中所有Command之標題及字形
+    '========================================================================
+    Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
+    Command_Property Cmd_Print, G_CmdPrint, G_Font_Name
+    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
+    Command_Property Cmd_Previous, G_CmdPrvPage, G_Font_Name
+    Command_Property Cmd_Next, G_CmdNxtPage, G_Font_Name
+    Command_Property Cmd_Set, G_CmdSet, G_Font_Name
+    
+    '========================================================================
+    '   設Form中Spread之屬性
+    '========================================================================
+    Set_Spread_Property
+
+    '========================================================================
+    '   以下為標準指令, 不得修改
+    '========================================================================
+    ProgressBar_Property Prb_Percent
+    VSElastic_Property Vse_Background
+    StatusBar_ProPerty Sts_MsgLine
+End Sub
+
+'========================================================================
+' Procedure : Set_Spread_Property (frm_TSR03)
+' @ Author  : Mike_chang
+' @ Date    : 2015/9/3
+' Purpose   :
+' Details   :
+'========================================================================
 Private Sub Set_Spread_Property()
-    With Spd_PATTERNR2
+    With Spd_TSR03
          .UnitType = 2
 
-'??? 設定本Spread之筆數及欄位數(取Columns Type的上限值)
-         Spread_Property Spd_PATTERNR2, 0, UBound(tSpd_PATTERNR2.Columns), WHITE, G_Font_Size, G_Font_Name
+        '??? 設定本Spread之筆數及欄位數(取Columns Type的上限值)
+         Spread_Property Spd_TSR03, 0, UBound(tSpd_TSR03.Columns), WHITE, G_Font_Size, G_Font_Name
+         
+        '========================================================================
+        '??? 設定本Spread之各欄標題及顯示寬度,各欄屬性及顯示字數
+        '    參數一 : Spread Name
+        '    參數二 : 參數一所屬的Spead Type Name
+        '    參數三 : 自訂的欄位名稱
+        '    參數四 : 設定欄寬
+        '    參數五 : 預設的欄位標題
+        '    參數六 : 欄位的資料型態
+        '    參數七 : 數值欄位的下限
+        '    參數八 : 數值欄位的下限
+        '    參數九 : 文字資料型態的最大長度
+        '    參數十 : 欄位顯示在Spread上的對齊方式
+        '    參數11 : 設定報表欄位標題及資料列印的Format
+        '    參數12 : 報表輸出至Excel時,是否將日期欄位格式化成日期格式
+        '    參數13 : Database Name,於此資料庫下找尋Label的Caption
+        '    參數14 : Field Name,以此欄位找尋Label的Caption
+        '    參數15 : Table Name,於表格下找尋Label的Caption
+        '========================================================================
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1507", TextWidth("X") * 10, G_Pnl_A1507, SS_CELL_TYPE_EDIT, "", "", 20, SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1502", TextWidth("X") * 6, G_Pnl_A1502, SS_CELL_TYPE_EDIT, "", "", 6, SS_CELL_H_ALIGN_CENTER
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1505", TextWidth("X") * 15, G_Pnl_A1505, SS_CELL_TYPE_EDIT, "", "", 40, SS_CELL_H_ALIGN_LEFT
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1504", TextWidth("X") * 8, G_Pnl_A1504, SS_CELL_TYPE_EDIT, "", "", 8
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1510", TextWidth("X") * 8, G_Pnl_A1510, SS_CELL_TYPE_EDIT, "", "", 8
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1512", TextWidth("X") * 8, G_Pnl_A1512, SS_CELL_TYPE_EDIT, "", "", 8
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1508", TextWidth("X") * 15, G_Pnl_A1508, SS_CELL_TYPE_EDIT, "", "", 15, SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "Flag", TextWidth("X") * 20, "Flag", SS_CELL_TYPE_EDIT, "", "", 20
 
-'??? 設定本Spread之各欄標題及顯示寬度,各欄屬性及顯示字數
-'    參數一 : Spread Name                                   參數二 : 參數一所屬的Spead Type Name
-'    參數三 : 自訂的欄位名稱                                參數四 : 設定欄寬
-'    參數五 : 預設的欄位標題                                參數六 : 欄位的資料型態
-'    參數七 : 數值欄位的下限                                參數八 : 數值欄位的下限
-'    參數九 : 文字資料型態的最大長度                        參數十 : 欄位顯示在Spread上的對齊方式
-'    參數11 : 設定報表欄位標題及資料列印的Format            參數12 : 報表輸出至Excel時,是否將日期欄位格式化成日期格式
-'    參數13 : Database Name,於此資料庫下找尋Label的Caption  參數14 : Field Name,以此欄位找尋Label的Caption
-'    參數15 : Table Name,於表格下找尋Label的Caption
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "A0901", TextWidth("X") * 8, G_Print_Date, SS_CELL_TYPE_EDIT, "", "", 10, SS_CELL_H_ALIGN_CENTER, _
-            SS_CELL_H_ALIGN_RIGHT
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "A0902", TextWidth("X") * 8, G_Print_Time, SS_CELL_TYPE_EDIT, "", "", 8, SS_CELL_H_ALIGN_CENTER
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "A0907", TextWidth("X") * 8, GetCaption("PATTERNR", "login", "登錄類別"), SS_CELL_TYPE_EDIT, "", "", 8, SS_CELL_H_ALIGN_CENTER
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "A0909", TextWidth("X") * 8, GetCaption("PATTERNR", "username", "使用者"), SS_CELL_TYPE_EDIT, "", "", 12
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "A0906", TextWidth("X") * 20, GetCaption("PATTERNR", "programname", "程式名稱"), SS_CELL_TYPE_EDIT, "", "", 40
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "A0911", TextWidth("X") * 8, GetCaption("PATTERNR", "systemid", "系統代號"), SS_CELL_TYPE_EDIT, "", "", 10
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "A0912", TextWidth("X") * 20, GetCaption("PanelDescpt", "remark", "備註"), SS_CELL_TYPE_EDIT, "", "", 50
-         SpdFldProperty Spd_PATTERNR2, tSpd_PATTERNR2, "Flag", TextWidth("X") * 20, "Flag", SS_CELL_TYPE_EDIT, "", "", 200
+        '設定本Spread允許Cell間的拖曳
+         .AllowDragDrop = False
 
-'設定本Spread允許Cell間的拖曳
-         .AllowDragDrop = True
-
-'設定本Spread允許資料跨欄顯示
+        '設定本Spread允許資料跨欄顯示
          .AllowCellOverflow = True
          
          .EditEnterAction = SS_CELL_EDITMODE_EXIT_NONE
 
-'固定向右捲動時, 所凍住之欄位
+        '固定向右捲動時, 所凍住之欄位
          .ColsFrozen = 2
 
-'鎖住Spread不可修改
+        '鎖住Spread不可修改
          .Row = -1: .Col = -1: .Lock = True
     End With
 End Sub
@@ -400,17 +625,18 @@ Private Sub Cmd_Help_Click()
 Dim a$
 
 '請將PATTERNR改為此Form名字即可, 其餘為標準指令, 不得修改
-    a$ = "notepad " + G_Help_Path + "PATTERNR2.HLP"
+    a$ = "notepad " + G_Help_Path + "TSR03.HLP"
     retcode = Shell(a$, 4)
 End Sub
 
 Private Sub Cmd_Next_Click()
     Cmd_Next.Enabled = False
-    Spd_PATTERNR2.SetFocus
+    Spd_TSR03.SetFocus
     SendKeys "{PgDn}"
     DoEvents
     Cmd_Next.Enabled = True
 End Sub
+
 Private Sub Cmd_Print_Click()
     Me.MousePointer = HOURGLASS
     Cmd_Print.Enabled = False
@@ -434,23 +660,15 @@ Private Sub Cmd_Print_Click()
     End If
        
 '??? 開始列印報表,第三個參數傳入V Screen的Spread
-    PrePare_Data frm_TSR03, Prb_Percent, Spd_PATTERNR2, m_ExitTrigger%
+    PrePare_Data frm_TSR03, Prb_Percent, Spd_TSR03, m_ExitTrigger%
     
     Cmd_Print.Enabled = True
     Me.MousePointer = Default
 End Sub
 
-Sub KeepFieldsValue()
-    G_ReportDataFrom = G_FromScreen
-    G_OutFile = Trim$(Txt_FileName)
-    If Opt_Printer.Value Then G_PrintSelect = G_Print2Printer
-    If Opt_File.Value Then G_PrintSelect = G_Print2File
-    If Opt_Excel.Value Then G_PrintSelect = G_Print2Excel
-End Sub
-
 Private Sub Cmd_Previous_Click()
     Cmd_Previous.Enabled = False
-    Spd_PATTERNR2.SetFocus
+    Spd_TSR03.SetFocus
     SendKeys "{PgUp}"
     DoEvents
     Cmd_Previous.Enabled = True
@@ -461,15 +679,15 @@ Private Sub Cmd_Set_Click()
 '    參數一 : 表格設定的Form Name
 '    參數二 : 請輸入欲提供User設定的Spread的Spread Type Name
 '    參數三 : 是否處理Spread排序欄位異動的更新
-    ShowRptDefForm frm_RptDef, tSpd_PATTERNR2
+    ShowRptDefForm frm_RptDef, tSpd_TSR03
     
 '??? 自表格設定表單返回時,處理Spread上的資料重整
 '    參數一 : 資料欲重整的Spread Name
 '    參數二 : 請輸入參數一的Spread Type Name
-    RefreshSpreadData frm_TSR03.Spd_PATTERNR2, tSpd_PATTERNR2
+    RefreshSpreadData frm_TSR03.Spd_TSR03, tSpd_TSR03
     
 '??? 結束表格設定視窗,將Focus設定在Spread上
-    Spd_PATTERNR2.SetFocus
+    Spd_TSR03.SetFocus
 End Sub
 
 Private Sub Form_Activate()
@@ -494,14 +712,14 @@ Private Sub Form_Activate()
        Sts_MsgLine.Panels(1) = G_Process
        Set_Spread_Property
        Cmd_Print.Enabled = False
-       PrePare_Data frm_TSR03, Prb_Percent, Spd_PATTERNR2, m_ExitTrigger%
+       PrePare_Data frm_TSR03, Prb_Percent, Spd_TSR03, m_ExitTrigger%
        If m_ExitTrigger% Then Exit Sub
        Cmd_Print.Enabled = True
     End If
     
     '將Form放置到螢幕的頂層
     frm_TSR03.ZOrder 0
-    If frm_TSR03.Visible Then Spd_PATTERNR2.SetFocus
+    If frm_TSR03.Visible Then Spd_TSR03.SetFocus
     Me.MousePointer = Default
 End Sub
 
@@ -549,8 +767,8 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
         
       Case KEY_ESCAPE
            KeyCode = 0
-           If Cmd_exit.Visible And Cmd_exit.Enabled Then
-              Cmd_exit.SetFocus
+           If Cmd_Exit.Visible And Cmd_Exit.Enabled Then
+              Cmd_Exit.SetFocus
               DoEvents
               SendKeys "{Enter}"
            End If
@@ -567,50 +785,6 @@ Private Sub Form_Load()
     Set_Property
 End Sub
 
-Private Function IsAllFieldsCheck() As Boolean
-    IsAllFieldsCheck = False
-    If Not CheckRoutine_FileName() Then Exit Function
-    IsAllFieldsCheck = True
-End Function
-Private Sub Set_Property()
-'??? 設定本Form之標題,字形及色系
-    Form_Property frm_TSR03, GetCaption("FormTitle", "PATTERNR", "使用記錄螢幕列印"), G_Font_Name
-        
-'??? 設定Form中所有TextBox,ComboBox,ListBox之字形及可輸人長度,可同時設定其所對應的Label控制項的屬性
-'    參數一 : Control Name                              參數二 : 物件的最大長度,非TextBox請輸入0
-'    參數三 : 對應Label的Control Name,設定其相關屬性    參數四 : 設定Label的Caption,若自資料庫抓不到Caption則以此設定為Label的Caption
-'    參數五 : 輸入欄位的格式,用於日期或數值輸入         參數六 : 數值欄位的上限
-'    參數七 : 數值欄位的下限                            參數八 : Database Name,於此資料庫下找尋Label的Caption
-'    參數九 : Table Name,於表格下找尋Label的Caption     參數十 : Field Name,以此欄位找尋Label的Caption
-    Field_Property Txt_FileName, 60
-    Txt_FileName.Visible = False
-        
-'??? 設定Form中所有Panel,Label,OptionButton,CheckBox,Frame之標題, 字形及色系
-'    參數一 : Control Name              參數二 : 設定Control的Caption
-'    參數三 : 是否顯示                  參數四 : 設定背景顏色
-'    參數五 : 設定字型大小              參數六 : 設定字型名稱
-    Control_Property Fra_PrintType, GetCaption("PanelDescpt", "printtype", "列印方式")
-    Control_Property Opt_Printer, GetCaption("PanelDescpt", "printer", "印表機")
-    Control_Property Opt_File, GetCaption("PanelDescpt", "file", "檔案")
-    Control_Property Opt_Excel, GetCaption("PanelDescpt", "excel", "Excel")
-    
-'設Form中所有Command之標題及字形
-    Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
-    Command_Property Cmd_Print, G_CmdPrint, G_Font_Name
-    Command_Property Cmd_exit, G_CmdExit, G_Font_Name
-    Command_Property Cmd_Previous, G_CmdPrvPage, G_Font_Name
-    Command_Property Cmd_Next, G_CmdNxtPage, G_Font_Name
-    Command_Property Cmd_Set, G_CmdSet, G_Font_Name
-    
-'設Form中Spread之屬性
-    Set_Spread_Property
-
-'以下為標準指令, 不得修改
-    ProgressBar_Property Prb_Percent
-    VSElastic_Property Vse_Background
-    StatusBar_ProPerty Sts_MsgLine
-End Sub
-
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 '若非由Q畫面結束V畫面,則不結束此畫面.標準寫法不可修改.
     If UnloadMode <> vbFormCode Then
@@ -619,28 +793,9 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     End If
 End Sub
 
-Sub BeforeUnloadForm()
-'關閉本表單前,須處理的動作在此加入
-
-'??? 取消Spread上的所有標識區塊
-    Spd_PATTERNR2.Action = SS_ACTION_DESELECT_BLOCK
-
-'結束目前視窗,跳出其他處理程序
-    m_ExitTrigger% = True
-
-'??? Keep目前結束的表單名稱至變數中
-    G_FormFrom$ = "PATTERNR2"
-    
-'??? 隱藏V畫面,回到Q畫面
-    DoEvents
-    Me.Hide
-    frm_TSR03q.Show
-End Sub
-
 Private Sub Opt_Excel_Click(Value As Integer)
     SetDefaultFileName Txt_FileName, G_Print2Excel
 End Sub
-
 
 Private Sub Opt_File_Click(Value As Integer)
     SetDefaultFileName Txt_FileName, G_Print2File
@@ -650,79 +805,47 @@ Private Sub Opt_Printer_Click(Value As Integer)
     Txt_FileName.Visible = False
 End Sub
 
-Private Sub Spd_PATTERNR2_Click(ByVal Col As Long, ByVal Row As Long)
+Private Sub Spd_TSR03_Click(ByVal Col As Long, ByVal Row As Long)
 '??? 由此控制報表是否提供排序功能
-    If Not tSpd_PATTERNR2.SortEnable Then Exit Sub
+    If Not tSpd_TSR03.SortEnable Then Exit Sub
     
 '於Column Heading Click時, 依該欄位排序
     If Row = 0 And Col > 0 Then
     
 '??? Update Spread Type中的排序欄位
-       SpdSortIndexReBuild tSpd_PATTERNR2, Col
+       SpdSortIndexReBuild tSpd_TSR03, Col
        
 '??? 利用Spread Type做Sort
-       SpreadColsSort Spd_PATTERNR2, tSpd_PATTERNR2
+       SpreadColsSort Spd_TSR03, tSpd_TSR03
        
     End If
 End Sub
 
-Private Sub Spd_PATTERNR2_DragDropBlock(ByVal Col As Long, ByVal Row As Long, ByVal Col2 As Long, ByVal Row2 As Long, ByVal newcol As Long, ByVal NewRow As Long, ByVal NewCol2 As Long, ByVal NewRow2 As Long, ByVal Overwrite As Boolean, Action As Integer, DataOnly As Boolean, Cancel As Boolean)
+Private Sub Spd_TSR03_DragDropBlock(ByVal Col As Long, ByVal Row As Long, ByVal Col2 As Long, ByVal Row2 As Long, ByVal newcol As Long, ByVal NewRow As Long, ByVal NewCol2 As Long, ByVal NewRow2 As Long, ByVal Overwrite As Boolean, Action As Integer, DataOnly As Boolean, Cancel As Boolean)
 '??? 將Spread上的原欄位移動至目的欄位
-    SpreadColumnMove Spd_PATTERNR2, tSpd_PATTERNR2, Col, newcol, NewRow, Cancel
+    SpreadColumnMove Spd_TSR03, tSpd_TSR03, Col, newcol, NewRow, Cancel
     
 '在同一欄位DragDrop不處理變色
     If Col = newcol Then Exit Sub
     
 '清除原欄位的顏色
-    SpreadLostFocus2 Spd_PATTERNR2, -1, Row, , , ConnectSemiColon(CStr(COLOR_YELLOW))
+    SpreadLostFocus2 Spd_TSR03, -1, Row, , , ConnectSemiColon(CStr(COLOR_YELLOW))
     
 '設定新欄位的顏色
     SpreadGotFocus -1, NewRow, , , ConnectSemiColon(CStr(COLOR_YELLOW))
 End Sub
 
-
-Private Sub Spd_PATTERNR2_GotFocus()
-    SpreadGotFocus -1, CLng(Spd_PATTERNR2.ActiveRow), , , ConnectSemiColon(CStr(COLOR_YELLOW))
+Private Sub Spd_TSR03_GotFocus()
+    SpreadGotFocus -1, CLng(Spd_TSR03.ActiveRow), , , ConnectSemiColon(CStr(COLOR_YELLOW))
 End Sub
 
-
-Private Sub Spd_PATTERNR2_LeaveCell(ByVal Col As Long, ByVal Row As Long, ByVal newcol As Long, ByVal NewRow As Long, Cancel As Boolean)
+Private Sub Spd_TSR03_LeaveCell(ByVal Col As Long, ByVal Row As Long, ByVal newcol As Long, ByVal NewRow As Long, Cancel As Boolean)
 '恢復前一欄位的顏色
-    SpreadLostFocus2 Spd_PATTERNR2, -1, Row, , , ConnectSemiColon(CStr(COLOR_YELLOW))
+    SpreadLostFocus2 Spd_TSR03, -1, Row, , , ConnectSemiColon(CStr(COLOR_YELLOW))
 
 '改變新欄位的顏色
     If NewRow > 0 Then SpreadGotFocus -1, NewRow, , , ConnectSemiColon(CStr(COLOR_YELLOW))
 End Sub
-
-
-
-Private Function CheckRoutine_FileName() As Boolean
-    CheckRoutine_FileName = True
-    
-    If Opt_Printer.Value = True Then Exit Function
-    
-'設定變數初始值
-    m_FieldError% = -1
-    
-'若選擇檔案列印,欄位若空白,則帶出 Default Value
-    If Opt_File.Value Then
-        SetDefaultFileName Txt_FileName, G_Print2File
-    ElseIf Opt_Excel.Value Then
-        SetDefaultFileName Txt_FileName, G_Print2Excel
-    End If
-    DoEvents
-    
-'檢核路徑是否存在
-    Dim a$
-    a$ = Trim(Txt_FileName)
-    If Not CheckDirectoryExist(a$) Then
-       CheckRoutine_FileName = False
-       Sts_MsgLine.Panels(1) = GetCaption("PgmMsg", "path_not_found", "路徑不存在 !")
-       m_FieldError% = Txt_FileName.TabIndex
-       Txt_FileName.SetFocus
-    End If
-End Function
-
 
 Private Sub Txt_FileName_GotFocus()
     TextGotFocus
@@ -740,3 +863,4 @@ Private Sub Txt_FileName_LostFocus()
 '自我檢查
     retcode = CheckRoutine_FileName()
 End Sub
+
