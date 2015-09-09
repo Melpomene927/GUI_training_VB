@@ -249,7 +249,7 @@ Sub Main()
     SetReportCols             ' 設定報表的所有欄位至Spread Type中
     
 '??? 將所有明細畫面先Load進Memory,請修改Form Name
-    Load frm_TSR03q           ' 為在Q畫面的設定鍵觸發時,能抓取V畫面Spread上
+    Load frm_TSR03            ' 為在Q畫面的設定鍵觸發時,能抓取V畫面Spread上
                               ' 的Caption,故於程式執行時先Load V畫面
                               
 '??? 請修改成第一個畫面的Form Name
@@ -391,7 +391,7 @@ Dim A_Break_Value#                              '科目小計 of A1508
     A_A1507$ = A_A1507_Brk$
     
     'Setup Output format
-    A_FmtStr$ = "B1$;B2$;FD$"   'Format: [Break Header] + [-------] + [Data]
+    A_FmtStr$ = "FD$"   'Format: [Break Header] + [-------] + [Data]
 
     'Loop to Dump Report Values
     Do While Not DY_A15.EOF And Not A_Exit%
@@ -413,7 +413,7 @@ Dim A_Break_Value#                              '科目小計 of A1508
             A_A1507$ = A_A1507_Brk$
             
             'Setup Output format
-            A_FmtStr$ = "NP;B1$;B2$;FD$"    'Format: [NewPage] + [Break Header] + [-------] + [Data]
+            A_FmtStr$ = "NP;FD$"    'Format: [NewPage] + [Break Header] + [-------] + [Data]
         End If
               
         'Keep列印資料至變數
@@ -684,7 +684,7 @@ Dim A_Row#, I#
                         
                     '若列印至Excel時,合併Break欄位的儲存格
                     SetCellAlignment GetMergeCols(1, G_ExcelIndex# + _
-                        G_XlsHRows%, G_ExcelMaxCols%, G_ExcelMaxCols%, 0), xlLeft, _
+                        G_XlsHRows%, G_ExcelMaxCols%, G_ExcelMaxCols%, 0), xlRight, _
                         xlCenter, True
                         
                 Case "FD$"
@@ -788,7 +788,7 @@ Dim A_FirstColName$, A_LastColName$
 
     '串接表頭資料至變數
     If G_PrintSelect = G_Print2Excel Then
-        G_ExcelWkb.Visible = True
+'        G_ExcelWkb.Visible = True
         '===========================================
         '???取得Excel首欄及最後一欄的自訂欄位名稱
         '===========================================
@@ -883,81 +883,6 @@ Function ReportSet() As Boolean
         ReportSet = G_RptSet
     End If
 End Function
-
-'========================================================================
-' Procedure : SetReportCols (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/7
-' Purpose   : setup tSpd columns
-' Details   :
-'========================================================================
-Sub SetReportCols()
-    '========================================================================
-    '*** 設定Q Screen中的Spd_Help vaSpread **********************************
-    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread上的欄位總數
-    '    參數三 : 是否允許User自訂排序欄位及其順序
-    '========================================================================
-    InitialCols tSpd_Help, 2, False
-    
-    '========================================================================
-    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
-    '    參數一 : Spread Type Name
-    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
-    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
-    '    參數四 : Optional - 設定程式預設排序欄位的順序
-    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
-    '    參數六 : Optional - 設定Break欄位的順序
-    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
-    '========================================================================
-    AddReportCol tSpd_Help, "A1502", , 1
-    AddReportCol tSpd_Help, "A1503", , 2
-    
-    '========================================================================
-    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread所在的Form Name
-    '    參數三 : vaSpread Name
-    '========================================================================
-    GetSpreadDefault tSpd_Help, "frm_TSR03q", "Spd_Help"
-
-    '========================================================================
-    '*** 設定V Screen中的Spd_TSR03 vaSpread *********************************
-    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread上的欄位總數
-    '    參數三 : 是否允許User自訂排序欄位及其順序
-    '========================================================================
-    InitialCols tSpd_TSR03, 8, False
-    
-    '========================================================================
-    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
-    '    參數一 : Spread Type Name
-    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
-    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
-    '    參數四 : Optional - 設定程式預設排序欄位的順序
-    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
-    '    參數六 : Optional - 設定Break欄位的順序
-    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
-    '========================================================================
-    AddReportCol tSpd_TSR03, "A1507", , 1, , 1
-    AddReportCol tSpd_TSR03, "A1502", , 2
-    AddReportCol tSpd_TSR03, "A1505"
-    AddReportCol tSpd_TSR03, "A1504"
-    AddReportCol tSpd_TSR03, "A1510"
-    AddReportCol tSpd_TSR03, "A1512"
-    AddReportCol tSpd_TSR03, "A1508"
-    AddReportCol tSpd_TSR03, "Flag", 2
-    
-    '========================================================================
-    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread所在的Form Name
-    '    參數三 : vaSpread Name
-    '========================================================================
-    GetSpreadDefault tSpd_TSR03, "frm_TSR03", "Spd_TSR03"
-End Sub
 
 '========================================================================
 ' Procedure : Set_Excel_Property (mod_TSR03)
@@ -1131,7 +1056,7 @@ Sub SetPrintFormatStr()
     H3$ = GetRptHeaderFormat(H3l$, HDate$)
     H4$ = GetRptHeaderFormat(H4l$, HDate$)
     H5$ = GetRptHeaderFormat(H5l$, HDate$)
-    B31$ = GetRptHeaderFormat(H3l$, B31$)
+    B31$ = GetRptHeaderFormat("", B31$)
 
 '??? 取得報表Break欄位的格式
     B1$ = GetRptHeaderFormat(B11$)
@@ -1142,7 +1067,82 @@ Sub SetPrintFormatStr()
     
 '??? 取得區隔列的格式
     B2$ = GetRptLineFormat("-")
-    B3$ = GetRptLineFormat("#")
+    B3$ = GetRptLineFormat("~")
     H9$ = GetRptLineFormat("=")
+End Sub
+
+'========================================================================
+' Procedure : SetReportCols (mod_TSR03)
+' @ Author  : Mike_chang
+' @ Date    : 2015/9/7
+' Purpose   : setup tSpd columns
+' Details   :
+'========================================================================
+Sub SetReportCols()
+    '========================================================================
+    '*** 設定Q Screen中的Spd_Help vaSpread **********************************
+    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread上的欄位總數
+    '    參數三 : 是否允許User自訂排序欄位及其順序
+    '========================================================================
+    InitialCols tSpd_Help, 2, False
+    
+    '========================================================================
+    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
+    '    參數一 : Spread Type Name
+    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
+    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
+    '    參數四 : Optional - 設定程式預設排序欄位的順序
+    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
+    '    參數六 : Optional - 設定Break欄位的順序
+    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
+    '========================================================================
+    AddReportCol tSpd_Help, "A1502", , 1
+    AddReportCol tSpd_Help, "A1503", , 2
+    
+    '========================================================================
+    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread所在的Form Name
+    '    參數三 : vaSpread Name
+    '========================================================================
+    GetSpreadDefault tSpd_Help, "frm_TSR03q", "Spd_Help"
+
+    '========================================================================
+    '*** 設定V Screen中的Spd_TSR03 vaSpread *********************************
+    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread上的欄位總數
+    '    參數三 : 是否允許User自訂排序欄位及其順序
+    '========================================================================
+    InitialCols tSpd_TSR03, 8, False
+    
+    '========================================================================
+    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
+    '    參數一 : Spread Type Name
+    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
+    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
+    '    參數四 : Optional - 設定程式預設排序欄位的順序
+    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
+    '    參數六 : Optional - 設定Break欄位的順序
+    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
+    '========================================================================
+    AddReportCol tSpd_TSR03, "A1507", , 1, , 1
+    AddReportCol tSpd_TSR03, "A1502", , 2
+    AddReportCol tSpd_TSR03, "A1505"
+    AddReportCol tSpd_TSR03, "A1504"
+    AddReportCol tSpd_TSR03, "A1510"
+    AddReportCol tSpd_TSR03, "A1512"
+    AddReportCol tSpd_TSR03, "A1508"
+    AddReportCol tSpd_TSR03, "Flag", 2
+    
+    '========================================================================
+    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread所在的Form Name
+    '    參數三 : vaSpread Name
+    '========================================================================
+    GetSpreadDefault tSpd_TSR03, "frm_TSR03", "Spd_TSR03"
 End Sub
 

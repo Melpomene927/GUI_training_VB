@@ -541,7 +541,7 @@ Private Sub Set_Property()
     '========================================================================
     Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
     Command_Property Cmd_Print, G_CmdPrint, G_Font_Name
-    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
+    Command_Property cmd_exit, G_CmdExit, G_Font_Name
     Command_Property Cmd_Previous, G_CmdPrvPage, G_Font_Name
     Command_Property Cmd_Next, G_CmdNxtPage, G_Font_Name
     Command_Property Cmd_Set, G_CmdSet, G_Font_Name
@@ -555,7 +555,7 @@ Private Sub Set_Property()
     '   夹非, ぃ眔э
     '========================================================================
     ProgressBar_Property Prb_Percent
-    VSElastic_Property Vse_Background
+    VSElastic_Property Vse_background
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
@@ -571,7 +571,8 @@ Private Sub Set_Spread_Property()
          .UnitType = 2
 
         '??? 砞﹚セSpreadぇ掸计の逆计(Columns Type)
-         Spread_Property Spd_TSR03, 0, UBound(tSpd_TSR03.Columns), WHITE, G_Font_Size, G_Font_Name
+         Spread_Property Spd_TSR03, 0, UBound(tSpd_TSR03.Columns), WHITE, _
+             G_Font_Size, G_Font_Name
          
         '========================================================================
         '??? 砞﹚セSpreadぇ逆夹肈の陪ボ糴,逆妮┦の陪ボ计
@@ -582,7 +583,7 @@ Private Sub Set_Spread_Property()
         '    把计き : 箇砞逆夹肈
         '    把计せ : 逆戈篈
         '    把计 : 计逆
-        '    把计 : 计逆
+        '    把计 : 计逆
         '    把计 : ゅ戈篈程
         '    把计 : 逆陪ボSpread癸霍よΑ
         '    把计11 : 砞﹚厨逆夹肈の戈Format
@@ -591,14 +592,24 @@ Private Sub Set_Spread_Property()
         '    把计14 : Field Name,逆т碝LabelCaption
         '    把计15 : Table Name,т碝LabelCaption
         '========================================================================
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1507", TextWidth("X") * 10, G_Pnl_A1507, SS_CELL_TYPE_EDIT, "", "", 20, SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1502", TextWidth("X") * 6, G_Pnl_A1502, SS_CELL_TYPE_EDIT, "", "", 6, SS_CELL_H_ALIGN_CENTER
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1505", TextWidth("X") * 15, G_Pnl_A1505, SS_CELL_TYPE_EDIT, "", "", 40, SS_CELL_H_ALIGN_LEFT
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1504", TextWidth("X") * 8, G_Pnl_A1504, SS_CELL_TYPE_EDIT, "", "", 8
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1510", TextWidth("X") * 8, G_Pnl_A1510, SS_CELL_TYPE_EDIT, "", "", 8
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1512", TextWidth("X") * 8, G_Pnl_A1512, SS_CELL_TYPE_EDIT, "", "", 8
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1508", TextWidth("X") * 15, G_Pnl_A1508, SS_CELL_TYPE_EDIT, "", "", 15, SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
-         SpdFldProperty Spd_TSR03, tSpd_TSR03, "Flag", TextWidth("X") * 20, "Flag", SS_CELL_TYPE_EDIT, "", "", 20
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1507", TextWidth("X") * 10, _
+             G_Pnl_A1507, SS_CELL_TYPE_EDIT, "", "", 20, SS_CELL_H_ALIGN_LEFT, _
+             SS_CELL_H_ALIGN_LEFT
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1502", TextWidth("X") * 6, _
+             G_Pnl_A1502, SS_CELL_TYPE_EDIT, "", "", 6, SS_CELL_H_ALIGN_CENTER
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1505", TextWidth("X") * 15, _
+             G_Pnl_A1505, SS_CELL_TYPE_EDIT, "", "", 40, SS_CELL_H_ALIGN_LEFT
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1504", TextWidth("X") * 8, _
+             G_Pnl_A1504, SS_CELL_TYPE_EDIT, "", "", 8
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1510", TextWidth("X") * 8, _
+             G_Pnl_A1510, SS_CELL_TYPE_EDIT, "", "", 8
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1512", TextWidth("X") * 8, _
+             G_Pnl_A1512, SS_CELL_TYPE_EDIT, "", "", 8
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "A1508", TextWidth("X") * 15, _
+             G_Pnl_A1508, SS_CELL_TYPE_FLOAT, "-999999999.99", "999999999.99", 15, _
+             SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
+         SpdFldProperty Spd_TSR03, tSpd_TSR03, "Flag", TextWidth("X") * 20, _
+             "Flag", SS_CELL_TYPE_EDIT, "", "", 20
 
         '砞﹚セSpreadす砛Cell丁╈Σ
          .AllowDragDrop = False
@@ -767,8 +778,8 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
         
       Case KEY_ESCAPE
            KeyCode = 0
-           If Cmd_Exit.Visible And Cmd_Exit.Enabled Then
-              Cmd_Exit.SetFocus
+           If cmd_exit.Visible And cmd_exit.Enabled Then
+              cmd_exit.SetFocus
               DoEvents
               SendKeys "{Enter}"
            End If

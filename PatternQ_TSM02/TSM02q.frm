@@ -404,18 +404,9 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'========================================================================
-' Module    : frm_TSM02q
-' Author    : Mike_chang
-' Date      : 2015/8/27
-' Purpose   :
-'========================================================================
 Option Explicit
 Option Compare Text
 
-'========================================================================
-'   Coding Rule
-'========================================================================
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -423,35 +414,18 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
-
-'必要變數
-Dim m_FieldError%    '此變數在判斷欄位是否有誤, 必須回到該欄位之動作
-Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
 
 '自定變數
 'Dim m_A4101Flag%
 'Dim m_aa$
 'Dim m_bb#
 'Dim m_cc&
-'========================================================================
 
-'====================================
-'   User Defined Fucntions
-'====================================
+'必要變數
+Dim m_FieldError%    '此變數在判斷欄位是否有誤, 必須回到該欄位之動作
+Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Set_Property
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Initializing
-' Details   : init: 1.form          (caption, font, color)
-'                   2.Panel & Label (caption, font, color)
-'                   3.Help Frame    (caption, font, color)
-'                   4.TextBox       (font, MaxLength)
-'                   5.Command button(caption, font)
-'========================================================================
+
 Private Sub Set_Property()
 '設定本Form之標題,字形及色系
     Form_Property Me, G_Form_TSM02q, G_Font_Name
@@ -493,16 +467,6 @@ Private Sub Set_Property()
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : DataPrepare_A02
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Prepare data for Help Spread
-' Details   : By input parameter "txt" as the textbox to return.
-'             Search "部門代碼", "部門簡稱" data from A02 to
-'             help user to input the wanted department ID number.
-'========================================================================
 Private Sub DataPrepare_A02(Txt As TextBox)
 Dim A_Sql$      'SQL Message
 Dim A_A0201$    'PKey of A02 (部門代碼)
@@ -572,14 +536,6 @@ Dim A_A0201$    'PKey of A02 (部門代碼)
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : IsAllFieldsCheck
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Do Full Check over current form's components
-' Details   :
-'========================================================================
 Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = False
     
@@ -598,16 +554,6 @@ Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : CheckRoutine_A02001s
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : check data correctness of Txt_A02001s
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A02001e
-'========================================================================
 Private Function CheckRoutine_A02001s() As Boolean
     CheckRoutine_A02001s = False
 
@@ -638,16 +584,6 @@ Private Function CheckRoutine_A02001s() As Boolean
     CheckRoutine_A02001s = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : CheckRoutine_A02005s
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : check data correctness of Txt_A02005s
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A02005e
-'========================================================================
 Private Function CheckRoutine_A02005s() As Boolean
     CheckRoutine_A02005s = False
 
@@ -678,15 +614,6 @@ Private Function CheckRoutine_A02005s() As Boolean
     CheckRoutine_A02005s = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : CheckRoutine_A0201
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : check data correctness of Txt_A0201s & Txt_A0201e
-' Details   : check over the conditions as below:
-'                   1.both A0201s, A0201e DataRange not exceed each other
-'========================================================================
 Private Function CheckRoutine_A0201() As Boolean
     CheckRoutine_A0201 = False
 
@@ -714,16 +641,6 @@ Private Function CheckRoutine_A0201() As Boolean
     CheckRoutine_A0201 = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : CheckRoutine_A0208s
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : check data correctness of Txt_A0208s
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A0208e
-'========================================================================
 Private Function CheckRoutine_A0208s() As Boolean
     CheckRoutine_A0208s = False
 
@@ -757,16 +674,6 @@ Private Function CheckRoutine_A0208s() As Boolean
     CheckRoutine_A0208s = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : CheckRoutine_A02001e
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : check data correctness of Txt_A02001e
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A02001s
-'========================================================================
 Private Function CheckRoutine_A02001e() As Boolean
     CheckRoutine_A02001e = False
 
@@ -799,16 +706,6 @@ Private Function CheckRoutine_A02001e() As Boolean
     CheckRoutine_A02001e = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : CheckRoutine_A02005e
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : check data correctness of Txt_A02005e
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A02005s
-'========================================================================
 Private Function CheckRoutine_A02005e() As Boolean
     CheckRoutine_A02005e = False
 
@@ -841,16 +738,6 @@ Private Function CheckRoutine_A02005e() As Boolean
     CheckRoutine_A02005e = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : CheckRoutine_A0208e
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : check data correctness of Txt_A0208e
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A0208s
-'========================================================================
 Private Function CheckRoutine_A0208e() As Boolean
     CheckRoutine_A0208e = False
 
@@ -884,15 +771,6 @@ Private Function CheckRoutine_A0208e() As Boolean
     CheckRoutine_A0208e = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : OpenMainFile
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Get The Information from Textboxes and push to V-pattern
-' Details   : Get 1.A02001 2.A02005 3. A0201 4.A0208 as Where Clause
-'             Concate the SQL Statement and Open Dynaset As Global var.
-'========================================================================
 Private Sub OpenMainFile()
 On Local Error GoTo MyError
 Dim A_Sql$
@@ -976,18 +854,6 @@ MyError:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'====================================
-'   Command Buttom Events
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : cmd_add_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Doing Add Operation, Goto D-form
-' Details   :
-'========================================================================
 Private Sub cmd_add_Click()
 '將作業狀態設定為新增狀態
     G_AP_STATE = G_AP_STATE_ADD
@@ -998,15 +864,6 @@ Private Sub cmd_add_Click()
     frm_TSM02.Show
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Cmd_Ok_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Doing Update & Delete, Goto V-form with DY_A02 opened
-' Details   : Calling "OpenMainFile" to open the dynaset by the clauses
-'             that input in the textboxes A02001, A02005, A0201, A0208.
-'========================================================================
 Private Sub Cmd_Ok_Click()
     Me.MousePointer = HOURGLASS
     
@@ -1034,14 +891,6 @@ Private Sub Cmd_Ok_Click()
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Cmd_Exit_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Exit Program
-' Details   :
-'========================================================================
 Private Sub Cmd_Exit_Click()
 '結束目前視窗,跳出其他處理程序
     m_ExitTrigger% = True
@@ -1049,14 +898,6 @@ Private Sub Cmd_Exit_Click()
     End
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Cmd_Help_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Open HLP file
-' Details   :
-'========================================================================
 Private Sub Cmd_Help_Click()
 Dim a$
 
@@ -1064,18 +905,6 @@ Dim a$
     retcode = Shell(a$, 4)
 End Sub
 
-'====================================
-'   Form Events
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Form_Activate
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Initial & Prepare Data
-' Details   :
-'========================================================================
 Private Sub Form_Activate()
     Sts_MsgLine.Panels(2) = GetCurrentDay(1)
     Me.Refresh
@@ -1101,14 +930,6 @@ Private Sub Form_Activate()
     If frm_TSM02q.Visible Then Txt_A0201s.SetFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Form_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Handle Key Events
-' Details   : Handling: F1輔助, F2查詢, F4新增, ESC離開
-'========================================================================
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
            Case KEY_F1
@@ -1144,14 +965,6 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Form_KeyPress
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_KeyPress(KeyAscii As Integer)
     Sts_MsgLine.Panels(1) = SetMessage(G_AP_STATE)
     
@@ -1169,27 +982,11 @@ Form_KeyPress_A:
     'End If
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Form_Load
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : First Entering this Form, Preparing
-' Details   :
-'========================================================================
 Private Sub Form_Load()
     FormCenter Me
     Set_Property
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Form_QueryUnload
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 
     Dim MSG ' Declare variable.
@@ -1210,18 +1007,6 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     
 End Sub
 
-'====================================
-'   Spread Events
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Spd_Help_DblClick
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Spd_Help_DblClick(ByVal Col As Long, ByVal Row As Long)
 Dim A_Code$
 
@@ -1249,54 +1034,22 @@ Dim A_Code$
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Spd_Help_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Focus & change color
-' Details   :
-'========================================================================
 Private Sub Spd_Help_GotFocus()
     SpreadGotFocus Spd_Help.ActiveCol, Spd_Help.ActiveRow
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Spd_Help_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Handle Key Events
-' Details   : Handling: Enter
-'========================================================================
 Private Sub Spd_Help_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = KEY_RETURN Then
        Spd_Help_DblClick Spd_Help.ActiveCol, Spd_Help.ActiveRow
     End If
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Spd_Help_LeaveCell
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Change color
-' Details   :
-'========================================================================
 Private Sub Spd_Help_LeaveCell(ByVal Col As Long, ByVal Row As Long, ByVal NewCol As Long, ByVal NewRow As Long, Cancel As Boolean)
 '標準指令,不得修改
     SpreadLostFocus Col, Row
     If NewCol > 0 Then SpreadGotFocus NewCol, NewRow
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Spd_Help_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Hide Fra_Help & back to textBox
-' Details   :
-'========================================================================
 Private Sub Spd_Help_LostFocus()
     Fra_Help.Visible = False
     Select Case Val(Spd_Help.Tag)
@@ -1307,30 +1060,10 @@ Private Sub Spd_Help_LostFocus()
     End Select
 End Sub
 
-'====================================
-'   Textbox Events
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02001e_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Change color
-' Details   :
-'========================================================================
 Private Sub Txt_A02001e_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02001e_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Change Color & check Text valid data
-' Details   :
-'========================================================================
 Private Sub Txt_A02001e_LostFocus()
     TextLostFocus
     
@@ -1343,26 +1076,10 @@ Private Sub Txt_A02001e_LostFocus()
     retcode = CheckRoutine_A02001e()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02001s_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A02001s_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02001s_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A02001s_LostFocus()
     TextLostFocus
     
@@ -1376,26 +1093,10 @@ Private Sub Txt_A02001s_LostFocus()
     retcode = CheckRoutine_A02001s()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02005e_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A02005e_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02005e_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A02005e_LostFocus()
     TextLostFocus
     
@@ -1408,26 +1109,10 @@ Private Sub Txt_A02005e_LostFocus()
     retcode = CheckRoutine_A02005e()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02005s_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A02005s_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A02005s_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A02005s_LostFocus()
     TextLostFocus
     
@@ -1440,52 +1125,20 @@ Private Sub Txt_A02005s_LostFocus()
     retcode = CheckRoutine_A02005s()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201e_DblClick
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201e_DblClick()
 '若欄位有提供輔助資料,按下滑鼠, 所須處理之事項
     Txt_A0201e_KeyDown KEY_F1, 0
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201e_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201e_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
     If KeyCode = KEY_F1 Then DataPrepare_A02 Txt_A0201e
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201e_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201e_GotFocus()
     TextHelpGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201e_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201e_LostFocus()
     TextLostFocus
     
@@ -1499,52 +1152,20 @@ Private Sub Txt_A0201e_LostFocus()
     retcode = CheckRoutine_A0201()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201s_DblClick
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201s_DblClick()
 '若欄位有提供輔助資料,按下滑鼠, 所須處理之事項
     Txt_A0201s_KeyDown KEY_F1, 0
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201s_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201s_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
     If KeyCode = KEY_F1 Then DataPrepare_A02 Txt_A0201s
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201s_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201s_GotFocus()
     TextHelpGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0201s_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201s_LostFocus()
     TextLostFocus
     
@@ -1558,28 +1179,10 @@ Private Sub Txt_A0201s_LostFocus()
     retcode = CheckRoutine_A0201()
 End Sub
 
-
-
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0208e_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0208e_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0208e_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0208e_LostFocus()
      TextLostFocus
     
@@ -1592,26 +1195,10 @@ Private Sub Txt_A0208e_LostFocus()
     retcode = CheckRoutine_A0208e()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0208s_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0208s_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02q
-' Procedure : Txt_A0208s_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0208s_LostFocus()
      TextLostFocus
     

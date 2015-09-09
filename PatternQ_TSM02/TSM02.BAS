@@ -1,16 +1,7 @@
 Attribute VB_Name = "mod_TSM02"
-'========================================================================
-' Module    : mod_TSM02
-' Author    : Mike_chang
-' Date      : 2015/8/27
-' Purpose   :
-'========================================================================
 Option Explicit
 Option Compare Text
 
-'========================================================================
-'   Coding Rule
-'========================================================================
 '在此處定義之所有變數, 一律以G開頭, 如G_AAA$, G_BBB#, G_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -18,7 +9,6 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
 
 '必要變數
 Global G_FormFrom$    '空白代表首次執行
@@ -51,27 +41,6 @@ Global G_Pnl_A0219$
 Global G_Pnl_Menu$
 Global G_Pnl_Selected$
 
-'Global G_Pnl_A15001$
-'Global G_Pnl_A15005$
-'Global G_Pnl_A1501$
-'Global G_Pnl_A1502$
-'Global G_Pnl_A1504$
-'Global G_Pnl_A1505$
-'Global G_Pnl_A1506$
-'Global G_Pnl_A1507$
-'Global G_Pnl_A1508$
-'Global G_Pnl_A1509$
-'Global G_Pnl_A1510$
-'Global G_Pnl_A1511$
-'Global G_Pnl_A1512$
-'Global G_Pnl_A1513$
-'Global G_Pnl_A1514$
-'Global G_Pnl_A1519$
-'Global G_Pnl_A1521$
-'Global G_Pnl_A1523$
-'Global G_Pnl_A1601$
-'Global G_Pnl_A1602$
-
 
 'Def 程式共用變數
 Global G_A0201$                      'Keep部門別
@@ -84,15 +53,6 @@ Global G_AA$
 Global G_BB#
 Global G_CC!
 
-'========================================================================
-' Module    : mod_TSM02
-' Procedure : GetPanelCaption
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Get Panel Caption from "Sini" table
-' Details   : Using GUI_common_module function:
-'             "GetSIniStr" to get topicvalue from sini
-'========================================================================
 Sub GetPanelCaption()
 '取FORM標題文字
     G_Form_TSM02 = GetSIniStr("FormTitle", "TSM02")
@@ -126,14 +86,6 @@ Sub GetPanelCaption()
     G_Pnl_Selected$ = GetSIniStr("PATTERNQ", "listselected")
 End Sub
 
-'========================================================================
-' Module    : mod_TSM02
-' Procedure : main
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Sub main()
 ' 本模組中, 必須按照下列順序執行, 如果有特殊情況須將某些模組關閉時,
 ' 請在該模組前上 ' 即可, 不得刪除.

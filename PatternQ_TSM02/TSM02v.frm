@@ -178,17 +178,9 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'========================================================================
-' Module    : Frm_TSM02v
-' Author    : Mike_chang
-' Date      : 2015/8/28
-' Purpose   :
-'========================================================================
 Option Explicit
 Option Compare Text
-'========================================================================
-'   Coding Rules
-'========================================================================
+
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -196,7 +188,6 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
 
 '自定變數
 'Dim m_A4101Flag%
@@ -207,24 +198,7 @@ Option Compare Text
 '必要變數
 Dim m_FieldError%    '此變數在判斷欄位是否有誤, 必須回到該欄位之動作
 Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
-'========================================================================
 
-'====================================
-'   User Defined Functions
-'====================================
-
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Set_Property
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Initialize Form Properties
-' Details   :   1. Form   (caption, font, color)
-'               2. Spread
-'                     └--Sub Set_Spread_Property
-'               3. Progress Bar
-'                     └--Sub ProgressBar_Property
-'========================================================================
 Private Sub Set_Property()
 '設定本Form之標題,字形及色系
     Form_Property Frm_TSM02v, G_Form_TSM02v, G_Font_Name
@@ -248,19 +222,6 @@ Private Sub Set_Property()
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Set_Spread_Property
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Setup Spread: Spd_TSM02v
-' Details   :   1. Columns & Rows
-'               2. Column Headers, width
-'               3. Celltype
-'               4. ColFrozen
-'               5. Column Aligments
-'               6. Set Non-editable
-'========================================================================
 Private Sub Set_Spread_Property()
     Spd_TSM02v.UnitType = 2      '<--- @!!! Fixed Property, DO NOT CHANGE. !!!
     
@@ -299,15 +260,6 @@ Private Sub Set_Spread_Property()
     Spd_TSM02v.Lock = True
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : MoveDB2Spread
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Move Data From Dynaset
-' Details   : DY_A02 was prepared in Sub "OpenMainFile" @ Q-form
-'             While Loading Records, show the Progress Bar & progress it
-'========================================================================
 Private Function MoveDB2Spread() As Boolean
 On Local Error GoTo My_Error
 Dim A_Row&
@@ -386,14 +338,6 @@ My_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Function
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Reference_INI
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Tool to fetch TopicValue Form SINI table
-' Details   : Query it by Open Dynaset: DY_INI and return TopicValue
-'========================================================================
 Private Function Reference_INI(ByVal A_Section$, ByVal A_Topic$) As String
 On Local Error GoTo MyError
 Dim A_Sql$
@@ -417,20 +361,6 @@ MyError:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Function
 
-
-'====================================
-'   Command Buttom Events
-'====================================
-
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : cmd_add_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : clean up rows & Goto D-form
-' Details   : Clean up rows if there're record fetch by "Query" operation
-'             in Q-form by F2
-'========================================================================
 Private Sub cmd_add_Click()
     Me.MousePointer = HOURGLASS
     
@@ -450,14 +380,6 @@ Private Sub cmd_add_Click()
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : cmd_delete_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Keep the Pkey which was Focused, Goto D-form
-' Details   :
-'========================================================================
 Private Sub cmd_delete_Click()
     If Spd_TSM02v.MaxRows = 0 Then Exit Sub
 
@@ -485,14 +407,6 @@ Private Sub cmd_delete_Click()
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Cmd_Exit_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Hide V-form, Goto Q-form
-' Details   :
-'========================================================================
 Private Sub Cmd_Exit_Click()
 '結束目前視窗,跳出其他處理程序
     m_ExitTrigger% = True
@@ -503,14 +417,6 @@ Private Sub Cmd_Exit_Click()
     frm_TSM02q.Show
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Cmd_Help_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Open HLP file
-' Details   :
-'========================================================================
 Private Sub Cmd_Help_Click()
 Dim a$
 
@@ -518,14 +424,6 @@ Dim a$
     retcode = Shell(a$, 4)
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Cmd_Next_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Roll down spread page
-' Details   :
-'========================================================================
 Private Sub Cmd_Next_Click()
     cmd_next.Enabled = False
     Spd_TSM02v.SetFocus
@@ -534,14 +432,6 @@ Private Sub Cmd_Next_Click()
     cmd_next.Enabled = True
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Cmd_Previous_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Roll up spread page
-' Details   :
-'========================================================================
 Private Sub Cmd_Previous_Click()
     cmd_previous.Enabled = False
     Spd_TSM02v.SetFocus
@@ -550,19 +440,6 @@ Private Sub Cmd_Previous_Click()
     cmd_previous.Enabled = True
 End Sub
 
-
-'====================================
-'   Form Events
-'====================================
-
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Form_Activate
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Load Data by Sub "MoveDB2Spread"
-' Details   :
-'========================================================================
 Private Sub Form_Activate()
     Sts_MsgLine.Panels(2) = GetCurrentDay(1)
     Me.Refresh
@@ -592,14 +469,6 @@ Private Sub Form_Activate()
     If Frm_TSM02v.Visible Then Spd_TSM02v.SetFocus
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Form_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Handle Key Event
-' Details   : Handling: F1輔助, F3刪除, F4新增, F7上頁, F8下頁, ESC跳出
-'========================================================================
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
            Case KEY_F1
@@ -652,68 +521,26 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Form_KeyPress
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Nothing
-' Details   :
-'========================================================================
 Private Sub Form_KeyPress(KeyAscii As Integer)
     Sts_MsgLine.Panels(1) = SetMessage(G_AP_STATE)
     KeyPress KeyAscii
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Form_Load
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Initialize
-' Details   :
-'========================================================================
 Private Sub Form_Load()
     FormCenter Me
     Set_Property
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Form_Unload
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Terminate
-' Details   :
-'========================================================================
 Private Sub Form_Unload(Cancel As Integer)
     Cancel = True
     If cmd_exit.Enabled Then Cmd_Exit_Click
 End Sub
 
-
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Spd_TSM02v_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Do Sorting if Column Header was clicked
-' Details   : By Function "SpreadSort"
-'========================================================================
 Private Sub Spd_TSM02v_Click(ByVal Col As Long, ByVal Row As Long)
 '於Column Header Click時, 依該欄位排序
     If Row = 0 Then SpreadSort Spd_TSM02v, Col
 End Sub
 
-
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Spd_TSM02v_DblClick
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Choose the record while double click the row
-' Details   : Keep the Pkey to Global var & Goto D-form
-'========================================================================
 Private Sub Spd_TSM02v_DblClick(ByVal Col As Long, ByVal Row As Long)
     If Row < 1 Then Exit Sub
     
@@ -741,40 +568,16 @@ Private Sub Spd_TSM02v_DblClick(ByVal Col As Long, ByVal Row As Long)
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Spd_TSM02v_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Change Color of active row
-' Details   :
-'========================================================================
 Private Sub Spd_TSM02v_GotFocus()
     SpreadGotFocus -1, Spd_TSM02v.ActiveRow
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Spd_TSM02v_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Handle Key Events
-' Details   : Handling: Enter --> Do Double-Click of Spread
-'========================================================================
 Private Sub Spd_TSM02v_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = KEY_RETURN Then
        Spd_TSM02v_DblClick CLng(Spd_TSM02v.ActiveCol), CLng(Spd_TSM02v.ActiveRow)
     End If
 End Sub
 
-'========================================================================
-' Module    : Frm_TSM02v
-' Procedure : Spd_TSM02v_LeaveCell
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Change color while leave cell
-' Details   :
-'========================================================================
 Private Sub Spd_TSM02v_LeaveCell(ByVal Col As Long, ByVal Row As Long, ByVal NewCol As Long, ByVal NewRow As Long, Cancel As Boolean)
 '恢復前一欄位的顏色
     SpreadLostFocus -1, Row

@@ -742,9 +742,11 @@ Begin VB.Form frm_TSM02
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -755,18 +757,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'========================================================================
-' Module    : frm_TSM02
-' Author    : Mike_chang
-' Date      : 2015/8/28
-' Purpose   :
-'========================================================================
+
 Option Explicit
 Option Compare Text
 
-'========================================================================
-'   Coding Rules
-'========================================================================
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -774,7 +768,7 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
+
 
 '自定變數
 'Dim m_A1501Flag%
@@ -788,23 +782,7 @@ Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
 'Dim m_RecordChange% '此變數在判斷資料是否有異動, 結束將提示是否存檔訊息
 Dim m_TabGotFocus%   '控制Tab_ClickAfter 只處理一次
 Dim m_TabMouseDown%  '控制由Help Control DblClick所觸發的Tab_ClickAfter不處理
-'========================================================================
 
-'====================================
-'   User Defined Functions
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Set_Property
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Setup Properties
-' Details   : 1. Form(caption, font, color)
-'             2. Label(caption, font, color)
-'             3. TextBox(font, maxlength)
-'             4. command buttom(caption, font)
-'========================================================================
 Private Sub Set_Property()
     Me.FontBold = False
     
@@ -861,16 +839,6 @@ Private Sub Set_Property()
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : SetCommand
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Setup command buttom enables
-' Details   : Pkey(A0201) is only allow to be insert while Adding record,
-'             Otherwise, at updating & delete, it's no meaning to change
-'             Pkey since it doesn't stand for a specific literal meaning
-'========================================================================
 Sub SetCommand()
 '設定每一作業狀態下, CONTROL是否可作用
     Select Case G_AP_STATE
@@ -901,15 +869,6 @@ Sub SetCommand()
      End Select
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : SetButtonEnable
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Set All Command Buttom to FALSE or restore previous
-' Details   : If Set True, Store Current Enable state and set to false
-'             Else restore from tag to previous state
-'========================================================================
 Sub SetButtonEnable(ByVal A_Enable%)
     If Not A_Enable% Then
        Vse_background.TabStop = True
@@ -930,15 +889,6 @@ Sub SetButtonEnable(ByVal A_Enable%)
     End If
 End Sub
 
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : IsKeyExist
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Check Primary Key Existed in DB
-' Details   :
-'========================================================================
 Private Function IsKeyExist() As Boolean
 On Local Error GoTo My_Error
 Dim A_Sql$
@@ -959,14 +909,6 @@ My_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Function
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : IsRecordChange
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Detect if data changed by Global Variable "G_DataChange"
-' Details   : set FALSE while Deleting
-'========================================================================
 Function IsRecordChange() As Boolean
 '若作業狀態為刪除則不做Check
     If G_AP_STATE = G_AP_STATE_DELETE Then
@@ -978,14 +920,6 @@ Function IsRecordChange() As Boolean
     IsRecordChange = G_DataChange%
 End Function
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : IsAllFieldsCheck
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Boolean Function checking whether all txtBox pass value check
-' Details   :
-'========================================================================
 Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = False
     
@@ -1001,14 +935,6 @@ Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : OpenMainFile
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Open Dynaset "DY_A02"
-' Details   :
-'========================================================================
 Private Sub OpenMainFile()
 On Local Error GoTo My_Error
 Dim A_Sql$
@@ -1018,28 +944,6 @@ Dim A_Sql$
     A_Sql$ = A_Sql$ & " where A0201='" & G_A0201$ & "'"
     A_Sql$ = A_Sql$ & " order by A0201"
     CreateDynasetODBC DB_ARTHGUI, DY_A02, A_Sql$, "DY_A02", True
-    
-'    'A15
-'    A_Sql$ = "SELECT * FROM A15"
-'    A_Sql$ = A_Sql$ & " where A1501='" & G_A0201$ & "'"
-'    A_Sql$ = A_Sql$ & " and A1502='" & Mid$(G_A1502$, 1, 4) & "'"
-'    A_Sql$ = A_Sql$ & " and A1503='" & Mid$(G_A1502$, 5) & "'"
-'    A_Sql$ = A_Sql$ & " order by A1501,A1502,A1503"
-'    CreateDynasetODBC DB_ARTHGUI, DY_A02, A_Sql$, "DY_A02", True
-'    'A14
-'    A_Sql$ = "SELECT * FROM A14"
-'    A_Sql$ = A_Sql$ & " where A1406='" & G_A0201$ & "'"
-'    A_Sql$ = A_Sql$ & " and A1402='" & Mid$(G_A1502$, 1, 4) & "'"
-'    A_Sql$ = A_Sql$ & " and A1403='" & Mid$(G_A1502$, 5) & "'"
-'    A_Sql$ = A_Sql$ & " order by A1401,A1406,A1402,A1403"
-'    CreateDynasetODBC DB_ARTHGUI, DY_A14, A_Sql$, "DY_A14", True
-'    'A20
-'    A_Sql$ = "SELECT * FROM A20"
-'    A_Sql$ = A_Sql$ & " where A2001='" & G_A0201$ & "'"
-'    A_Sql$ = A_Sql$ & " and A2002='" & G_A1502$ & "'"
-'    A_Sql$ = A_Sql$ & " order by A2001,A2002,A2003"
-'    CreateDynasetODBC DB_ARTHGUI, DY_A20, A_Sql$, "DY_A20", True
-    Exit Sub
 
 My_Error:
     retcode = AccessDBErrorMessage()
@@ -1047,14 +951,6 @@ My_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Move2Menu
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Move2Menu()
 '將異動資料UPDATE回V畫面的SPREAD上
     With Frm_TSM02v!Spd_TSM02v
@@ -1079,14 +975,6 @@ Private Sub Move2Menu()
     End With
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : MoveDB2Field
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub MoveDB2Field()
 On Local Error GoTo My_Error
 
@@ -1116,16 +1004,6 @@ My_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : MoveField2DB
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub MoveField2DB()
 On Local Error GoTo My_Error
 
@@ -1194,14 +1072,6 @@ My_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : SaveCheck
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   :
-' Details   :
-'========================================================================
 Function SaveCheck(Optional A_PassQuestion% = False) As Boolean
     SaveCheck = False
     
@@ -1229,14 +1099,6 @@ Function SaveCheck(Optional A_PassQuestion% = False) As Boolean
     SaveCheck = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : CheckRoutine_A0201
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Check Pkey valid
-' Details   : Check: 1.Pkey not empty  2.Pkey not duplicate
-'========================================================================
 Private Function CheckRoutine_A0201() As Boolean
     CheckRoutine_A0201 = True
     m_FieldError% = -1
@@ -1265,15 +1127,6 @@ Private Function CheckRoutine_A0201() As Boolean
     End If
 End Function
 
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : CheckRoutine_A0202
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Check MustInput Constraint
-' Details   :
-'========================================================================
 Private Function CheckRoutine_A0202() As Boolean
     CheckRoutine_A0202 = False
 
@@ -1291,14 +1144,6 @@ Private Function CheckRoutine_A0202() As Boolean
     CheckRoutine_A0202 = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : CheckRoutine_A0203
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Check MustInput Constraint
-' Details   :
-'========================================================================
 Private Function CheckRoutine_A0203() As Boolean
     CheckRoutine_A0203 = False
 
@@ -1316,15 +1161,6 @@ Private Function CheckRoutine_A0203() As Boolean
     CheckRoutine_A0203 = True
 End Function
 
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : CheckRoutine_A0208
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Function CheckRoutine_A0208() As Boolean
     CheckRoutine_A0208 = False
     
@@ -1365,14 +1201,6 @@ Private Function CheckRoutine_A0208() As Boolean
     CheckRoutine_A0208 = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : CheckRoutine_A0209
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Function CheckRoutine_A0209() As Boolean
     CheckRoutine_A0209 = False
     
@@ -1411,14 +1239,6 @@ Private Function CheckRoutine_A0209() As Boolean
     CheckRoutine_A0209 = True
 End Function
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : ClearFieldsValue
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub ClearFieldsValue()
 '將欄位值清空
     Txt_A0201.text = ""
@@ -1441,15 +1261,6 @@ Private Sub ClearFieldsValue()
 
 End Sub
 
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Delete_From_Menu
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Delete_From_Menu()
 '將V畫面上的該筆資料列刪除
     With Frm_TSM02v!Spd_TSM02v
@@ -1459,15 +1270,6 @@ Private Sub Delete_From_Menu()
     End With
 End Sub
 
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Delete_Process_A02
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Do Deletion by Pkey: A0201
-' Details   :
-'========================================================================
 Private Sub Delete_Process_A02()
 On Local Error GoTo My_Error
 
@@ -1482,19 +1284,6 @@ My_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-
-'====================================
-'   Command Buttom Events
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Cmd_Help_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : call HLP file
-' Details   :
-'========================================================================
 Private Sub Cmd_Help_Click()
 Dim a$
 
@@ -1502,14 +1291,6 @@ Dim a$
     retcode = Shell(a$, 4)
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Cmd_Next_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Move to next record of the V-form
-' Details   :
-'========================================================================
 Private Sub Cmd_Next_Click()
 '無下一筆資料不做處理
     If G_ActiveRow# >= G_MaxRows# Then
@@ -1558,14 +1339,6 @@ Private Sub Cmd_Next_Click()
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Cmd_Previous_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Move to Previous record of V-Form
-' Details   :
-'========================================================================
 Private Sub Cmd_Previous_Click()
 '無上一筆資料不做處理
     If G_ActiveRow# <= 1 Then
@@ -1612,14 +1385,6 @@ Private Sub Cmd_Previous_Click()
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Cmd_Ok_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Do Insert ,Update Or Delete
-' Details   :
-'========================================================================
 Private Sub Cmd_Ok_Click()
     Me.MousePointer = HOURGLASS
     
@@ -1668,14 +1433,6 @@ Private Sub Cmd_Ok_Click()
     End If
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Cmd_Exit_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Cmd_Exit_Click()
     Me.MousePointer = HOURGLASS
 
@@ -1704,18 +1461,6 @@ Private Sub Cmd_Exit_Click()
     Me.MousePointer = Default
 End Sub
 
-'====================================
-'   Form Events
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Form_Activate
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_Activate()
     Me.MousePointer = HOURGLASS
     Sts_MsgLine.Panels(2) = GetCurrentDay(1)
@@ -1765,14 +1510,6 @@ Private Sub Form_Activate()
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Form_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Handle Key Event
-' Details   : Handling: F1說明, F7上筆, F8下筆, F11確認, ESC離開
-'========================================================================
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 
     Select Case KeyCode
@@ -1814,14 +1551,6 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Form_KeyPress
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Manage Uppercase input(A0201), and Record data changed
-' Details   :
-'========================================================================
 Private Sub Form_KeyPress(KeyAscii As Integer)
     Sts_MsgLine.Panels(1) = SetMessage(G_AP_STATE)
     
@@ -1850,56 +1579,20 @@ Form_KeyPress_A:
     If G_AP_STATE = G_AP_STATE_DELETE Then KeyAscii = 0
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Form_Load
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_Load()
     FormCenter Me
     Set_Property
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Form_Unload
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_Unload(Cancel As Integer)
     Cancel = True
     If cmd_exit.Enabled Then cmd_exit.SetFocus: Cmd_Exit_Click
 End Sub
 
-'====================================
-'   TextBox Evnets
-'====================================
-
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Txt_A0201_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Txt_A0201_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0201_LostFocus()
     TextLostFocus
     
@@ -1913,26 +1606,10 @@ Private Sub Txt_A0201_LostFocus()
     retcode = CheckRoutine_A0201()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Txt_A0202_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0202_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Txt_A0202_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0202_LostFocus()
     TextLostFocus
     
@@ -1946,25 +1623,10 @@ Private Sub Txt_A0202_LostFocus()
     retcode = CheckRoutine_A0202()
 End Sub
 
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Txt_A0203_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A0203_GotFocus()
     TextGotFocus
 End Sub
-'========================================================================
-' Module    : frm_TSM02
-' Procedure : Txt_A0203_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   :
-' Details   :
-'========================================================================
+
 Private Sub Txt_A0203_LostFocus()
     TextLostFocus
     
