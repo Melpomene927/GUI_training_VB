@@ -57,11 +57,11 @@ Begin VB.Form frm_EXAM01
       MouseIcon       =   "EXAM01.frx":0326
       Begin FPSpread.vaSpread Spd_EXAM01 
          Height          =   2115
-         Left            =   1080
+         Left            =   1305
          OleObjectBlob   =   "EXAM01.frx":0342
          TabIndex        =   22
          Top             =   1710
-         Width           =   7620
+         Width           =   7350
       End
       Begin VB.TextBox Txt_A1628 
          BackColor       =   &H00FFFFFF&
@@ -373,7 +373,7 @@ Begin VB.Form frm_EXAM01
          Top             =   255
          Width           =   1470
       End
-      Begin VB.Label Lbl_A0206 
+      Begin VB.Label Lbl_A1613 
          Caption         =   "關係人"
          BeginProperty Font 
             Name            =   "System"
@@ -491,9 +491,7 @@ Attribute VB_Exposed = False
 Option Explicit
 Option Compare Text
 
-'========================================================================
-'   Coding Rules
-'========================================================================
+
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 '   $: 文字
@@ -501,7 +499,6 @@ Option Compare Text
 '   &: 程式迴圈變數
 '   %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 '   空白: 代表VARIENT, 動態變數
-'========================================================================
 
 '自定變數
 'Dim m_A1501Flag%
@@ -515,23 +512,12 @@ Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
 'Dim m_RecordChange% '此變數在判斷資料是否有異動, 結束將提示是否存檔訊息
 Dim m_TabGotFocus%   '控制Tab_ClickAfter 只處理一次
 Dim m_TabMouseDown%  '控制由Help Control DblClick所觸發的Tab_ClickAfter不處理
-'========================================================================
-'====================================
-'   User Defined Functions
-'====================================
 
-'========================================================================
-' Procedure : CheckRoutine_A1601 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Check Pkey valid
-' Details   : Check: 1.Pkey not empty  2.Pkey not duplicate
-'========================================================================
 Private Function CheckRoutine_A1601() As Boolean
     CheckRoutine_A1601 = True
     m_FieldError% = -1
     
-'檢核該欄位是否輸入
+    '檢核該欄位是否輸入
     If Txt_A1601.text = "" Then
         sts_msgline.Panels(1) = G_Pnl_A1601$ & G_MustInput
         CheckRoutine_A1601 = False
@@ -543,7 +529,7 @@ Private Function CheckRoutine_A1601() As Boolean
         Exit Function
     End If
 
-'檢核資料是否已存在
+    '檢核資料是否已存在
     If G_AP_STATE = G_AP_STATE_ADD Then
         If IsKeyExist(Txt_A1601) Then
              sts_msgline.Panels(1) = G_Pnl_A1601$ & G_RecordExist
@@ -555,13 +541,6 @@ Private Function CheckRoutine_A1601() As Boolean
     End If
 End Function
 
-'========================================================================
-' Procedure : CheckRoutine_A1602 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Check MustInput Constraint
-' Details   :
-'========================================================================
 Private Function CheckRoutine_A1602() As Boolean
     CheckRoutine_A1602 = False
 
@@ -578,13 +557,6 @@ Private Function CheckRoutine_A1602() As Boolean
     CheckRoutine_A1602 = True
 End Function
 
-'========================================================================
-' Procedure : CheckRoutine_A1628 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Check Date Formate Valid
-' Details   :
-'========================================================================
 Private Function CheckRoutine_A1628() As Boolean
     CheckRoutine_A1628 = False
     
@@ -605,13 +577,6 @@ Private Function CheckRoutine_A1628() As Boolean
     CheckRoutine_A1628 = True
 End Function
 
-'========================================================================
-' Procedure : ClearFieldsValue (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Clear Fields
-' Details   :
-'========================================================================
 Private Sub ClearFieldsValue()
     'Clear Txtbox
     Txt_A1601.text = ""
@@ -628,13 +593,6 @@ Private Sub ClearFieldsValue()
     Spd_EXAM01.MaxRows = 1
 End Sub
 
-'========================================================================
-' Procedure : Delete_From_Menu (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Delete_From_Menu()
 '將V畫面上的該筆資料列刪除
     With frm_EXAM01v.Spd_EXAM01v
@@ -644,13 +602,6 @@ Private Sub Delete_From_Menu()
     End With
 End Sub
 
-'========================================================================
-' Procedure : Delete_Process_A16 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Do Deletion by Pkey: A1601
-' Details   :
-'========================================================================
 Private Sub Delete_Process_A16()
 On Local Error GoTo MY_Error
 
@@ -665,67 +616,60 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Procedure : Delete_Process_A19 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Delete_Process_A19()
 On Local Error GoTo MY_Error
-
+Dim I#
+    '1. Erase all records in DB
     G_Str = "DELETE FROM A19"
     G_Str = G_Str & " WHERE A1901='" & G_A1601$ & "'"
-    If Trim(G_A1902$) <> "" Then
-        G_Str = G_Str & " And A1902 = '" & G_A1902$ & "'"
-    End If
     ExecuteProcess DB_ARTHGUI, G_Str
-    Exit Sub
     
+    '2. push records in Spread to DB
+    For I# = 1 To Spd_EXAM01.DataRowCnt
+        MoveSpread2DB I#
+    Next
+    
+    Exit Sub
 MY_Error:
     retcode = AccessDBErrorMessage()
     If retcode = IDOK Then Resume
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : IsAllFieldsCheck
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Boolean Function checking whether all txtBox pass value check
-' Details   :
-'========================================================================
 Private Function IsAllFieldsCheck() As Boolean
+Dim A_Row&, A_Col&
     IsAllFieldsCheck = False
     
 '執行存檔前須將所有檢核欄位再做一次
     If G_AP_STATE = G_AP_STATE_ADD Then
         If Not CheckRoutine_A1601() Then
-            Txt_A1601.SetFocus
             Exit Function
         End If
     End If
     If Not CheckRoutine_A1602() Then
-        Txt_A1602.SetFocus
         Exit Function
     End If
     If Not CheckRoutine_A1628() Then
-        Txt_A1628.SetFocus
         Exit Function
     End If
+    
+    With Spd_EXAM01
+    If .DataRowCnt >= 1 Then
+        For A_Row& = 1 To .DataRowCnt
+            If SpreadLineCheck(A_Row&, A_Col&) = False Then
+                .Row = A_Row&: .Col = A_Col&
+                .Action = SS_ACTION_ACTIVE_CELL
+                .SetFocus
+                SpreadGotFocus A_Col&, A_Row&
+                Exit Function
+            End If
+        Next
+    End If
+    End With
     
     IsAllFieldsCheck = True
 End Function
 
-'========================================================================
-' Procedure : IsKeyChanged (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Function IsKeyChanged(ByVal A_A1902$, ByVal A_A1902o$) As Boolean
 
    IsKeyChanged = False
@@ -735,16 +679,6 @@ Private Function IsKeyChanged(ByVal A_A1902$, ByVal A_A1902o$) As Boolean
    
 End Function
 
-'========================================================================
-' Procedure : IsKeyExist ()
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Check Primary Key Existed in DB
-' Details   : N/A
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' @ Modified: change to A16 DB
-'========================================================================
 Private Function IsKeyExist(ByVal A_A1601$) As Boolean
 On Local Error GoTo MY_Error
 Dim DY_A16_TMP As Recordset
@@ -768,14 +702,6 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Function
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : IsRecordChange
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Detect if data changed by Global Variable "G_DataChange"
-' Details   : set FALSE while Deleting
-'========================================================================
 Function IsRecordChange() As Boolean
 '若作業狀態為刪除則不做Check
     If G_AP_STATE = G_AP_STATE_DELETE Then
@@ -787,13 +713,6 @@ Function IsRecordChange() As Boolean
     IsRecordChange = G_DataChange%
 End Function
 
-'========================================================================
-' Procedure : Move2Menu (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Move fields to V-form after Insert, Update
-' Details   : 將異動資料UPDATE回V畫面的SPREAD上
-'========================================================================
 Private Sub Move2Menu()
     With frm_EXAM01v.Spd_EXAM01v
          If G_AP_STATE = G_AP_STATE_UPDATE Then
@@ -819,17 +738,9 @@ Private Sub Move2Menu()
     End With
 End Sub
 
-'========================================================================
-' Procedure : MoveDB2Field (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Fetch Data from the DY_A16, DY_A19
-' Details   :
-'========================================================================
 Private Sub MoveDB2Field()
 On Local Error GoTo MY_Error
 
-    'textbox
     Txt_A1601.text = Trim$(DY_A16.Fields("A1601") & "")
     Txt_A1602.text = Trim$(DY_A16.Fields("A1602") & "")
     Txt_A1609.text = Trim$(DY_A16.Fields("A1609") & "")
@@ -840,7 +751,6 @@ On Local Error GoTo MY_Error
     Txt_A1606.text = Trim$(DY_A16.Fields("A1606") & "")
     Txt_A1628.text = Trim$(DY_A16.Fields("A1628") & "")
    
-   
     Exit Sub
 MY_Error:
     retcode = AccessDBErrorMessage()
@@ -848,19 +758,15 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Procedure : MoveDB2Spread (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Function MoveDB2Spread()
 On Local Error GoTo MY_Error
+    ' Exit if nothing in DY_A19
+    If DY_A19.BOF And DY_A19.EOF Then Exit Function
     
     'spread
     With Spd_EXAM01
         .MaxRows = 0
+        DY_A19.MoveFirst
         Do Until DY_A19.EOF
             .MaxRows = .MaxRows + 1
             .Row = .MaxRows
@@ -872,6 +778,7 @@ On Local Error GoTo MY_Error
             .text = Trim(DY_A19.Fields("A1903") & "")
             .Col = 4
             .text = Trim(DY_A19.Fields("A1902") & "")
+            DY_A19.MoveNext
         Loop
     End With
     
@@ -883,33 +790,16 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Function
 
-'========================================================================
-' Procedure : MoveField2DB (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub MoveField2DB()
 On Local Error GoTo MY_Error
 Dim A_A16121$, A_A16122$, A_A16123$
 Dim I&
 
     'split client address to 3 fields
-    If Len(Txt_A1612) > 80 Then
-        A_A16123$ = Mid(Txt_A1612, 81, 40)
-        A_A16122$ = Mid(Txt_A1612, 41, 40)
-        A_A16121$ = Mid(Txt_A1612, 1, 40)
-    ElseIf Len(Txt_A1612) > 40 And Len(Txt_A1612) <= 80 Then
-        A_A16123$ = ""
-        A_A16122$ = Mid(Txt_A1612, 41, Len(Txt_A1612))
-        A_A16121$ = Mid(Txt_A1612, 1, 40)
-    Else
-        A_A16123$ = ""
-        A_A16122$ = ""
-        A_A16121$ = Mid(Txt_A1612, 1, Len(Txt_A1612))
-    End If
-    
+    A_A16123$ = GetLenStr(Txt_A1612, 81, 40)
+    A_A16122$ = GetLenStr(Txt_A1612, 41, 40)
+    A_A16121$ = GetLenStr(Txt_A1612, 1, 40)
+
     
     G_Str = ""
     If G_AP_STATE = G_AP_STATE_ADD Then
@@ -959,12 +849,11 @@ Dim I&
     End If
     
     'Add A19
-    If Spd_EXAM01.MaxRows > 1 Then
-        For I& = 1 To Spd_EXAM01.MaxRows
-            MoveSpread2DB (I&)
-        Next
-    End If
-    
+    If Spd_EXAM01.DataRowCnt <= 1 Then Exit Sub
+    For I& = 1 To Spd_EXAM01.DataRowCnt
+        MoveSpread2DB (I&)
+    Next
+
     Exit Sub
     
 MY_Error:
@@ -973,13 +862,6 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Procedure : MoveSpread2DB (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub MoveSpread2DB(ByVal Row As Long)
 On Local Error GoTo MY_Error
 Dim A_A1901$, A_A1902$, A_A1903$
@@ -1036,15 +918,6 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : OpenMainFile
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Open Dynaset "DY_A19"
-' Details   : A19 is a relation of A16-A16, A1901 is ClientA relats A1902
-'             which is ClientB
-'========================================================================
 Private Sub OpenMainFile()
 On Local Error GoTo MY_Error
 Dim A_Sql$
@@ -1056,31 +929,11 @@ Dim A_Sql$
 
     'A19
     A_Sql$ = "Select A1902,A1903,A1602 From A19"
-    A_Sql$ = A_Sql$ & " INNER JOIN A16"
+    A_Sql$ = A_Sql$ & " LEFT JOIN A16"
     A_Sql$ = A_Sql$ & " ON A19.A1902 = A16.A1601"
     A_Sql$ = A_Sql$ & " Where A19.A1901 = '" & G_A1601$ & "'"
     CreateDynasetODBC DB_ARTHGUI, DY_A19, A_Sql$, "DY_A19", True
 
-'    'A15
-'    A_Sql$ = "SELECT * FROM A15"
-'    A_Sql$ = A_Sql$ & " where A1501='" & G_A1601$ & "'"
-'    A_Sql$ = A_Sql$ & " and A1502='" & Mid$(G_A1502$, 1, 4) & "'"
-'    A_Sql$ = A_Sql$ & " and A1503='" & Mid$(G_A1502$, 5) & "'"
-'    A_Sql$ = A_Sql$ & " order by A1501,A1502,A1503"
-'    CreateDynasetODBC DB_ARTHGUI, DY_A16, A_Sql$, "DY_A16", True
-'    'A14
-'    A_Sql$ = "SELECT * FROM A14"
-'    A_Sql$ = A_Sql$ & " where A1406='" & G_A1601$ & "'"
-'    A_Sql$ = A_Sql$ & " and A1402='" & Mid$(G_A1502$, 1, 4) & "'"
-'    A_Sql$ = A_Sql$ & " and A1403='" & Mid$(G_A1502$, 5) & "'"
-'    A_Sql$ = A_Sql$ & " order by A1401,A1406,A1402,A1403"
-'    CreateDynasetODBC DB_ARTHGUI, DY_A14, A_Sql$, "DY_A14", True
-'    'A20
-'    A_Sql$ = "SELECT * FROM A20"
-'    A_Sql$ = A_Sql$ & " where A2001='" & G_A1601$ & "'"
-'    A_Sql$ = A_Sql$ & " and A2002='" & G_A1502$ & "'"
-'    A_Sql$ = A_Sql$ & " order by A2001,A2002,A2003"
-'    CreateDynasetODBC DB_ARTHGUI, DY_A20, A_Sql$, "DY_A20", True
     Exit Sub
 
 MY_Error:
@@ -1089,13 +942,6 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Procedure : Reference_A16 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Function Reference_A16(ByVal A_A1601$) As String
 On Local Error GoTo MyError
 Dim DY_Tmp As Recordset
@@ -1120,13 +966,6 @@ MyError:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Function
 
-'========================================================================
-' Procedure : SaveCheck (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Open Dialog(or not) and ask whether save to DB
-' Details   : Using "MoveField2DB", "Move2Menu" to Save
-'========================================================================
 Function SaveCheck(Optional A_PassQuestion% = False) As Boolean
     SaveCheck = False
     
@@ -1154,15 +993,6 @@ Function SaveCheck(Optional A_PassQuestion% = False) As Boolean
     SaveCheck = True
 End Function
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : SetButtonEnable
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Set All Command Buttom to FALSE or restore previous
-' Details   : If Set True, Store Current Enable state and set to false
-'             Else restore from tag to previous state
-'========================================================================
 Sub SetButtonEnable(ByVal A_Enable%)
     If Not A_Enable% Then
        vse_background.TabStop = True
@@ -1183,20 +1013,6 @@ Sub SetButtonEnable(ByVal A_Enable%)
     End If
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : SetCommand
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   : Setup command buttom enables
-' Details   : Pkey(A1601) is only allow to be insert while Adding record,
-'             Otherwise, at updating & delete, it's no meaning to change
-'             Pkey since it doesn't stand for a specific literal meaning
-'------------------------------------------------------------------------
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' @ Modified: Mark out all Pre&Next page controls
-'========================================================================
 Sub SetCommand()
 '設定每一作業狀態下, CONTROL是否可作用
     Select Case G_AP_STATE
@@ -1232,20 +1048,6 @@ Sub SetCommand()
      End Select
 End Sub
 
-'========================================================================
-' Procedure : Set_Property (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Setup Properties
-' Details   : 1. Form(caption, font, color)
-'             2. Label(caption, font, color)
-'             3. TextBox(font, maxlength)
-'             4. command buttom(caption, font)
-'------------------------------------------------------------------------
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' @ Modified: Add Spread setting
-'========================================================================
 Private Sub Set_Property()
     Me.FontBold = False
     
@@ -1292,13 +1094,6 @@ Private Sub Set_Property()
     StatusBar_ProPerty sts_msgline
 End Sub
 
-'========================================================================
-' Procedure : Set_Spread_Property (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Set_Spread_Property()
     Spd_EXAM01.UnitType = 2
 
@@ -1338,13 +1133,6 @@ Private Sub Set_Spread_Property()
     Spd_EXAM01.Col = 5:  Spd_EXAM01.ColHidden = True
 End Sub
 
-'========================================================================
-' Procedure : SpreadLineCheck (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Check Spread Row data while the Row is modified
-' Details   :
-'========================================================================
 Function SpreadLineCheck(ByVal Row As Long, Col As Long) As Boolean
     With Spd_EXAM01
         .Row = Row
@@ -1365,13 +1153,6 @@ Function SpreadLineCheck(ByVal Row As Long, Col As Long) As Boolean
     End With
 End Function
 
-'========================================================================
-' Procedure : SpreadCheck_1 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Check Column 1 must input & not relat to itself
-' Details   :
-'========================================================================
 Function SpreadCheck_1(ByVal Row As Long) As Boolean
 Dim A_A1902$, A_A1902o$, A_Action$
     
@@ -1423,13 +1204,6 @@ Dim A_A1902$, A_A1902o$, A_Action$
     End With
 End Function
 
-'========================================================================
-' Procedure : SpreadCheck_3 (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Check Column 3 Must Input
-' Details   :
-'========================================================================
 Function SpreadCheck_3(ByVal Row As Long) As Boolean
 
     SpreadCheck_3 = False
@@ -1443,30 +1217,15 @@ Function SpreadCheck_3(ByVal Row As Long) As Boolean
     End With
 End Function
 
-'====================================
-'   Command Buttom Events
-'====================================
-
-'========================================================================
-' Procedure : Cmd_Delete_Click (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub cmd_delete_Click()
-    Delete_Process_A19
+    With frm_EXAM01.Spd_EXAM01
+        .Row = G_ActiveRow#
+        .Action = SS_ACTION_DELETE_ROW
+        .MaxRows = .MaxRows - 1
+    End With
     sts_msgline.Panels(1) = G_Delete_Ok
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Cmd_Help_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : call HLP file
-' Details   :
-'========================================================================
 Private Sub Cmd_Help_Click()
 Dim a$
 
@@ -1474,13 +1233,6 @@ Dim a$
     retcode = Shell(a$, 4)
 End Sub
 
-'========================================================================
-' Procedure : Cmd_Next_Click (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Move to next record of the V-form
-' Details   :
-'========================================================================
 Private Sub Cmd_Next_Click()
 ''無下一筆資料不做處理
 '    If G_ActiveRow# >= G_MaxRows# Then
@@ -1529,14 +1281,6 @@ Private Sub Cmd_Next_Click()
 '    Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Cmd_Previous_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Move to Previous record of V-Form
-' Details   :
-'========================================================================
 Private Sub Cmd_Previous_Click()
 ''無上一筆資料不做處理
 '    If G_ActiveRow# <= 1 Then
@@ -1583,14 +1327,6 @@ Private Sub Cmd_Previous_Click()
 '    Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Cmd_Ok_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Do Insert ,Update Or Delete
-' Details   :
-'========================================================================
 Private Sub Cmd_Ok_Click()
     Me.MousePointer = HOURGLASS
     
@@ -1642,14 +1378,6 @@ Private Sub Cmd_Ok_Click()
     End If
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Cmd_Exit_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Cmd_Exit_Click()
     Me.MousePointer = HOURGLASS
 
@@ -1678,17 +1406,6 @@ Private Sub Cmd_Exit_Click()
     Me.MousePointer = Default
 End Sub
 
-'====================================
-'   Form Events
-'====================================
-
-'========================================================================
-' Procedure : Form_Activate (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/31
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_Activate()
 Dim A_A1601$
     Me.MousePointer = HOURGLASS
@@ -1749,14 +1466,6 @@ Dim A_A1601$
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Form_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Handle Key Event
-' Details   : Handling: F1說明, F7上筆, F8下筆, F11確認, ESC離開
-'========================================================================
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 
     Select Case KeyCode
@@ -1799,23 +1508,11 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Form_KeyPress
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Manage Uppercase input(A1601), and Record data changed
-' Details   :
-'========================================================================
 Private Sub Form_KeyPress(KeyAscii As Integer)
     sts_msgline.Panels(1) = SetMessage(G_AP_STATE)
     
 '主動將資料輸入由小寫轉為大寫
 '  若有某些欄位不需要轉換時, 須予以跳過
-'    If ActiveControl.TabIndex = Txt_A1605.TabIndex Then GoTo Form_KeyPress_A
-'    If ActiveControl.TabIndex = Txt_A1612.TabIndex Then GoTo Form_KeyPress_A
-'    If ActiveControl.TabIndex = Txt_A1514.TabIndex Then GoTo Form_KeyPress_A
-'    If ActiveControl.TabIndex = txt_xxx.TabIndex Then GoTo Form_KeyPress_A
     If ActiveControl.TabIndex <> Txt_A1601.TabIndex Then GoTo Form_KeyPress_A
     If KeyAscii >= Asc("a") And KeyAscii <= Asc("z") Then
        KeyAscii = Asc(UCase(Chr(KeyAscii)))
@@ -1827,53 +1524,27 @@ Form_KeyPress_A:
        If KeyAscii <> KEY_RETURN Then G_DataChange% = True
     End If
 
-    'If ActiveControl.TabIndex <> Spd_EXAM01.TabIndex Then
+    If ActiveControl.TabIndex <> Spd_EXAM01.TabIndex Then
        KeyPress KeyAscii           'Enter時自動跳到下一欄位, spread除外
-    'End If
+    End If
     
 '刪除作業下, 將KeyBoard鎖住, 不接受資料異動
     If G_AP_STATE = G_AP_STATE_DELETE Then KeyAscii = 0
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Form_Load
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_Load()
     FormCenter Me
     Set_Property
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01
-' Procedure : Form_Unload
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_Unload(Cancel As Integer)
     Cancel = True
     If cmd_Exit.Enabled Then cmd_Exit.SetFocus: Cmd_Exit_Click
 End Sub
 
-'====================================
-'   Spread Evnets
-'====================================
 
-'========================================================================
-' Procedure : Spd_EXAM01_Change (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   : 如任何一欄位有所變更時, 在P-key是空白情況下, 視同新增,
-'             否則為修改狀態
-'========================================================================
 Private Sub Spd_EXAM01_Change(ByVal Col As Long, ByVal Row As Long)
+'Detect Row data change and write to the hidden column
 Dim A_A1902$, A_A1903$      'Column Value of Spd_EXAM01
 Dim A_A1902o$               '
 
@@ -1895,13 +1566,6 @@ Dim A_A1902o$               '
     End With
 End Sub
 
-'========================================================================
-' Procedure : Spd_EXAM01_DblClick (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : When DblClick on the first column, call frm_GD to help input
-' Details   :
-'========================================================================
 Private Sub Spd_EXAM01_DblClick(ByVal Col As Long, ByVal Row As Long)
     If Col <> 1 Then Exit Sub
     If Row < 1 Then Exit Sub
@@ -1911,36 +1575,15 @@ Private Sub Spd_EXAM01_DblClick(ByVal Col As Long, ByVal Row As Long)
     G_Hlp_Return = Spd_EXAM01.TabIndex
 End Sub
 
-'========================================================================
-' Procedure : Spd_EXAM01_GotFocus (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : change color
-' Details   :
-'========================================================================
 Private Sub Spd_EXAM01_GotFocus()
     SpreadGotFocus Spd_EXAM01.ActiveCol, Spd_EXAM01.ActiveRow
 End Sub
 
-'========================================================================
-' Procedure : Spd_EXAM01_KeyUp (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Hotfix
-' Details   :
-'========================================================================
 Private Sub Spd_EXAM01_KeyUp(KeyCode As Integer, Shift As Integer)
 '標準指令, 避免中文字第一個字上不去, 不得修改
     SpreadKeyPress Spd_EXAM01, KeyCode
 End Sub
 
-'========================================================================
-' Procedure : Spd_EXAM01_LeaveCell (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Spd_EXAM01_LeaveCell(ByVal Col As Long, ByVal Row As Long, ByVal NewCol As Long, ByVal NewRow As Long, Cancel As Boolean)
 On Local Error GoTo MY_Error
     'change color
@@ -2002,32 +1645,15 @@ MY_Error:
     sts_msgline.Panels(1) = Error(Err)
 End Sub
 
-'========================================================================
-' Procedure : Spd_EXAM01_MouseDown (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Update status bar
-' Details   :
-'========================================================================
 Private Sub Spd_EXAM01_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
     sts_msgline.Panels(1) = SetMessage(G_AP_STATE)
 End Sub
 
-'====================================
-'   TextBox Evnets
-'====================================
 
 Private Sub Txt_A1601_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1601_LostFocus(frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   : Do check pkey not empty & duplicate
-' Details   :
-'========================================================================
 Private Sub Txt_A1601_LostFocus()
     TextLostFocus
     
@@ -2045,13 +1671,6 @@ Private Sub Txt_A1628_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1628_LostFocus (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Do check date format
-' Details   :
-'========================================================================
 Private Sub Txt_A1628_LostFocus()
     TextLostFocus
     '判斷以下狀況發生時, 不須做任何處理
@@ -2068,13 +1687,6 @@ Private Sub Txt_A1602_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1602_LostFocus (frm_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Do check must input
-' Details   :
-'========================================================================
 Private Sub Txt_A1602_LostFocus()
     TextLostFocus
     

@@ -320,9 +320,13 @@ Begin VB.Form frm_EXAM01q
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -336,9 +340,6 @@ Attribute VB_Exposed = False
 Option Explicit
 Option Compare Text
 
-'========================================================================
-'   Coding Rule
-'========================================================================
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -346,7 +347,7 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
+
 '自定變數
 'Dim m_A4101Flag%
 'Dim m_aa$
@@ -356,19 +357,7 @@ Option Compare Text
 '必要變數
 Dim m_FieldError%    '此變數在判斷欄位是否有誤, 必須回到該欄位之動作
 Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
-'========================================================================
-'====================================
-'   User Defined Fucntions
-'====================================
 
-'========================================================================
-' Procedure : CheckRoutine_A1601 (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : check data correctness of Txt_A1601s & Txt_A1601e
-' Details   : check over the conditions as below:
-'                   1.both A1601s, A1601e DataRange not exceed each other
-'========================================================================
 Private Function CheckRoutine_A1601() As Boolean
     CheckRoutine_A1601 = False
 
@@ -378,7 +367,7 @@ Private Function CheckRoutine_A1601() As Boolean
 '增加想要做的檢查
     If Trim$(Txt_A1601e) = "" Then Txt_A1601e = Txt_A1601s
     
-    If Not CheckDataRange(sts_msgline, Trim$(Txt_A1601s), Trim$(Txt_A1601e)) Then
+    If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A1601s), Trim$(Txt_A1601e)) Then
         '==================
         'if from s to e
         'do not focus back (since it's correct to entering from s to e)
@@ -396,15 +385,6 @@ Private Function CheckRoutine_A1601() As Boolean
     CheckRoutine_A1601 = True
 End Function
 
-'========================================================================
-' Procedure : CheckRoutine_A1628s (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : check data correctness of Txt_A1628s
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A1628e
-'========================================================================
 Private Function CheckRoutine_A1628s() As Boolean
     CheckRoutine_A1628s = False
 
@@ -417,14 +397,14 @@ Private Function CheckRoutine_A1628s() As Boolean
 '    Else
     If Not Trim(Txt_A1628s) = "" Then
        If Not IsDateValidate(Txt_A1628s) Then
-          sts_msgline.Panels(1) = G_Pnl_A1628$ & G_DateError
+          Sts_MsgLine.Panels(1) = G_Pnl_A1628$ & G_DateError
           m_FieldError% = Txt_A1628s.TabIndex
           Txt_A1628s.SetFocus
           Exit Function
        End If
     End If
     
-    If Not CheckDateRange(sts_msgline, Trim$(Txt_A1628s), Trim$(Txt_A1628e)) Then
+    If Not CheckDateRange(Sts_MsgLine, Trim$(Txt_A1628s), Trim$(Txt_A1628e)) Then
        If ActiveControl.TabIndex = Txt_A1628e.TabIndex Then
 '若有錯誤, 將變數值設定為該Control之TabIndex
           m_FieldError% = Txt_A1628s.TabIndex
@@ -438,16 +418,6 @@ Private Function CheckRoutine_A1628s() As Boolean
     CheckRoutine_A1628s = True
 End Function
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : CheckRoutine_A1628e
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : check data correctness of Txt_A1628e
-' Details   : check over the conditions as below:
-'                   1.valid date format
-'                   2.date range not exceed Txt_A1628s
-'========================================================================
 Private Function CheckRoutine_A1628e() As Boolean
     CheckRoutine_A1628e = False
 
@@ -460,14 +430,14 @@ Private Function CheckRoutine_A1628e() As Boolean
 '    Else
     If Not Trim(Txt_A1628e) = "" Then
        If Not IsDateValidate(Txt_A1628e) Then
-          sts_msgline.Panels(1) = G_Pnl_A1628$ & G_DateError
+          Sts_MsgLine.Panels(1) = G_Pnl_A1628$ & G_DateError
           m_FieldError% = Txt_A1628e.TabIndex
           Txt_A1628e.SetFocus
           Exit Function
        End If
     End If
     
-    If Not CheckDateRange(sts_msgline, Trim$(Txt_A1628s), Trim$(Txt_A1628e)) Then
+    If Not CheckDateRange(Sts_MsgLine, Trim$(Txt_A1628s), Trim$(Txt_A1628e)) Then
        If ActiveControl.TabIndex = Txt_A1628s.TabIndex Then
 '若有錯誤, 將變數值設定為該Control之TabIndex
           m_FieldError% = Txt_A1628s.TabIndex
@@ -481,15 +451,6 @@ Private Function CheckRoutine_A1628e() As Boolean
     CheckRoutine_A1628e = True
 End Function
 
-'========================================================================
-' Procedure : DataPrepare_A16 (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Prepare data for Help Spread
-' Details   :
-'       @modified: Do Nothing, Since Help procedure has been done
-'                  with frm_GD
-'========================================================================
 Private Sub DataPrepare_A16(Txt As TextBox)
 Dim A_Sql$      'SQL Message
 Dim A_A1601$    'PKey of A16 (客戶/廠商編號)
@@ -559,13 +520,6 @@ Dim A_A1601$    'PKey of A16 (客戶/廠商編號)
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Procedure : IsAllFieldsCheck
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Do Full Check over current form's components
-' Details   :
-'========================================================================
 Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = False
     
@@ -580,15 +534,6 @@ Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = True
 End Function
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : OpenMainFile
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Get The Information from Textboxes and push to V-pattern
-' Details   : Get 1.A1602 2.A1609 3. A1601 4.A1628 as Where Clause
-'             Concate the SQL Statement and Open Dynaset As Global var.
-'========================================================================
 Private Sub OpenMainFile()
 On Local Error GoTo MyError
 Dim A_Sql$
@@ -650,17 +595,6 @@ MyError:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Procedure : Set_Property  (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Initializing
-' Details   : init: 1.form          (caption, font, color)
-'                   2.Panel & Label (caption, font, color)
-'                   3.Help Frame    (caption, font, color)
-'                   4.TextBox       (font, MaxLength)
-'                   5.Command button(caption, font)
-'========================================================================
 Private Sub Set_Property()
     '設定本Form之標題,字形及色系
     Form_Property Me, G_Form_EXAM01q, G_Font_Name
@@ -689,28 +623,16 @@ Private Sub Set_Property()
     '    ComboBox_Property Cbo_A1501, G_Font_Size, G_Font_Name
         
     '設Form中所有Command之標題及字形
-    Command_Property cmd_Help, G_CmdHelp, G_Font_Name
-    Command_Property cmd_ok, G_CmdSearch, G_Font_Name
-    Command_Property cmd_add, G_CmdAdd, G_Font_Name
-    Command_Property cmd_Exit, G_CmdExit, G_Font_Name
+    Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
+    Command_Property Cmd_Ok, G_CmdSearch, G_Font_Name
+    Command_Property Cmd_Add, G_CmdAdd, G_Font_Name
+    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
     
     '以下為標準指令, 不得修改
-    VSElastic_Property vse_background
-    StatusBar_ProPerty sts_msgline
+    VSElastic_Property Vse_Background
+    StatusBar_ProPerty Sts_MsgLine
 End Sub
 
-'====================================
-'   Command Buttom Events
-'====================================
-
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : cmd_add_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Doing Add Operation, Goto D-form
-' Details   :
-'========================================================================
 Private Sub cmd_add_Click()
 '將作業狀態設定為新增狀態
     G_AP_STATE = G_AP_STATE_ADD
@@ -721,14 +643,6 @@ Private Sub cmd_add_Click()
     frm_EXAM01.Show
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Cmd_Exit_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Exit Program
-' Details   :
-'========================================================================
 Private Sub Cmd_Exit_Click()
 '結束目前視窗,跳出其他處理程序
     m_ExitTrigger% = True
@@ -736,20 +650,11 @@ Private Sub Cmd_Exit_Click()
     End
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Cmd_Ok_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Doing Update & Delete, Goto V-form with DY_A16 opened
-' Details   : Calling "OpenMainFile" to open the dynaset by the clauses
-'             that input in the textboxes A1602, A1609, A1601, A1628.
-'========================================================================
 Private Sub Cmd_Ok_Click()
     Me.MousePointer = HOURGLASS
     
-    sts_msgline.Panels(1) = G_Process
-    sts_msgline.Refresh
+    Sts_MsgLine.Panels(1) = G_Process
+    Sts_MsgLine.Refresh
     
 '針對此畫面的必須檢核欄位做PageCheck
     If Not IsAllFieldsCheck() Then
@@ -766,20 +671,12 @@ Private Sub Cmd_Ok_Click()
        Me.Hide
        frm_EXAM01v.Show
     Else
-       sts_msgline.Panels(1) = G_NoQueryData
+       Sts_MsgLine.Panels(1) = G_NoQueryData
     End If
     
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Cmd_Help_Click
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Open HLP file
-' Details   :
-'========================================================================
 Private Sub Cmd_Help_Click()
 Dim a$
 
@@ -787,21 +684,9 @@ Dim a$
     retcode = Shell(a$, 4)
 End Sub
 
-'====================================
-'   Form Events
-'====================================
-
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Form_Activate
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Initial & Prepare Data
-' Details   :
-'========================================================================
 Private Sub Form_Activate()
 Dim A_A1601$
-    sts_msgline.Panels(2) = GetCurrentDay(1)
+    Sts_MsgLine.Panels(2) = GetCurrentDay(1)
     Me.Refresh
     m_FieldError% = -1
     m_ExitTrigger% = False
@@ -812,6 +697,7 @@ Dim A_A1601$
         
         'Take out return value and push to correct Textbox
         StrCut frm_GD.Tag, Chr$(KEY_TAB), A_A1601$, ""
+        If G_Hlp_Return = "!" Then Exit Sub
         Select Case G_Hlp_Return
             Case Txt_A1601s.TabIndex
                 Txt_A1601s.text = A_A1601$
@@ -826,66 +712,50 @@ Dim A_A1601$
         
     End If
     G_AP_STATE = G_AP_STATE_QUERY  '設定作業狀態
-    sts_msgline.Panels(1) = SetMessage(G_AP_STATE)
+    Sts_MsgLine.Panels(1) = SetMessage(G_AP_STATE)
     
     '將Form放置到螢幕的頂層
     frm_EXAM01q.ZOrder 0
     If frm_EXAM01q.Visible Then Txt_A1601s.SetFocus
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Form_KeyDown
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : Handle Key Events
-' Details   : Handling: F1輔助, F2查詢, F4新增, ESC離開
-'========================================================================
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
            Case KEY_F1
                 If ActiveControl.TabIndex = Txt_A1601s.TabIndex Then Exit Sub
                 If ActiveControl.TabIndex = Txt_A1601e.TabIndex Then Exit Sub
                 KeyCode = 0
-                If cmd_Help.Visible = True And cmd_Help.Enabled = True Then
-                   cmd_Help.SetFocus
+                If Cmd_Help.Visible = True And Cmd_Help.Enabled = True Then
+                   Cmd_Help.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F2
                 KeyCode = 0
-                If cmd_ok.Visible = True And cmd_ok.Enabled = True Then
-                   cmd_ok.SetFocus
+                If Cmd_Ok.Visible = True And Cmd_Ok.Enabled = True Then
+                   Cmd_Ok.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F4
                 KeyCode = 0
-                If cmd_add.Visible = True And cmd_add.Enabled = True Then
-                   cmd_add.SetFocus
+                If Cmd_Add.Visible = True And Cmd_Add.Enabled = True Then
+                   Cmd_Add.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_ESCAPE
                 KeyCode = 0
-                If cmd_Exit.Visible = True And cmd_Exit.Enabled = True Then
-                   cmd_Exit.SetFocus
+                If Cmd_Exit.Visible = True And Cmd_Exit.Enabled = True Then
+                   Cmd_Exit.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
     End Select
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Form_KeyPress
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_KeyPress(KeyAscii As Integer)
-    sts_msgline.Panels(1) = SetMessage(G_AP_STATE)
+    Sts_MsgLine.Panels(1) = SetMessage(G_AP_STATE)
     
 '主動將資料輸入由小寫轉為大寫
 '  若有某些欄位不需要轉換時, 須予以跳過
@@ -901,27 +771,11 @@ Form_KeyPress_A:
     'End If
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Form_Load
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   : First Entering this Form, Preparing
-' Details   :
-'========================================================================
 Private Sub Form_Load()
     FormCenter Me
     Set_Property
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Form_QueryUnload
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/28
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 
     Dim MSG ' Declare variable.
@@ -942,19 +796,6 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     
 End Sub
 
-'====================================
-'   Textbox Events
-'====================================
-
-
-'========================================================================
-' Procedure : Txt_A1601e_DblClick (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'       @modified: Call frm_GD to help user input data
-'========================================================================
 Private Sub Txt_A1601e_DblClick()
 '若欄位有提供輔助資料,按下滑鼠, 所須處理之事項
     G_FormFrom$ = frm_GD.Name
@@ -963,39 +804,15 @@ Private Sub Txt_A1601e_DblClick()
     G_Hlp_Return = Txt_A1601e.TabIndex
 End Sub
 
-
-'========================================================================
-' Procedure : Txt_A1601e_KeyDown (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A1601e_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
     If KeyCode = KEY_F1 Then Txt_A1601e_DblClick
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Txt_A1601e_GotFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A1601e_GotFocus()
     TextHelpGotFocus
 End Sub
 
-'========================================================================
-' Module    : frm_EXAM01q
-' Procedure : Txt_A1601e_LostFocus
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A1601e_LostFocus()
     TextLostFocus
     
@@ -1008,14 +825,6 @@ Private Sub Txt_A1601e_LostFocus()
     retcode = CheckRoutine_A1601()
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1601s_DblClick (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'       @modified: Call frm_GD to help user input data
-'========================================================================
 Private Sub Txt_A1601s_DblClick()
 '若欄位有提供輔助資料,按下滑鼠, 所須處理之事項
 '    Txt_A1601s_KeyDown KEY_F1, 0
@@ -1026,14 +835,6 @@ Private Sub Txt_A1601s_DblClick()
     
 End Sub
 
-
-'========================================================================
-' Procedure : Txt_A1601s_KeyDown (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A1601s_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
     If KeyCode = KEY_F1 Then Txt_A1601s_DblClick
@@ -1043,13 +844,6 @@ Private Sub Txt_A1601s_GotFocus()
     TextHelpGotFocus
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1601s_LostFocus (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Do checking
-' Details   :
-'========================================================================
 Private Sub Txt_A1601s_LostFocus()
     TextLostFocus
     
@@ -1078,25 +872,10 @@ Private Sub Txt_A1609_LostFocus()
     TextLostFocus
 End Sub
 
-
-'========================================================================
-' Procedure : Txt_A1628e_GotFocus (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A1628e_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1628e_LostFocus (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A1628e_LostFocus()
      TextLostFocus
     
@@ -1109,24 +888,10 @@ Private Sub Txt_A1628e_LostFocus()
     retcode = CheckRoutine_A1628e()
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1628s_GotFocus (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Txt_A1628s_GotFocus()
     TextGotFocus
 End Sub
 
-'========================================================================
-' Procedure : Txt_A1628s_LostFocus (frm_EXAM01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Do checking
-' Details   :
-'========================================================================
 Private Sub Txt_A1628s_LostFocus()
      TextLostFocus
     

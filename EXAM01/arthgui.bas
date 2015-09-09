@@ -1,11 +1,4 @@
 Attribute VB_Name = "mod_ArthGUI"
-'========================================================================
-' Module    : mod_ArthGUI
-' Author    : Mike_chang
-' Date      : 2015/8/27
-' Purpose   : SQL Server Database Common Module (ArthGui)
-'             The Common Server of All New GUI System
-'========================================================================
 Option Explicit
 
 'Customer Request Value
@@ -83,14 +76,6 @@ Global DY_M1 As Recordset
 Global DY_M11 As Recordset
 Global DY_M2 As Recordset
 
-'========================================================================
-' Module    : mod_ArthGUI
-' Procedure : GetCaption
-' @ Author  :
-' @ Date    : 2015/8/27
-' Purpose   : Get lexicon of component caption from database
-' Details   : 自資料庫取得辭庫
-'========================================================================
 Function GetCaption(ByVal Section$, ByVal Topic$, ByVal Default$) As String
 Dim A_Str$
 
@@ -408,7 +393,7 @@ On Local Error Resume Next
     'Open Table
     If Trim(DB_LOCAL.Connect) = "" Then
         Set TB_INI = DB_LOCAL.OpenRecordset("INI", dbOpenTable)
-        TB_INI.Index = "INI"
+        TB_INI.index = "INI"
     End If
     
     'Pick User Name

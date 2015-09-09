@@ -1,16 +1,8 @@
 Attribute VB_Name = "mod_EXAM01"
-'========================================================================
-' Module    : mod_EXAM01
-' Author    : Mike_chang
-' Date      : 2015/8/27
-' Purpose   :
-'========================================================================
 Option Explicit
 Option Compare Text
 
-'========================================================================n
-'   Coding Rule
-'========================================================================
+
 '在此處定義之所有變數, 一律以G開頭, 如G_AAA$, G_BBB#, G_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -18,7 +10,6 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
 
 '必要變數
 Global G_FormFrom$    '空白代表首次執行
@@ -38,6 +29,7 @@ Global G_Pnl_A1609$
 Global G_Pnl_A1628$
 Global G_Pnl_A1612$
 
+Global G_Pnl_A1901$
 Global G_Pnl_A1902$
 Global G_Pnl_A1902n$
 Global G_Pnl_A1903$
@@ -51,39 +43,29 @@ Global G_Pnl_A1903$
 'Def 程式共用變數
 Global G_A1601$                      'Keep部門別
 Global G_A1601o$                     'Keep Pre 部門別
-Global G_A1902$
 Global G_Hlp_Return                  'Keep return value from form_GD
 
 Global G_ActiveRow#                  'Keep資料目前所在列
 Global G_MaxRows#                    'Keep資料總筆數
 
-
-'========================================================================
-' Procedure : GetPanelCaption (mod_EXAM01)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   : Get Panel Caption from "Sini" table
-' Details   : Using GUI_common_module function:
-'             "GetCaption" to get topicvalue from sini
-'========================================================================
 Sub GetPanelCaption()
     '取FORM標題文字
-    G_Form_EXAM01 = GetCaption("FormTitle", "MCFGD", "客戶基本資料維護")
-    G_Form_EXAM01v = GetCaption("FormTitle", "", "客戶基本資料三、瀏覽")
-    G_Form_EXAM01q = GetCaption("FormTitle", "MCFGDV", "客戶基本資料查詢")
+    G_Form_EXAM01 = GetCaption("FormTitle", "EXAM01", "客戶基本資料維護")
+    G_Form_EXAM01v = GetCaption("FormTitle", "EXAM01q", "客戶基本資料瀏覽")
+    G_Form_EXAM01q = GetCaption("FormTitle", "EXAM01V", "客戶基本資料查詢")
     '取欄位標題文字
 
-    G_Pnl_A1601$ = GetCaption("MCFGD", "order1", "客戶編號")
+    G_Pnl_A1601$ = GetCaption("EXAM01", "order1", "客戶編號")
     G_Pnl_A1602$ = GetCaption("paneldescpt", "custmer", "客戶簡稱")
     G_Pnl_A1605$ = GetCaption("PanelDescpt", "10", "聯絡電話")
     G_Pnl_A1606$ = GetCaption("KBM01", "fax", "傳真電話")
-    G_Pnl_A1612$ = GetCaption("MCFGD", "address0", "聯絡地址")
-    G_Pnl_A1609$ = GetCaption("MCFGD", "", "身分證/統編")
-    G_Pnl_A1628$ = GetCaption("MCFGD", "", "生日/成立日")
+    G_Pnl_A1612$ = GetCaption("EXAM01", "address0", "聯絡地址")
+    G_Pnl_A1609$ = GetCaption("EXAM01", "idcard", "身分證/統編")
+    G_Pnl_A1628$ = GetCaption("EXAM01", "birthday", "生日/成立日")
     
-    
-    G_Pnl_A1902$ = GetCaption("MCFGD", "", "關係人編號")
-    G_Pnl_A1902n$ = GetCaption("MCFGD", "", "關係人簡稱")
+    G_Pnl_A1901$ = GetCaption("EXAM01", "relPerson", "關係人")
+    G_Pnl_A1902$ = GetCaption("EXAM01", "relPrnNum", "關係人編號")
+    G_Pnl_A1902n$ = GetCaption("EXAM01", "relPrnBrf", "關係人簡稱")
     G_Pnl_A1903$ = GetCaption("PanelDescpt", "relationship", "關係")
 
     
@@ -92,14 +74,6 @@ Sub GetPanelCaption()
     G_Pnl_Dash$ = GetCaption("PanelDescpt", "dash", "～")
 End Sub
 
-'========================================================================
-' Module    : mod_EXAM01
-' Procedure : main
-' @ Author  : Mike_chang
-' @ Date    : 2015/8/27
-' Purpose   :
-' Details   :
-'========================================================================
 Sub main()
 ' 本模組中, 必須按照下列順序執行, 如果有特殊情況須將某些模組關閉時,
 ' 請在該模組前上 ' 即可, 不得刪除.
