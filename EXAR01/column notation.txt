@@ -1,4 +1,5 @@
 A1609 15 統一編號 PanelDescpt unifyno
+
 A1617 10 負責業務 X (to A0802)
 A1601 10 客戶編號 PanelDescpt buyerid
 A1602 12 客戶簡稱 paneldescpt custmer

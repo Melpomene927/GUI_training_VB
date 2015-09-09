@@ -549,9 +549,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Option Compare Text
-'========================================================================
-'   Coding Rule
-'========================================================================
+
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -559,7 +557,7 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
+
 '必要變數
 Dim m_FieldError%    '此變數在判斷欄位是否有誤, 必須回到該欄位之動作
 Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
@@ -571,13 +569,6 @@ Dim m_A1601Flag%
 'Dim m_bb#
 'Dim m_cc&
 
-'========================================================================
-' Procedure : BeforeUnloadForm (frm_EXAR01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/7
-' Purpose   : 關閉本程式前,須處理的動作在此加入
-' Details   :
-'========================================================================
 Sub BeforeUnloadForm()
 
     '釋放Excel物件
@@ -588,23 +579,16 @@ Sub BeforeUnloadForm()
     
     '??? 關閉V Screen
     DoEvents
-    Unload frm_EXAR
+    Unload frm_EXAR01
     
     '??? 儲存目前報表格式
-    SaveSpreadDefault tSpd_Help, "frm_EXARq", "Spd_Help"
-    SaveSpreadDefault tSpd_EXAR01, "frm_EXAR", "Spd_EXAR01"
+    SaveSpreadDefault tSpd_Help, "frm_EXAR01q", "Spd_Help"
+    SaveSpreadDefault tSpd_EXAR01, "frm_EXAR01", "Spd_EXAR01"
     
     '關閉有所閞啟的Recordset及Database
     CloseFileDB
 End Sub
 
-'========================================================================
-' Procedure : CheckRoutine_FileName (frm_EXAR01q)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/7
-' Purpose   :
-' Details   :
-'========================================================================
 Private Function CheckRoutine_FileName() As Boolean
     CheckRoutine_FileName = True
     
@@ -633,13 +617,6 @@ Private Function CheckRoutine_FileName() As Boolean
     End If
 End Function
 
-'========================================================================
-' Procedure : DataPrepare_A08 (frm_TSRq)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : Show the Spd_help to assist data input (A1617 = A0801)
-' Details   :
-'========================================================================
 Private Sub DataPrepare_A08(Txt As TextBox)
 Dim A_Sql$
     
@@ -724,13 +701,6 @@ Dim A_Sql$
     Me.MousePointer = Default
 End Sub
 
-'========================================================================
-' Procedure : IsAllFieldsCheck (frm_TSRq)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/7
-' Purpose   : Do double check before enter next step
-' Details   : !!! Nothing to check here in this project
-'========================================================================
 Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = False
 '    If Not CheckRoutine_A1617() Then Exit Function
@@ -739,16 +709,6 @@ Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = True
 End Function
 
-'========================================================================
-' Procedure : KeepFieldsValue (frm_TSRq)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : Keep searching conditions for Repert Header informations
-' Details   :
-'             客戶編號 (A1601): xxxxxxxxxx - xxxxxxxxxx
-'             負責業務 (A1617): hhhhhhhhhh - hhhhhhhhhh
-'             統一編號 (A1609): xxxxxxxx -xxxxxxxx
-'========================================================================
 Private Sub KeepFieldsValue()
 '??? 資料的列印來源由RecordSet而來
     G_ReportDataFrom = G_FromRecordSet
@@ -767,34 +727,26 @@ Private Sub KeepFieldsValue()
     If Opt_Excel.Value Then G_PrintSelect = G_Print2Excel
 End Sub
 
-'========================================================================
-' Procedure : OpenMainFile (frm_TSRq)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : Open dynaset for V-form
-' Details   :
-'========================================================================
 Private Sub OpenMainFile()
 On Local Error GoTo MY_Error
 Dim A_Sql$
-Dim A_A1502e$
 
     'Concate SQL Message
-    A_Sql$ = "SELECT A1502,A1503,A1504,A1505,A1507,A1508,A1510,A1512,A1302 FROM A16"
-    A_Sql$ = A_Sql$ & " INNER JOIN A08"
+    A_Sql$ = "SELECT A1617,A1601,A1602,A1614,A1605,A1606,A1620,A1621,A1643"
+    A_Sql$ = A_Sql$ & " ,ISNULL(A0802,N'從缺')AS A0802 FROM A16"
+    A_Sql$ = A_Sql$ & " LEFT JOIN A08"
     A_Sql$ = A_Sql$ & " ON A08.A0801 = A16.A1617"
-    A_Sql$ = A_Sql$ & " WHERE A1501='" & G_A1501$ & "'"
-    If G_A1502s$ <> "" Then
-        A_Sql$ = A_Sql$ & " and A1502+A1503>='" & G_A1502s$ & "'"
-    End If
-    If G_A1502e$ <> "" Then
-        A_A1502e$ = G_A1502e$ & "Z"
-        A_Sql$ = A_Sql$ & " and A1502+A1503<='" & A_A1502e$ & "'"
-    End If
+    A_Sql$ = A_Sql$ & " WHERE 1=1"
+    If G_A1601s$ <> "" Then A_Sql$ = A_Sql$ & " and A1601>='" & G_A1601s$ & "'"
+    If G_A1601e$ <> "" Then A_Sql$ = A_Sql$ & " and A1601<='" & G_A1601e$ & "'"
+    If G_A1617s$ <> "" Then A_Sql$ = A_Sql$ & " and A1617>='" & G_A1617s$ & "'"
+    If G_A1617e$ <> "" Then A_Sql$ = A_Sql$ & " and A1617<='" & G_A1617e$ & "'"
+    If G_A1609s$ <> "" Then A_Sql$ = A_Sql$ & " and A1609>='" & G_A1609s$ & "'"
+    If G_A1609e$ <> "" Then A_Sql$ = A_Sql$ & " and A1609<='" & G_A1609e$ & "'"
     
     'Open Dynaset
-    A_Sql$ = A_Sql$ & GetOrderCols(tSpd_EXAR01, "A1507,A1502,A1503")
-    CreateDynasetODBC DB_ARTHGUI, DY_A15, A_Sql$, "DY_A15", True
+    A_Sql$ = A_Sql$ & GetOrderCols(tSpd_EXAR01, "A1617,A1601")
+    CreateDynasetODBC DB_ARTHGUI, DY_A16, A_Sql$, "DY_A16", True
     
 '====================================
 '   @Modify From PATTERNR2
@@ -811,7 +763,7 @@ Dim A_A1502e$
 '    If G_A0911$ <> "" Then A_Sql$ = A_Sql$ & " and A0911='" & G_A0911$ & "'"
 '??? 設定排序欄位(第二個參數為程式預設的排序欄位)
 '    A_Sql$ = A_Sql$ & GetOrderCols(tSpd_EXAR01, "A0909,A0911,A0901,A0902")
-'    CreateDynasetODBC DB_ARTHGUI, DY_A15, A_Sql$, "DY_A15", True
+'    CreateDynasetODBC DB_ARTHGUI, DY_A16, A_Sql$, "DY_A16", True
     
     Exit Sub
     
@@ -821,16 +773,9 @@ MY_Error:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Sub
 
-'========================================================================
-' Procedure : Set_Property (frm_TSRq)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Set_Property()
 '??? 設定本Form之標題,字形及色系
-    Form_Property frm_EXARq, G_Form_EXAR01q$, G_Font_Name
+    Form_Property frm_EXAR01q, G_Form_EXAR01q$, G_Font_Name
     
     '========================================================================
     '???設定Form中所有TextBox,ComboBox,ListBox之字形及可輸人長度
@@ -847,10 +792,13 @@ Private Sub Set_Property()
     '   參數九 : Table Name,於表格下找尋Label的Caption
     '   參數十 : Field Name,以此欄位找尋Label的Caption
     '========================================================================
-    Field_Property Txt_A1617s, 6, Lbl_A1617, G_Pnl_A16023
-    Field_Property Txt_A1617e, 6
+    Field_Property Txt_A1601s, 10, Lbl_A1601, G_Pnl_A1601
+    Field_Property Txt_A1601e, 10
+    Field_Property Txt_A1617s, 10, Lbl_A1617, G_Pnl_A1617
+    Field_Property Txt_A1617e, 10
+    Field_Property Txt_A1609s, 15, Lbl_A1609, G_Pnl_A1609
+    Field_Property Txt_A1609e, 15
     Field_Property Txt_FileName, 60
-    Field_Property Cbo_A1501, 0, Lbl_A1601, G_Pnl_A1601
     Txt_FileName.Visible = False
     
     '========================================================================
@@ -859,6 +807,8 @@ Private Sub Set_Property()
     '    參數三 : 是否顯示                  參數四 : 設定背景顏色
     '    參數五 : 設定字型大小              參數六 : 設定字型名稱
     '========================================================================
+    Control_Property Lbl_Sign(0), G_Pnl_Dash$
+    Control_Property Lbl_Sign(1), G_Pnl_Dash$
     Control_Property Lbl_Sign(2), G_Pnl_Dash$
     Control_Property Opt_Printer, G_Pnl_Printer$
     Control_Property Opt_Scrn, G_Pnl_Screen$
@@ -888,67 +838,73 @@ Private Sub Cmd_Help_Click()
 Dim a$
 
 '請將PATTERNRq改為此Form名字即可, 其餘為標準指令, 不得修改
-    a$ = "notepad " + G_Help_Path + "TSR03q.HLP"
+    a$ = "notepad " + G_Help_Path + "EXAR01q.HLP"
     retcode = Shell(a$, 4)
 End Sub
 
 Private Sub Cmd_Print_Click()
+' Mechanisms:
+'       Disable "Print" buttom until things are done
+'       1. Check data correctness
+'       2. Keep search conditions
+'       3. Open dynaset
+'       4. Start print procedure
+'           ├─ to Screen: show "frm_EXAR01"
+'           └─ else: go to "PrePare_Data"
+
     Me.MousePointer = HOURGLASS
     Cmd_Print.Enabled = False
 
-'檢核欄位正確性
+    '檢核欄位正確性
     If Not IsAllFieldsCheck() Then
-       Me.MousePointer = Default
-       Cmd_Print.Enabled = True
-       Exit Sub
+        Me.MousePointer = Default
+        Cmd_Print.Enabled = True
+        Exit Sub
     End If
 
-'Keep共用變數供印表用
+    'Keep共用變數供印表用
     KeepFieldsValue
     
-'處理列印動作
+    '處理列印動作
     Sts_MsgLine.Panels(1) = G_Process
     OpenMainFile
-    If DY_A15.BOF And DY_A15.EOF Then
-
-'無資料不做列印
-       Sts_MsgLine.Panels(1) = G_NoQueryData
+    If DY_A16.BOF And DY_A16.EOF Then   '無資料不做列印
+        Sts_MsgLine.Panels(1) = G_NoQueryData
     Else
+        '控制RepSet Form結束後,不會觸發Form_Activate
+        If G_PrintSelect = G_Print2Printer Then
+            G_FormFrom$ = "RptSet"
+        End If
+        
+        If Not Opt_Scrn.Value Then
+            '??? 開始列印報表,第三個參數傳入V Screen的Spread
+            PrePare_Data frm_EXAR01q, Prb_Percent, frm_EXAR01.Spd_EXAR01, m_ExitTrigger%
 
-'控制RepSet Form結束後,不會觸發Form_Activate
-       If G_PrintSelect = G_Print2Printer Then
-          G_FormFrom$ = "RptSet"
-       End If
-       
-       If Not Opt_Scrn.Value Then
-
-'??? 開始列印報表,第三個參數傳入V Screen的Spread
-          PrePare_Data frm_EXARq, Prb_Percent, frm_EXAR.Spd_EXAR01, m_ExitTrigger%
-
-'當Esc鍵被觸發,結束列印動作
-          If m_ExitTrigger% Then Exit Sub
-       Else
-          DoEvents
-          Me.Hide
-          frm_EXAR.Show
-          Sts_MsgLine.Panels(1) = G_PrintOk
-       End If
+            '當Esc鍵被觸發,結束列印動作
+            If m_ExitTrigger% Then Exit Sub
+        Else
+            DoEvents
+            Me.Hide
+            frm_EXAR01.Show
+            Sts_MsgLine.Panels(1) = G_PrintOk
+        End If
     End If
     Cmd_Print.Enabled = True
     Me.MousePointer = Default
 End Sub
 
 Private Sub Cmd_Set_Click()
-'??? Load表格設定的表單
-'    參數一 : 表格設定的Form Name
-'    參數二 : 請輸入欲提供User設定的vaSpread的Spread Type Name
-'    參數三 : 是否處理Spread排序欄位異動的更新
+    '??? Load表格設定的表單
+    '    參數一 : 表格設定的Form Name
+    '    參數二 : 請輸入欲提供User設定的
+    '             vaSpread的Spread Type Name
+    '    參數三 : 是否處理Spread排序欄位異動的更新
     ShowRptDefForm frm_RptDef, tSpd_EXAR01
     
-'??? 自表格設定表單返回時,處理Spread上的資料重整
-'    參數一 : 資料欲重整的Spread Name
-'    參數二 : 請輸入參數一的Spread Type Name
-    RefreshSpreadData frm_EXAR.Spd_EXAR01, tSpd_EXAR01
+    '??? 自表格設定表單返回時,處理Spread上的資料重整
+    '    參數一 : 資料欲重整的Spread Name
+    '    參數二 : 請輸入參數一的Spread Type Name
+    RefreshSpreadData frm_EXAR01.Spd_EXAR01, tSpd_EXAR01
 End Sub
 
 Private Sub Form_Load()
@@ -976,8 +932,8 @@ Private Sub Form_Activate()
     End If
     
     '將Form放置到螢幕的頂層
-    frm_EXARq.ZOrder 0
-    If frm_EXARq.Visible Then Txt_A1617s.SetFocus
+    frm_EXAR01q.ZOrder 0
+    If frm_EXAR01q.Visible Then Txt_A1617s.SetFocus
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1025,13 +981,14 @@ End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
     Sts_MsgLine.Panels(1) = SetMessage(G_AP_STATE)
-'主動將資料輸入由小寫轉為大寫
-'  若有某些欄位不需要轉換時, 須予以跳過
-   If ActiveControl.TabIndex <> Txt_A1617s.TabIndex And _
-   ActiveControl.TabIndex <> Txt_A1617e.TabIndex Then _
-   GoTo Form_KeyPress_A
-   'If ActiveControl.TabIndex = txt_yyy.TabIndex Then GoTo Form_KeyPress_A
-   'If ActiveControl.TabIndex = txt_zzz.TabIndex Then GoTo Form_KeyPress_A
+'   主動將資料輸入由小寫轉為大寫
+'   若有某些欄位不需要轉換時, 須予以跳過
+
+'    If ActiveControl.TabIndex <> Txt_A1617s.TabIndex And _
+'    ActiveControl.TabIndex <> Txt_A1617e.TabIndex Then _
+'    GoTo Form_KeyPress_A
+'    If ActiveControl.TabIndex = txt_yyy.TabIndex Then GoTo Form_KeyPress_A
+'    If ActiveControl.TabIndex = txt_zzz.TabIndex Then GoTo Form_KeyPress_A
     If KeyAscii >= Asc("a") And KeyAscii <= Asc("z") Then
        KeyAscii = Asc(UCase(Chr(KeyAscii)))
     End If
@@ -1079,17 +1036,17 @@ Private Sub Opt_Scrn_Click(Value As Integer)
 End Sub
 
 Private Sub Spd_Help_Click(ByVal Col As Long, ByVal Row As Long)
-'??? 由此控制Spread是否提供排序功能
+    '??? 由此控制Spread是否提供排序功能
     If Not tSpd_Help.SortEnable Then Exit Sub
     
-'於Column Heading Click時, 依該欄位排序
+    '於Column Heading Click時, 依該欄位排序
     If Row = 0 And Col > 0 Then
     
-'??? Update Spread Type中的排序欄位
-       SpdSortIndexReBuild tSpd_Help, Col
+        '??? Update Spread Type中的排序欄位
+        SpdSortIndexReBuild tSpd_Help, Col
        
-'??? 利用Spread Type做Sort
-       SpreadColsSort Spd_Help, tSpd_Help
+        '??? 利用Spread Type做Sort
+        SpreadColsSort Spd_Help, tSpd_Help
        
     End If
 End Sub
@@ -1099,39 +1056,38 @@ Dim A_Code$
 
     Me.MousePointer = HOURGLASS
     
-'KEEP自輔助視窗點選的資料
+    'KEEP自輔助視窗點選的資料
     With Spd_Help
     
-'??? 以自訂的欄位名稱取得欄位值
-         A_Code$ = GetSpdText(Spd_Help, tSpd_Help, "A1502", Row)
-         A_Code$ = A_Code$ & GetSpdText(Spd_Help, tSpd_Help, "A1503", Row)
+    '??? 以自訂的欄位名稱取得欄位值
+        A_Code$ = GetSpdText(Spd_Help, tSpd_Help, "A0801", Row)
     
-'將KEEP的資料帶入畫面
-         Select Case Val(.Tag)
-           Case Txt_A1617s.TabIndex
+        '將KEEP的資料帶入畫面
+        Select Case Val(.Tag)
+            Case Txt_A1617s.TabIndex
                 Txt_A1617s = A_Code$
-           Case Txt_A1617e.TabIndex
+            Case Txt_A1617e.TabIndex
                 Txt_A1617e = A_Code$
-         End Select
+        End Select
     End With
     
-'隱藏輔助視窗
+    '隱藏輔助視窗
     Fra_Help.Visible = False
     
     Me.MousePointer = Default
 End Sub
 
 Private Sub Spd_Help_DragDropBlock(ByVal Col As Long, ByVal Row As Long, ByVal Col2 As Long, ByVal Row2 As Long, ByVal newcol As Long, ByVal NewRow As Long, ByVal NewCol2 As Long, ByVal NewRow2 As Long, ByVal Overwrite As Boolean, Action As Integer, DataOnly As Boolean, Cancel As Boolean)
-'??? 將Spread上的原欄位移動至目的欄位
+    '??? 將Spread上的原欄位移動至目的欄位
     SpreadColumnMove Spd_Help, tSpd_Help, Col, newcol, NewRow, Cancel
     
-'在同一欄位DragDrop不處理變色
+    '在同一欄位DragDrop不處理變色
     If Col = newcol Then Exit Sub
     
-'清除原欄位的顏色
+    '清除原欄位的顏色
     SpreadLostFocus Col, Row
     
-'設定新欄位的顏色
+    '設定新欄位的顏色
     SpreadGotFocus newcol, NewRow
 End Sub
 
@@ -1146,7 +1102,7 @@ Private Sub Spd_Help_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub Spd_Help_LeaveCell(ByVal Col As Long, ByVal Row As Long, ByVal newcol As Long, ByVal NewRow As Long, Cancel As Boolean)
-'標準指令,不得修改
+    '標準指令,不得修改
     SpreadLostFocus Col, Row
     If newcol > 0 Then SpreadGotFocus newcol, NewRow
 End Sub
@@ -1162,7 +1118,7 @@ Private Sub Spd_Help_LostFocus()
 End Sub
 
 Private Sub Txt_A1617e_DblClick()
-'若欄位有提供輔助資料,按下滑鼠, 所須處理之事項
+    '若欄位有提供輔助資料,按下滑鼠, 所須處理之事項
     Txt_A1617e_KeyDown KEY_F1, 0
 End Sub
 
@@ -1171,21 +1127,21 @@ Private Sub Txt_A1617e_GotFocus()
 End Sub
 
 Private Sub Txt_A1617e_KeyDown(KeyCode As Integer, Shift As Integer)
-'若欄位有提供輔助資料,按下F1, 所須處理之事項
+    '若欄位有提供輔助資料,按下F1, 所須處理之事項
     If KeyCode = KEY_F1 Then DataPrepare_A08 Txt_A1617e
 End Sub
 
 Private Sub Txt_A1617e_LostFocus()
     TextLostFocus
     
-'判斷以下狀況發生時, 不須做任何處理
-    If Fra_Help.Visible = True Then Exit Sub
-    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
-    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617e.TabIndex Then Exit Sub
-    ' ....
-
-'自我檢查
-    retcode = CheckRoutine_A1617()
+''判斷以下狀況發生時, 不須做任何處理
+'    If Fra_Help.Visible = True Then Exit Sub
+'    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+'    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617e.TabIndex Then Exit Sub
+'    ' ....
+'
+''自我檢查
+'    retcode = CheckRoutine_A1617()
 End Sub
 
 Private Sub Txt_A1617s_DblClick()
@@ -1206,13 +1162,13 @@ Private Sub Txt_A1617s_LostFocus()
     TextLostFocus
     
 '判斷以下狀況發生時, 不須做任何處理
-    If Fra_Help.Visible = True Then Exit Sub
-    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
-    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617s.TabIndex Then Exit Sub
-    ' ....
-
-'自我檢查
-    retcode = CheckRoutine_A1617()
+'    If Fra_Help.Visible = True Then Exit Sub
+'    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+'    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617s.TabIndex Then Exit Sub
+'    ' ....
+'
+''自我檢查
+'    retcode = CheckRoutine_A1617()
 End Sub
 
 Private Sub Txt_FileName_GotFocus()

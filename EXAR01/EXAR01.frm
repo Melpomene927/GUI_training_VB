@@ -7,7 +7,7 @@ Begin VB.Form frm_EXAR01
    Appearance      =   0  'Flat
    BackColor       =   &H00C0C0C0&
    Caption         =   "使用記錄列印"
-   ClientHeight    =   6420
+   ClientHeight    =   6105
    ClientLeft      =   30
    ClientTop       =   375
    ClientWidth     =   9480
@@ -26,10 +26,10 @@ Begin VB.Form frm_EXAR01
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
    PaletteMode     =   1  'UseZOrder
-   ScaleHeight     =   6420
+   ScaleHeight     =   6105
    ScaleWidth      =   9480
    Begin VsOcxLib.VideoSoftElastic Vse_Background 
-      Height          =   6045
+      Height          =   5730
       Left            =   0
       TabIndex        =   11
       TabStop         =   0   'False
@@ -37,7 +37,7 @@ Begin VB.Form frm_EXAR01
       Width           =   9480
       _Version        =   327680
       _ExtentX        =   16722
-      _ExtentY        =   10663
+      _ExtentY        =   10107
       _StockProps     =   70
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
@@ -59,14 +59,14 @@ Begin VB.Form frm_EXAR01
          Left            =   60
          OleObjectBlob   =   "EXAR01.frx":0342
          TabIndex        =   0
-         Top             =   540
+         Top             =   90
          Width           =   7860
       End
       Begin ComctlLib.ProgressBar Prb_Percent 
          Height          =   210
          Left            =   1290
          TabIndex        =   13
-         Top             =   5250
+         Top             =   4890
          Width           =   6645
          _ExtentX        =   11721
          _ExtentY        =   370
@@ -87,7 +87,7 @@ Begin VB.Form frm_EXAR01
          Height          =   735
          Left            =   60
          TabIndex        =   14
-         Top             =   5220
+         Top             =   4860
          Width           =   7875
          Begin VB.TextBox Txt_FileName 
             BackColor       =   &H00FFFFFF&
@@ -260,7 +260,7 @@ Begin VB.Form frm_EXAR01
          Height          =   405
          Left            =   8010
          TabIndex        =   10
-         Top             =   5550
+         Top             =   5190
          Width           =   1425
          _Version        =   65536
          _ExtentX        =   2514
@@ -298,74 +298,13 @@ Begin VB.Form frm_EXAR01
             Strikethrough   =   0   'False
          EndProperty
       End
-      Begin Threed.SSPanel Pnl_A1501 
-         Height          =   390
-         Left            =   1035
-         TabIndex        =   15
-         Top             =   90
-         Width           =   465
-         _Version        =   65536
-         _ExtentX        =   820
-         _ExtentY        =   688
-         _StockProps     =   15
-         BackColor       =   15790320
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         BevelOuter      =   1
-      End
-      Begin Threed.SSPanel Pnl_A1501n 
-         Height          =   390
-         Left            =   1485
-         TabIndex        =   16
-         Top             =   90
-         Width           =   1860
-         _Version        =   65536
-         _ExtentX        =   3281
-         _ExtentY        =   688
-         _StockProps     =   15
-         BackColor       =   15790320
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         BevelOuter      =   1
-      End
-      Begin VB.Label Lbl_A1501 
-         Caption         =   "公司別"
-         BeginProperty Font 
-            Name            =   "新細明體"
-            Size            =   12
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         Left            =   90
-         TabIndex        =   17
-         Top             =   135
-         Width           =   1635
-      End
    End
    Begin ComctlLib.StatusBar Sts_MsgLine 
       Align           =   2  'Align Bottom
       Height          =   375
       Left            =   0
       TabIndex        =   12
-      Top             =   6045
+      Top             =   5730
       Width           =   9480
       _ExtentX        =   16722
       _ExtentY        =   661
@@ -374,9 +313,13 @@ Begin VB.Form frm_EXAR01
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -390,9 +333,6 @@ Attribute VB_Exposed = False
 Option Explicit
 Option Compare Text
 
-'========================================================================
-'   Coding Rule
-'========================================================================
 '在此處定義之所有變數, 一律以M開頭, 如M_AAA$, M_BBB#, M_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -400,7 +340,7 @@ Option Compare Text
 ' &: 程式迴圈變數
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
-'========================================================================
+
 '自定變數
 'Dim m_aa$
 'Dim m_bb#
@@ -410,17 +350,8 @@ Option Compare Text
 Dim m_FieldError%    '此變數在判斷欄位是否有誤, 必須回到該欄位之動作
 Dim m_ExitTrigger%   '此變數在判斷結束鍵是否被觸發, 將停止目前正在處理的作業
 
-
-
-'========================================================================
-' Procedure : BeforeUnloadForm (frm_EXAR)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : 關閉本表單前,須處理的動作在此加入
-' Details   :
-'========================================================================
 Sub BeforeUnloadForm()
-
+'關閉本表單前,須處理的動作在此加入
 
 '??? 取消Spread上的所有標識區塊
     Spd_EXAR01.Action = SS_ACTION_DESELECT_BLOCK
@@ -429,12 +360,12 @@ Sub BeforeUnloadForm()
     m_ExitTrigger% = True
 
 '??? Keep目前結束的表單名稱至變數中
-    G_FormFrom$ = "TSR03"
+    G_FormFrom$ = "EXAR01"
     
 '??? 隱藏V畫面,回到Q畫面
     DoEvents
     Me.Hide
-    frm_EXARq.Show
+    frm_EXAR01q.Show
 End Sub
 
 Private Function CheckRoutine_FileName() As Boolean
@@ -464,26 +395,12 @@ Private Function CheckRoutine_FileName() As Boolean
     End If
 End Function
 
-'========================================================================
-' Procedure : IsAllFieldsCheck (frm_EXAR)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = False
     If Not CheckRoutine_FileName() Then Exit Function
     IsAllFieldsCheck = True
 End Function
 
-'========================================================================
-' Procedure : KeepFieldsValue (frm_EXAR)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Sub KeepFieldsValue()
     G_ReportDataFrom = G_FromScreen
     G_OutFile = Trim$(Txt_FileName)
@@ -492,18 +409,10 @@ Sub KeepFieldsValue()
     If Opt_Excel.Value Then G_PrintSelect = G_Print2Excel
 End Sub
 
-
-'========================================================================
-' Procedure : Set_Property (frm_EXAR)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Private Sub Set_Property()
 
     '??? 設定本Form之標題,字形及色系
-    Form_Property frm_EXAR, G_Form_TSR01$, G_Font_Name
+    Form_Property frm_EXAR01, G_Form_EXAR01$, G_Font_Name
     
     '========================================================================
     '???設定Form中所有TextBox,ComboBox,ListBox之字形及可輸人長度,
@@ -539,7 +448,7 @@ Private Sub Set_Property()
     '========================================================================
     Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
     Command_Property Cmd_Print, G_CmdPrint, G_Font_Name
-    Command_Property Cmd_exit, G_CmdExit, G_Font_Name
+    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
     Command_Property Cmd_Previous, G_CmdPrvPage, G_Font_Name
     Command_Property Cmd_Next, G_CmdNxtPage, G_Font_Name
     Command_Property Cmd_Set, G_CmdSet, G_Font_Name
@@ -558,7 +467,7 @@ Private Sub Set_Property()
 End Sub
 
 '========================================================================
-' Procedure : Set_Spread_Property (frm_EXAR)
+' Procedure : Set_Spread_Property (frm_EXAR01)
 ' @ Author  : Mike_chang
 ' @ Date    : 2015/9/3
 ' Purpose   :
@@ -569,7 +478,8 @@ Private Sub Set_Spread_Property()
          .UnitType = 2
 
         '??? 設定本Spread之筆數及欄位數(取Columns Type的上限值)
-         Spread_Property Spd_EXAR01, 0, UBound(tSpd_EXAR01.Columns), WHITE, G_Font_Size, G_Font_Name
+         Spread_Property Spd_EXAR01, 0, UBound(tSpd_EXAR01.Columns), WHITE, _
+             G_Font_Size, G_Font_Name
          
         '========================================================================
         '??? 設定本Spread之各欄標題及顯示寬度,各欄屬性及顯示字數
@@ -580,7 +490,7 @@ Private Sub Set_Spread_Property()
         '    參數五 : 預設的欄位標題
         '    參數六 : 欄位的資料型態
         '    參數七 : 數值欄位的下限
-        '    參數八 : 數值欄位的下限
+        '    參數八 : 數值欄位的上限
         '    參數九 : 文字資料型態的最大長度
         '    參數十 : 欄位顯示在Spread上的對齊方式
         '    參數11 : 設定報表欄位標題及資料列印的Format
@@ -589,14 +499,43 @@ Private Sub Set_Spread_Property()
         '    參數14 : Field Name,以此欄位找尋Label的Caption
         '    參數15 : Table Name,於表格下找尋Label的Caption
         '========================================================================
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1507", TextWidth("X") * 10, G_Pnl_A1507, SS_CELL_TYPE_EDIT, "", "", 20, SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1502", TextWidth("X") * 6, G_Pnl_A1502, SS_CELL_TYPE_EDIT, "", "", 6, SS_CELL_H_ALIGN_CENTER
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1505", TextWidth("X") * 15, G_Pnl_A1505, SS_CELL_TYPE_EDIT, "", "", 40, SS_CELL_H_ALIGN_LEFT
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1504", TextWidth("X") * 8, G_Pnl_A1504, SS_CELL_TYPE_EDIT, "", "", 8
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1510", TextWidth("X") * 8, G_Pnl_A1510, SS_CELL_TYPE_EDIT, "", "", 8
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1512", TextWidth("X") * 8, G_Pnl_A1512, SS_CELL_TYPE_EDIT, "", "", 8
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1508", TextWidth("X") * 15, G_Pnl_A1508, SS_CELL_TYPE_EDIT, "", "", 15, SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
-         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "Flag", TextWidth("X") * 20, "Flag", SS_CELL_TYPE_EDIT, "", "", 20
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1617", TextWidth("X") * 12, _
+             G_Pnl_A1617$, SS_CELL_TYPE_EDIT, "", "", 12, SS_CELL_H_ALIGN_LEFT, _
+             SS_CELL_H_ALIGN_LEFT
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1601", TextWidth("X") * 10, _
+             G_Pnl_A1601$, SS_CELL_TYPE_EDIT, "", "", 10, SS_CELL_H_ALIGN_CENTER
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1602", TextWidth("X") * 12, _
+             G_Pnl_A1602$, SS_CELL_TYPE_EDIT, "", "", 12, SS_CELL_H_ALIGN_CENTER
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1614", TextWidth("X") * 20, _
+             G_Pnl_A1614$, SS_CELL_TYPE_EDIT, "", "", 20
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1605", TextWidth("X") * 10, _
+             G_Pnl_A1605$, SS_CELL_TYPE_EDIT, "", "", 15
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1606", TextWidth("X") * 10, _
+             G_Pnl_A1606$, SS_CELL_TYPE_EDIT, "", "", 15
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1620", TextWidth("X") * 8, _
+             G_Pnl_A1620$, SS_CELL_TYPE_FLOAT, "-999999999.99", "999999999.99", 15, _
+             SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1621", TextWidth("X") * 8, _
+             G_Pnl_A1621$, SS_CELL_TYPE_FLOAT, "-999999999.99", "999999999.99", 15, _
+             SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "A1643", TextWidth("X") * 8, _
+             G_Pnl_A1643$, SS_CELL_TYPE_FLOAT, "-999999999.99", "999999999.99", 15, _
+             SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "credit", TextWidth("X") * 8, _
+             G_Pnl_Credit$, SS_CELL_TYPE_FLOAT, "-999999999.99", "999999999.99", 15, _
+             SS_CELL_H_ALIGN_RIGHT, SS_CELL_H_ALIGN_RIGHT
+             
+         SpdFldProperty Spd_EXAR01, tSpd_EXAR01, "Flag", TextWidth("X") * 20, _
+             "Flag", SS_CELL_TYPE_EDIT, "", "", 20
 
         '設定本Spread允許Cell間的拖曳
          .AllowDragDrop = False
@@ -623,7 +562,7 @@ Private Sub Cmd_Help_Click()
 Dim a$
 
 '請將PATTERNR改為此Form名字即可, 其餘為標準指令, 不得修改
-    a$ = "notepad " + G_Help_Path + "TSR03.HLP"
+    a$ = "notepad " + G_Help_Path + "EXAR01.HLP"
     retcode = Shell(a$, 4)
 End Sub
 
@@ -639,26 +578,26 @@ Private Sub Cmd_Print_Click()
     Me.MousePointer = HOURGLASS
     Cmd_Print.Enabled = False
 
-'檢核欄位正確性
+    '檢核欄位正確性
     If IsAllFieldsCheck() = False Then
        Me.MousePointer = Default
        Cmd_Print.Enabled = True
        Exit Sub
     End If
 
-'Keep共用變數供印表用
+    'Keep共用變數供印表用
     KeepFieldsValue
     
-'處理列印動作
+    '處理列印動作
     Sts_MsgLine.Panels(1) = G_Process
 
-'控制RepSet Form結束後,不會觸發Form_Activate
+    '控制RepSet Form結束後,不會觸發Form_Activate
     If G_PrintSelect = G_Print2Printer Then
        G_FormFrom$ = "RptSet"
     End If
        
-'??? 開始列印報表,第三個參數傳入V Screen的Spread
-    PrePare_Data frm_EXAR, Prb_Percent, Spd_EXAR01, m_ExitTrigger%
+    '??? 開始列印報表,第三個參數傳入V Screen的Spread
+    PrePare_Data frm_EXAR01, Prb_Percent, Spd_EXAR01, m_ExitTrigger%
     
     Cmd_Print.Enabled = True
     Me.MousePointer = Default
@@ -682,7 +621,7 @@ Private Sub Cmd_Set_Click()
 '??? 自表格設定表單返回時,處理Spread上的資料重整
 '    參數一 : 資料欲重整的Spread Name
 '    參數二 : 請輸入參數一的Spread Type Name
-    RefreshSpreadData frm_EXAR.Spd_EXAR01, tSpd_EXAR01
+    RefreshSpreadData frm_EXAR01.Spd_EXAR01, tSpd_EXAR01
     
 '??? 結束表格設定視窗,將Focus設定在Spread上
     Spd_EXAR01.SetFocus
@@ -710,14 +649,14 @@ Private Sub Form_Activate()
        Sts_MsgLine.Panels(1) = G_Process
        Set_Spread_Property
        Cmd_Print.Enabled = False
-       PrePare_Data frm_EXAR, Prb_Percent, Spd_EXAR01, m_ExitTrigger%
+       PrePare_Data frm_EXAR01, Prb_Percent, Spd_EXAR01, m_ExitTrigger%
        If m_ExitTrigger% Then Exit Sub
        Cmd_Print.Enabled = True
     End If
     
     '將Form放置到螢幕的頂層
-    frm_EXAR.ZOrder 0
-    If frm_EXAR.Visible Then Spd_EXAR01.SetFocus
+    frm_EXAR01.ZOrder 0
+    If frm_EXAR01.Visible Then Spd_EXAR01.SetFocus
     Me.MousePointer = Default
 End Sub
 
@@ -765,8 +704,8 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
         
       Case KEY_ESCAPE
            KeyCode = 0
-           If Cmd_exit.Visible And Cmd_exit.Enabled Then
-              Cmd_exit.SetFocus
+           If Cmd_Exit.Visible And Cmd_Exit.Enabled Then
+              Cmd_Exit.SetFocus
               DoEvents
               SendKeys "{Enter}"
            End If

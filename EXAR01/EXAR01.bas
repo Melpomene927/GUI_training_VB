@@ -1,16 +1,7 @@
 Attribute VB_Name = "mod_EXAR01"
-'========================================================================
-' Module    : mod_EXAR01
-' Author    : Mike_chang
-' Date      : 2015/9/7
-' Purpose   : Common Module shared by all forms
-'========================================================================
 Option Explicit             'Do not allow ambiguous declaration
 Option Compare Text         'Set all compare method as text-compare
 
-'========================================================================
-'   Coding Rule
-'========================================================================
 '在此處定義之所有變數, 一律以G開頭, 如G_AAA$, G_BBB#, G_CCC&
 '且變數之形態, 一律在最後一碼區別, 範例如下:
 ' $: 文字
@@ -19,9 +10,6 @@ Option Compare Text         'Set all compare method as text-compare
 ' %: 給一些使用於是或否用途之變數 (TRUE / FALSE )
 ' 空白: 代表VARIENT, 動態變數
 
-'========================================================================
-'   必要變數
-'========================================================================
 Global G_FormFrom$    '空白代表首次執行
 
 '========================================================================
@@ -60,44 +48,13 @@ Global G_Pnl_Excel$
 '========================================================================
 '   Def 程式共用變數
 '========================================================================
-'Global G_A0901s$
-'Global G_A0901e$
-'Global G_A0902s$
-'Global G_A0902e$
-'Global G_A0904s$
-'Global G_A0904e$
-'Global G_A0905$
-'Global G_A0905o$
-'Global G_A0906$
-'Global G_A0906o$
-'Global G_A0911$
-'Global G_A0911o$
-
-'Global G_SlipAttrib_1$
-'Global G_SlipAttrib_2$
-'Global G_AccountUse_1$
-'Global G_AccountUse_2$
-'Global G_AccountUse_3$
-'Global G_SlipType_1$
-'Global G_SlipType_2$
-'Global G_SlipType_3$
-'Global G_SlipType_4$
-'Global G_SlipType_5$
-'Global G_SlipType_6$
-'Global G_SlipType_7$
-'Global G_SlipType_8$
-
 Global G_PathNotFound$
 Global G_Report_Heading$
 
-Global G_A1620_Sum$
-Global G_A1620_Total$
-Global G_A1621_Sum$
-Global G_A1621_Total$
-Global G_A1643_Sum$
-Global G_A1643_Total$
-Global G_Credit_Sum$
-Global G_Credit_Total$
+Global G_A1620_Total#
+Global G_A1621_Total#
+Global G_A1643_Total#
+Global G_Credit_Total#
 
 Global G_A1601s$
 Global G_A1601e$
@@ -106,13 +63,7 @@ Global G_A1617e$
 Global G_A1609s$
 Global G_A1609e$
 
-Global G_A1501$
-Global G_A1501n$
-Global G_A1508_Total#
 
-''SAMPLE
-'Global G_BB#
-'Global G_CC!
 '========================================================================
 '??? 在此宣告此程式中所有的Spread自訂型態變數,每個提供User自訂欄位的vaSpread,
 '    必須宣告一個Spread自訂型態變數,命名如下:
@@ -193,15 +144,7 @@ Global FC$              'Column Header Description
 Global fd$              'Column Header Data
 Global N1$
 Global N2$
-'========================================================================
 
-'========================================================================
-' Procedure : GetPanelCaption (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Sub GetPanelCaption()
 '取FORM標題文字
     G_Form_EXAR01$ = GetCaption("FormTitle", "", "客戶資料列印")
@@ -220,8 +163,8 @@ Sub GetPanelCaption()
     G_Pnl_A1643$ = GetCaption("PanelDescpt", "nr", "應收票據")
     G_Pnl_Credit$ = GetCaption("PanelDescpt", "credit use", "可用額度")
     
-    G_Pnl_Sum$ = GetCaption("TSR03", "sum", "小計")
-    G_Pnl_Total$ = GetCaption("TSR03", "total", "合計")
+    G_Pnl_Sum$ = GetCaption("EXAR01", "sum", "小計")
+    G_Pnl_Total$ = GetCaption("EXAR01", "total", "合計")
     
     G_Pnl_A0801$ = GetCaption("PanelDescpt", "", "業務員編號")
     G_Pnl_A0802$ = GetCaption("PanelDescpt", "p_name_c", "可用額度")
@@ -250,16 +193,9 @@ Sub GetPanelCaption()
     
 '取其他變數內含值
     G_PathNotFound$ = GetCaption("PgmMsg", "path_not_found", "檔案路徑錯誤!")
-    G_Report_Heading$ = GetCaption("ReportHeading", "TSR03", "科目列印")
+    G_Report_Heading$ = GetCaption("ReportHeading", "EXAR01", "科目列印")
 End Sub
 
-'========================================================================
-' Procedure : Main (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : Program Entry
-' Details   :
-'========================================================================
 Sub Main()
 ' 本模組中, 必須按照下列順序執行, 如果有特殊情況須將某些模組關閉時,
 ' 請在該模組前上 ' 即可, 不得刪除.
@@ -278,25 +214,23 @@ Sub Main()
     SetReportCols             ' 設定報表的所有欄位至Spread Type中
     
 '??? 將所有明細畫面先Load進Memory,請修改Form Name
-    Load frm_EXARq           ' 為在Q畫面的設定鍵觸發時,能抓取V畫面Spread上
+    Load frm_EXAR01           ' 為在Q畫面的設定鍵觸發時,能抓取V畫面Spread上
                               ' 的Caption,故於程式執行時先Load V畫面
                               
 '??? 請修改成第一個畫面的Form Name
-    frm_EXARq.Show       ' 首頁畫面顯示
+    frm_EXAR01q.Show       ' 首頁畫面顯示
     Screen.MousePointer = Default
 End Sub
 
-'========================================================================
-' Procedure : PageCheck (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Sub PageCheck(Spd As vaSpread, Optional Break As Boolean = False)
+'   under 2 circumstances do jump as below
+'   1. reach maximum line
+'   2. change to next break column
+'   !!! "Excel" & "Screen Spread" does not need to jump to next page
+
     If G_PrintSelect = G_Print2Excel And Not Break Then Exit Sub
     If G_PrintSelect = G_Print2Screen Then Exit Sub
-'跳頁處理
+    '跳頁處理
     If G_LineNo > G_OverFlow Or Break Then          '@Alter R2: Adding "Break" mechanism
         If G_PageNo > 0 Then
            If G_PrintSelect <> G_Print2Excel Then   '@Alter R2:
@@ -316,22 +250,15 @@ Sub PageCheck(Spd As vaSpread, Optional Break As Boolean = False)
     End If
 End Sub
 
-'========================================================================
-' Procedure : PrePare_Data (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Sub PrePare_Data(Frm As Form, Prb As ProgressBar, Spd As vaSpread, A_Exit%)
 On Local Error GoTo MY_Error
     
     '??? 設定ProgressBar最大值
     If G_ReportDataFrom = G_FromRecordSet Then
        Spd.MaxRows = 0
-       DY_A15.MoveLast
-       Prb.MAX = DY_A15.RecordCount
-       DY_A15.MoveFirst
+       DY_A16.MoveLast
+       Prb.MAX = DY_A16.RecordCount
+       DY_A16.MoveFirst
     Else
        Prb.MAX = Spd.MaxRows
     End If
@@ -358,7 +285,8 @@ On Local Error GoTo MY_Error
     If Not ReportSet() Then Frm!Sts_MsgLine.Panels(1) = SetMessage(G_AP_STATE): Exit Sub
 
     '??? 若有Break欄位時,須重新調整報表的欄寬
-    AdjustColWidth Spd, tSpd_EXAR01, "A1507", B31$
+    AdjustColWidth Spd, tSpd_EXAR01, "A1617", B31$
+    
     
     '資料列印處理
     If G_ReportDataFrom = G_FromRecordSet Then
@@ -384,20 +312,17 @@ MY_Error:
     Err = 0
 End Sub
 
-'========================================================================
-' Procedure : Print2Spread (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Sub Print2Spread(Prb As ProgressBar, Spd As vaSpread, A_Exit%)
 Dim A_FmtStr$                                   'Format String
-Dim A_A1502$, A_A1505$, A_A1504$                'Output Column Values
-Dim A_A1510$, A_A1512$, A_A1508$
-Dim A_A1507$, A_A1507_Brk$                      'Break Column(A1507科目大類) & Previous Value of it
+Dim A_A1601$, A_A1602$, A_A1614$                'Output Column Values
+Dim A_A1605$, A_A1606$, A_A1620$
+Dim A_A1621$, A_A1643$, A_credit$
+Dim A_A1617$, A_A1617_Brk$                      'Break Column(A1607科目大類) & Previous Value of it
 Dim A_Row#, A_Index#                            'Statical Counter
-Dim A_Break_Value#                              '科目小計 of A1508
+Dim A_Break_Value#                              '授信額度小計 of A1620
+Dim A_Break_Value2#                             '應收帳款小計 of A1621
+Dim A_Break_Value3#                             '應收票據小計 of A1643
+Dim A_Break_Value4#                             '可用額度小計 of credit
 
     'Initialize
     Prb.Visible = True
@@ -408,88 +333,85 @@ Dim A_Break_Value#                              '科目小計 of A1508
     
     'Initialize Summary Counter
     A_Break_Value# = 0
-    G_A1508_Total# = 0
+    A_Break_Value2# = 0
+    A_Break_Value3# = 0
+    A_Break_Value4# = 0
+    G_A1620_Total# = 0
+    G_A1621_Total# = 0
+    G_A1643_Total# = 0
+    G_Credit_Total# = 0
     
     
     '列印表頭
     ReportHeader Spd
     
     'Keep Break Value
-    A_A1507_Brk$ = Trim$(DY_A15.Fields("A1302") & "")
-    A_A1507$ = A_A1507_Brk$
+    A_A1617_Brk$ = Trim$(DY_A16.Fields("A0802") & "")
+    A_A1617$ = A_A1617_Brk$
     
     'Setup Output format
-    A_FmtStr$ = "B1$;B2$;FD$"   'Format: [Break Header] + [-------] + [Data]
+    A_FmtStr$ = "FD$"   'Format: [Break Header] + [-------] + [Data]
+'    A_FmtStr$ = "B1$;B2$;FD$"   'Format: [Break Header] + [-------] + [Data]
 
     'Loop to Dump Report Values
-    Do While Not DY_A15.EOF And Not A_Exit%
+    Do While Not DY_A16.EOF And Not A_Exit%
        
         '累加目前處理的資料筆數
         A_Index# = A_Index# + 1
     
         'If change to another break
-        If StrComp(A_A1507_Brk$, Trim$(DY_A15.Fields("A1302") & ""), vbTextCompare) <> 0 Then
+        If StrComp(A_A1617_Brk$, Trim$(DY_A16.Fields("A0802") & ""), _
+            vbTextCompare) <> 0 Then
                  
-            '列印科目小計的Break
-            PrintBreak Spd, A_Row#, G_Pnl_Sum$, A_Break_Value#, "B2$;B3$;B2$"
+            '列印小計
+            PrintBreak Spd, A_Row#, G_Pnl_Sum$, A_Break_Value#, A_Break_Value2#, _
+                A_Break_Value3#, A_Break_Value4#, "B2$;B3$;B2$"
           
-            '將科目合計及科目小計的變數歸零,以便重新累計
+            '變數歸零,以便重新累計
             A_Break_Value# = 0
+            A_Break_Value2# = 0
+            A_Break_Value3# = 0
+            A_Break_Value4# = 0
           
             'Keep Break Value
-            A_A1507_Brk$ = Trim$(DY_A15.Fields("A1302") & "")
-            A_A1507$ = A_A1507_Brk$
+            A_A1617_Brk$ = Trim$(DY_A16.Fields("A0802") & "")
+            A_A1617$ = A_A1617_Brk$
             
             'Setup Output format
-            A_FmtStr$ = "NP;B1$;B2$;FD$"    'Format: [NewPage] + [Break Header] + [-------] + [Data]
+            A_FmtStr$ = "NP;FD$"    'Format: [NewPage] + [Data]
+'            A_FmtStr$ = "NP;B1$;B2$;FD$"    'Format: [NewPage] + [Break Header] + [-------] + [Data]
         End If
               
         'Keep列印資料至變數
-        'col2
-        A_A1502$ = Trim$(DY_A15.Fields("A1502") & "")
-        A_A1502$ = A_A1502$ & Trim$(DY_A15.Fields("A1503") & "")
-        'col3
-        A_A1505$ = Trim$(DY_A15.Fields("A1505") & "")
-        'col4
-        Select Case Trim$(DY_A15.Fields("A1504") & "")
-            Case "1"
-                A_A1504$ = G_SlipAttrib_1$
-            Case "2"
-                A_A1504$ = G_SlipAttrib_2$
-        End Select
-        'col5
-        Select Case Trim$(DY_A15.Fields("A1510") & "")
-            Case "1"
-                A_A1510$ = G_AccountUse_1$
-            Case "2"
-                A_A1510$ = G_AccountUse_2$
-            Case "3"
-                A_A1510$ = G_AccountUse_3$
-        End Select
-        'col6
-        Select Case Trim$(DY_A15.Fields("A1512") & "")
-            Case "1"
-                A_A1512$ = G_SlipType_1$
-            Case "2"
-                A_A1512$ = G_SlipType_2$
-            Case "3"
-                A_A1512$ = G_SlipType_3$
-            Case "4"
-                A_A1512$ = G_SlipType_4$
-            Case "5"
-                A_A1512$ = G_SlipType_5$
-            Case "6"
-                A_A1512$ = G_SlipType_6$
-            Case "7"
-                A_A1512$ = G_SlipType_7$
-            Case "8"
-                A_A1512$ = G_SlipType_8$
-        End Select
-        'col7
-        A_A1508$ = Trim$(DY_A15.Fields("A1508") & "")
-        'sum up col7 to break value
-        A_Break_Value# = A_Break_Value# + CDbl(A_A1508$)
-        G_A1508_Total# = G_A1508_Total# + CDbl(A_A1508$)
+        'col2 客戶編號 10
+        A_A1601$ = Trim$(DY_A16.Fields("A1601") & "")
+        'col3 客戶簡稱 12
+        A_A1602$ = Trim$(DY_A16.Fields("A1602") & "")
+        'col4 聯絡人 20
+        A_A1614$ = Trim$(DY_A16.Fields("A1614") & "")
+        'col5 電話號碼 15
+        A_A1605$ = Trim$(DY_A16.Fields("A1605") & "")
+        'col6 傳真號碼 15
+        A_A1606$ = Trim$(DY_A16.Fields("A1606") & "")
+        'col7 授信額度 8
+        A_A1620$ = Trim$(DY_A16.Fields("A1620") & "")
+        'col8 應收帳款 8
+        A_A1621$ = Trim$(DY_A16.Fields("A1621") & "")
+        'col9 應收票據 8
+        A_A1643$ = Trim$(DY_A16.Fields("A1643") & "")
+        'col10 可用額度 8
+        A_credit$ = Str(Val(A_A1620$) - Val(A_A1621$) - Val(A_A1643$))
+        
+        'sum up col7~10 to break value
+        G_A1620_Total# = G_A1620_Total# + CDbl(A_A1620$)
+        G_A1621_Total# = G_A1621_Total# + CDbl(A_A1621$)
+        G_A1643_Total# = G_A1643_Total# + CDbl(A_A1643$)
+        G_Credit_Total# = G_Credit_Total# + CDbl(A_credit$)
+
+        A_Break_Value# = A_Break_Value# + CDbl(A_A1620$)
+        A_Break_Value2# = A_Break_Value2# + CDbl(A_A1621$)
+        A_Break_Value3# = A_Break_Value3# + CDbl(A_A1643$)
+        A_Break_Value4# = A_Break_Value4# + CDbl(A_credit$)
         
        
         '將Spread上的MaxRows加一
@@ -502,15 +424,18 @@ Dim A_Break_Value#                              '科目小計 of A1508
         '    參數三 : 自訂的欄位名稱        參數四 : 資料列
         '    參數五 : 填入值
         '========================================================================
-        SetSpdText Spd, tSpd_EXAR01, "A1507", A_Row#, A_A1507$   '科目大類
-        SetSpdText Spd, tSpd_EXAR01, "A1502", A_Row#, A_A1502$   '會計科目
-        SetSpdText Spd, tSpd_EXAR01, "A1505", A_Row#, A_A1505$   '中文說明
-        SetSpdText Spd, tSpd_EXAR01, "A1504", A_Row#, A_A1504$   '借貸屬性
-        SetSpdText Spd, tSpd_EXAR01, "A1510", A_Row#, A_A1510$   '科目使用
-        SetSpdText Spd, tSpd_EXAR01, "A1512", A_Row#, A_A1512$   '傳票格式
-        SetSpdText Spd, tSpd_EXAR01, "A1508", A_Row#, A_A1508$   '目前餘額
+        SetSpdText Spd, tSpd_EXAR01, "A1617", A_Row#, A_A1617$   '負責業務
+        SetSpdText Spd, tSpd_EXAR01, "A1601", A_Row#, A_A1601$   '客戶編號
+        SetSpdText Spd, tSpd_EXAR01, "A1602", A_Row#, A_A1602$   '客戶簡稱
+        SetSpdText Spd, tSpd_EXAR01, "A1614", A_Row#, A_A1614$   '聯絡人
+        SetSpdText Spd, tSpd_EXAR01, "A1605", A_Row#, A_A1605$   '電話號碼
+        SetSpdText Spd, tSpd_EXAR01, "A1606", A_Row#, A_A1606$   '傳真號碼
+        SetSpdText Spd, tSpd_EXAR01, "A1620", A_Row#, A_A1620$   '授信額度
+        SetSpdText Spd, tSpd_EXAR01, "A1621", A_Row#, A_A1621$   '應收帳款
+        SetSpdText Spd, tSpd_EXAR01, "A1643", A_Row#, A_A1643$   '應收票據
+        SetSpdText Spd, tSpd_EXAR01, "credit", A_Row#, A_credit$ '可用額度
         SetSpdText Spd, tSpd_EXAR01, "Flag", A_Row#, A_FmtStr$
-        SetSpdText Spd, tSpd_EXAR01, "TEST", A_Row#, "TEST"
+'        SetSpdText Spd, tSpd_EXAR01, "TEST", A_Row#, "TEST"
         
         
        
@@ -524,12 +449,13 @@ Dim A_Break_Value#                              '科目小計 of A1508
         '   若Spread的MaxRows大於等於100筆,則先跳至PrintSub將Spread上的資料印出,
         '   並將MaxRows歸零,再繼續Prepare資料至V Screen.
         '========================================================================
-        If (G_ReportDataFrom = G_FromRecordSet And G_PrintSelect <> G_Print2Screen) And A_Row# >= 100 Then
+        If (G_ReportDataFrom = G_FromRecordSet And G_PrintSelect <> _
+            G_Print2Screen) And A_Row# >= 100 Then
             GoSub Print2SpreadA
         End If
        
         '清空,Break以後,不列印此欄位的資料
-        A_A1507$ = ""
+        A_A1617$ = ""
        
         '設定資料列的套用格式
         A_FmtStr$ = "FD$"   'Format: [ReportData]
@@ -542,7 +468,7 @@ Dim A_Break_Value#                              '科目小計 of A1508
         '當Esc鍵被觸發,結束列印動作
         If A_Exit% Then Exit Do
        
-        DY_A15.MoveNext
+        DY_A16.MoveNext
        
     Loop
     
@@ -551,13 +477,15 @@ Dim A_Break_Value#                              '科目小計 of A1508
 
     '列印表尾
     '列印科目合計的Break
-    PrintBreak Spd, A_Row#, G_Pnl_Sum$, A_Break_Value#, "B2$;B3$;H9$"
+    PrintBreak Spd, A_Row#, G_Pnl_Sum$, A_Break_Value#, A_Break_Value2#, _
+        A_Break_Value3#, A_Break_Value4#, "B2$;B3$;H9$"
           
     '列印科目小計的Break
-    PrintBreak Spd, A_Row#, G_Pnl_Total$, G_A1508_Total#, "B3$;H9$"
+    PrintBreak Spd, A_Row#, G_Pnl_Total$, G_A1620_Total#, G_A1621_Total#, G_A1643_Total#, G_Credit_Total#, "B3$;H9$"
           
     '若於Q畫面選擇非螢幕顯示的列印方式,於資料處理結束,須再將Spread上的資料印出.
-    If (G_ReportDataFrom = G_FromRecordSet And G_PrintSelect <> G_Print2Screen) And Spd.MaxRows > 0 Then
+    If (G_ReportDataFrom = G_FromRecordSet And G_PrintSelect <> G_Print2Screen) _
+        And Spd.MaxRows > 0 Then
        GoSub Print2SpreadA
     End If
     
@@ -573,14 +501,6 @@ Print2SpreadA:
     Return
 End Sub
 
-'========================================================================
-' Module    : mod_TSR03
-' Procedure : PrintBottom
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : 列印報表表尾
-' Details   :
-'========================================================================
 Sub PrintBottom(Prb As ProgressBar, Spd As vaSpread)
     
     '??? 列印印表人
@@ -590,7 +510,8 @@ Sub PrintBottom(Prb As ProgressBar, Spd As vaSpread)
 
 
     '??? 將起始欄位中的資料,以G_G1字元將資料切割成多個欄位值
-    SetExcelTextToColumns G_XlsStartCol%, 1, G_XlsHRows% + G_ExcelIndex#, SetXlsFldDataType(tSpd_EXAR01)
+    SetExcelTextToColumns G_XlsStartCol%, 1, G_XlsHRows% + G_ExcelIndex#, _
+        SetXlsFldDataType(tSpd_EXAR01)
     
     '設定Excel的報表格式
     SetExcelFormat
@@ -600,25 +521,23 @@ Sub PrintBottom(Prb As ProgressBar, Spd As vaSpread)
     Prb.Visible = False
 End Sub
 
-'========================================================================
-' Procedure : PrintBreak (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : 處理Break的列印
-' Details   :
-'========================================================================
-Sub PrintBreak(Spd As vaSpread, A_Row#, ByVal A_Desc$, ByVal A_Break_Value#, ByVal A_FmtStr$)
+Sub PrintBreak(Spd As vaSpread, A_Row#, ByVal A_Desc$, ByVal A_Break_Value#, _
+    ByVal A_Break_Value2#, ByVal A_Break_Value3#, ByVal A_Break_Value4#, ByVal _
+    A_FmtStr$)
 Dim A_STR$, A_PrtStr$, A_Col&, A_Len&, A_Len2&
 
     'Keep列印資料至變數
     A_STR$ = A_Desc$ & G_G1 & Format(A_Break_Value#, "#,##0.00")
+    A_STR$ = A_STR$ & G_G1 & Format(A_Break_Value2#, "#,##0.00")
+    A_STR$ = A_STR$ & G_G1 & Format(A_Break_Value3#, "#,##0.00")
+    A_STR$ = A_STR$ & G_G1 & Format(A_Break_Value4#, "#,##0.00")
     A_STR$ = PrintUse(B31$, A_STR$)
     
     '將Spread上的MaxRows加一
     AddSpreadMaxRows Spd, A_Row#
     
     '以欄位名稱設定欄位值至Spread
-    SetSpdText Spd, tSpd_EXAR01, "A1507", A_Row#, A_STR$
+    SetSpdText Spd, tSpd_EXAR01, "A1617", A_Row#, A_STR$
     
     '設定該列列印時所套用的格式字串
     SetSpdText Spd, tSpd_EXAR01, "Flag", A_Row#, A_FmtStr$
@@ -630,16 +549,8 @@ Dim A_STR$, A_PrtStr$, A_Col&, A_Len&, A_Len2&
     If G_PrintSelect = G_Print2Screen Then Spd.TopRow = SetSpreadTopRow(Spd)
 End Sub
 
-'========================================================================
-' Module    : mod_TSR03
-' Procedure : PrintSub
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : 將資料由Spread讀取列印至文字檔,印表機或Excel
-' Details   :
-'========================================================================
 Sub PrintSub(Prb As ProgressBar, Spd As vaSpread, ByVal ShowProgress%, A_Exit%)
-Dim A_PrtStr$, A_A1507$, A_FmtStr$()
+Dim A_PrtStr$, A_A1617$, A_FmtStr$()
 Dim A_Row#, I#
 
     '由V Screen執行的列印動作,才須處理的作業
@@ -662,13 +573,16 @@ Dim A_Row#, I#
         '    參數一 : Spread Name           參數二 : 參數一所屬的Spead Type Name
         '    參數三 : 自訂的欄位名稱        參數四 : 資料列
         '========================================================================
-        A_A1507$ = GetSpdText(Spd, tSpd_EXAR01, "A1507", A_Row#)
-        GetSpdText Spd, tSpd_EXAR01, "A1502", A_Row#, , , , , True
-        GetSpdText Spd, tSpd_EXAR01, "A1505", A_Row#
-        GetSpdText Spd, tSpd_EXAR01, "A1504", A_Row#
-        GetSpdText Spd, tSpd_EXAR01, "A1510", A_Row#
-        GetSpdText Spd, tSpd_EXAR01, "A1512", A_Row#
-        GetSpdText Spd, tSpd_EXAR01, "A1508", A_Row#
+        A_A1617$ = GetSpdText(Spd, tSpd_EXAR01, "A1617", A_Row#)
+        GetSpdText Spd, tSpd_EXAR01, "A1601", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "A1602", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "A1614", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "A1605", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "A1606", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "A1620", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "A1621", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "A1643", A_Row#
+        GetSpdText Spd, tSpd_EXAR01, "credit", A_Row#
         A_FmtStr$ = Split(GetSpdText(Spd, tSpd_EXAR01, "Flag", A_Row#), ";")
         
         For I# = 0 To UBound(A_FmtStr$)
@@ -679,21 +593,21 @@ Dim A_Row#, I#
            
             '??? 將字串傳給PrintOut3處理列印動作
             Select Case UCase$(A_FmtStr$(I#))
-                Case "H1$"
+                Case "H1$"      'Single white space
                     PrintOut3 Spd, H1$, "", -1
                     
-                Case "H9$"
+                Case "H9$"      'Line: =========================
                     PrintOut3 Spd, H9$, "", -1
                     
-                Case "B2$"
+                Case "B2$"      'Line: -------------------------
                     PrintOut3 Spd, B2$, "", -1
                     
-                Case "B1$"
+                Case "B1$"      'Break Header
                     G_ExcelIndex# = G_ExcelIndex# + 1
                     If G_PrintSelect = G_Print2Excel Then
-                       A_PrtStr$ = PrintUse(B1$, G_Pnl_A1607 & G_G1 & A_A1507$)
+                       A_PrtStr$ = PrintUse(B1$, G_Pnl_A1617$ & G_G1 & A_A1617$)
                     Else
-                       A_PrtStr$ = G_Pnl_A1607 & G_G1 & A_A1507$
+                       A_PrtStr$ = G_Pnl_A1617$ & G_G1 & A_A1617$
                     End If
                     PrintOut3 Spd, B1$, A_PrtStr$, G_ExcelIndex#
                     '若列印至Excel時,合併Break欄位的儲存格
@@ -701,9 +615,9 @@ Dim A_Row#, I#
                         G_XlsHRows%, G_ExcelMaxCols%, G_ExcelMaxCols%, 0), xlLeft, _
                         xlCenter, True
                         
-                Case "B3$"
+                Case "B3$"      'Break Value
                     G_ExcelIndex# = G_ExcelIndex# + 1
-                    PrintOut3 Spd, B3$, A_A1507$, G_ExcelIndex#
+                    PrintOut3 Spd, B3$, A_A1617$, G_ExcelIndex#
                     
                     '設定Excel Cells Range的背景顏色
                     SetExcelRangeColor G_XlsHRows% + G_ExcelIndex#, G_XlsHRows% _
@@ -712,15 +626,15 @@ Dim A_Row#, I#
                         
                     '若列印至Excel時,合併Break欄位的儲存格
                     SetCellAlignment GetMergeCols(1, G_ExcelIndex# + _
-                        G_XlsHRows%, G_ExcelMaxCols%, G_ExcelMaxCols%, 0), xlLeft, _
+                        G_XlsHRows%, G_ExcelMaxCols%, G_ExcelMaxCols%, 0), xlRight, _
                         xlCenter, True
                         
-                Case "FD$"
+                Case "FD$"      'Contents
                     G_ExcelIndex# = G_ExcelIndex# + 1
                     PrintOut3 Spd, fd$, PrintStrConnect(tSpd_EXAR01, 2), _
                         G_ExcelIndex#
                         
-                Case "NP"
+                Case "NP"       'New Page
                     PageCheck Spd, True
                     
             End Select
@@ -744,7 +658,7 @@ End Sub
 Sub ReDefineHeaderAlign()
 '針對與預設值不同的欄位,重新設定報表抬頭欄位的對齊方式
 
-    ChangeReportHeaderAlign tSpd_EXAR01, "A1507", SS_CELL_H_ALIGN_LEFT
+    ChangeReportHeaderAlign tSpd_EXAR01, "A1617", SS_CELL_H_ALIGN_LEFT
 '    ChangeReportHeaderAlign tSpd_EXAR01, "A0902", SS_CELL_H_ALIGN_CENTER
 '    ChangeReportHeaderAlign tSpd_EXAR01, "A0906", SS_CELL_H_ALIGN_CENTER
 '    ChangeReportHeaderAlign tSpd_EXAR01, "A0907", SS_CELL_H_ALIGN_RIGHT
@@ -765,14 +679,6 @@ Sub ReDefineReportHeader()
 '                                   :
 End Sub
 
-'========================================================================
-' Module    : mod_TSR03
-' Procedure : Reference_SINI
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Private Function Reference_SINI(ByVal A_Section$, ByVal A_Topic$) As String
 On Local Error GoTo MyError
 Dim A_Sql$
@@ -794,13 +700,6 @@ MyError:
     If retcode = IDCANCEL Then CloseFileDB: End
 End Function
 
-'========================================================================
-' Procedure : ReportHeader (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   : 列印報表表頭
-' Details   :
-'========================================================================
 Sub ReportHeader(Spd As vaSpread)
 Dim A_H2$, A_H3$, A_H4$, A_H5$, A_FC$
 Dim A_FirstColName$, A_LastColName$
@@ -873,13 +772,6 @@ Dim A_FirstColName$, A_LastColName$
     If G_PrintSelect = G_Print2Excel Then G_XlsHRows% = 6
 End Sub
 
-'========================================================================
-' Procedure : ReportSet (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Function ReportSet() As Boolean
     ReportSet = True
     
@@ -912,88 +804,6 @@ Function ReportSet() As Boolean
     End If
 End Function
 
-'========================================================================
-' Procedure : SetReportCols (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/7
-' Purpose   : setup tSpd columns
-' Details   :
-'========================================================================
-Sub SetReportCols()
-    '========================================================================
-    '*** 設定Q Screen中的Spd_Help vaSpread **********************************
-    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread上的欄位總數
-    '    參數三 : 是否允許User自訂排序欄位及其順序
-    '========================================================================
-    InitialCols tSpd_Help, 2, False
-    
-    '========================================================================
-    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
-    '    參數一 : Spread Type Name
-    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
-    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
-    '    參數四 : Optional - 設定程式預設排序欄位的順序
-    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
-    '    參數六 : Optional - 設定Break欄位的順序
-    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
-    '========================================================================
-    AddReportCol tSpd_Help, "A1502", , 1
-    AddReportCol tSpd_Help, "A1503", , 2
-    
-    '========================================================================
-    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread所在的Form Name
-    '    參數三 : vaSpread Name
-    '========================================================================
-    GetSpreadDefault tSpd_Help, "frm_EXARq", "Spd_Help"
-
-    '========================================================================
-    '*** 設定V Screen中的Spd_EXAR01 vaSpread *********************************
-    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread上的欄位總數
-    '    參數三 : 是否允許User自訂排序欄位及其順序
-    '========================================================================
-    InitialCols tSpd_EXAR01, 8, False
-    
-    '========================================================================
-    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
-    '    參數一 : Spread Type Name
-    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
-    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
-    '    參數四 : Optional - 設定程式預設排序欄位的順序
-    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
-    '    參數六 : Optional - 設定Break欄位的順序
-    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
-    '========================================================================
-    AddReportCol tSpd_EXAR01, "A1507", , 1, , 1
-    AddReportCol tSpd_EXAR01, "A1502", , 2
-    AddReportCol tSpd_EXAR01, "A1505"
-    AddReportCol tSpd_EXAR01, "A1504"
-    AddReportCol tSpd_EXAR01, "A1510"
-    AddReportCol tSpd_EXAR01, "A1512"
-    AddReportCol tSpd_EXAR01, "A1508"
-    AddReportCol tSpd_EXAR01, "Flag", 2
-    
-    '========================================================================
-    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
-    '    參數一 : Spread Type Name
-    '    參數二 : vaSpread所在的Form Name
-    '    參數三 : vaSpread Name
-    '========================================================================
-    GetSpreadDefault tSpd_EXAR01, "frm_EXAR", "Spd_EXAR01"
-End Sub
-
-'========================================================================
-' Procedure : Set_Excel_Property (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Sub Set_Excel_Property(Spd As vaSpread, tSPD As Spread)
 '設定起始欄位為1,並將Headers的總列數歸零
     G_XlsStartCol% = 1: G_XlsHRows% = 0
@@ -1008,22 +818,13 @@ Sub Set_Excel_Property(Spd As vaSpread, tSPD As Spread)
     SetExcelDataType Spd, tSPD
 End Sub
 
-'========================================================================
-' Procedure : SetExcelFormat (mod_TSR03)
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/4
-' Purpose   :
-' Details   :
-'========================================================================
 Sub SetExcelFormat()
-'設定Excel報表格式,於資料列印完後才設定
 Dim A_MaxCol$, A_Row#
 
     If G_PrintSelect <> G_Print2Excel Then Exit Sub
 
-
     '========================================================================
-    ' Excel Brakers Setting
+    ' Excel style Setting
     '========================================================================
     '??? 目前EXCEL印到第幾列
     A_Row# = G_ExcelIndex# + G_XlsHRows%
@@ -1096,34 +897,25 @@ Dim A_MaxCol$, A_Row#
     SelectExcelCells "A1"
 End Sub
 
-'========================================================================
-' Module    : mod_TSR03
-' Procedure : SetPrintFormatStr
-' @ Author  : Mike_chang
-' @ Date    : 2015/9/3
-' Purpose   :
-' Details   :
-'========================================================================
 Sub SetPrintFormatStr()
-'Run Time設定報表的格式
 
-'??? 對報表表頭格式進行變數初始值的動作
-    H3l$ = ""
-    H4l$ = "############## : ########## - ##########"
-    H5l$ = "############## : ## ###############"
+    '??? 對報表表頭格式進行變數初始值的動作
+    H3l$ = "########## : ########## - ##########"
+    H4l$ = "########## : ############ - ############"
+    H5l$ = "########## : ############### - ###############"
     HDate$ = "######## : ##########"
     HPerson$ = "######## : ############"
-    B31$ = "######## : ~~~~~~~~~~~~~~~~~~~~  "
-    B11$ = "######## : ####################"
+    B31$ = "######## : ~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~  "
+    B11$ = "######## : ###############"
 
-'螢幕顯示不須設定報表格式
+    '螢幕顯示不須設定報表格式
     If G_PrintSelect = G_Print2Screen Then Exit Sub
 
-'??? 設定報表左右側空間及欄間隔,若使用預設值可不輸入
+    '??? 設定報表左右側空間及欄間隔,若使用預設值可不輸入
     SetRptAllocate
     
-'??? 取得報表的最小寬度
-    GetRptMinWidth H5l$ & Space(1) & HDate$
+    '??? 取得報表的最小寬度
+    GetRptMinWidth H3l$ & Space(1) & HDate$
     
 ' 一列以上Header的格式設定 =====================================================================
 '??? 取得標題或資料的字串格式(參數二表傳回的格式型態 -- 1:標題格式 2:資料顯示的格式)
@@ -1141,36 +933,107 @@ Sub SetPrintFormatStr()
 '    fd$ = GetRptFormatStr(tSpd_EXAR01, 2)
 ' ==============================================================================================
    
-'??? 取得標題或資料的字串格式(參數二表傳回的格式型態 -- 1:標題格式 2:資料顯示的格式)
-    ' 針對與預設值不同的欄位,重新設定報表抬頭欄位的對齊方式
+    '??? 取得標題或資料的字串格式(參數二表傳回的格式型態 -- 1:標題格式 2:資料顯示的格式)
+    '   針對與預設值不同的欄位,重新設定報表抬頭欄位的對齊方式
     ReDefineHeaderAlign
 
-'??? 表頭為Single Line 時使用
+    '??? 表頭為Single Line 時使用
     FC$ = GetRptFormatStr(tSpd_EXAR01, 1)
     fd$ = GetRptFormatStr(tSpd_EXAR01, 2)
 
-'??? 取得報表抬頭的格式
+    '??? 取得報表抬頭的格式
     H2$ = GetRptTitleFormat()
     
-'??? 取得報表表頭資料的格式
-    H3l$ = PrintUse(H3l$, "")
-    H4l$ = PrintUse(H4l$, G_Pnl_A1601$ & G_G1 & G_A1501$ & G_G1 & G_A1501n$)
-    H5l$ = PrintUse(H5l$, G_Pnl_A16023$ & G_G1 & G_A1502s$ & G_G1 & G_A1502e$)
+    '??? 取得報表表頭資料的格式
+    H3l$ = PrintUse(H3l$, G_Pnl_A1601$ & G_G1 & G_A1601s$ & G_G1 & G_A1601e$)
+    H4l$ = PrintUse(H4l$, G_Pnl_A1617$ & G_G1 & G_A1617s$ & G_G1 & G_A1617e$)
+    H5l$ = PrintUse(H5l$, G_Pnl_A1609$ & G_G1 & G_A1609s$ & G_G1 & G_A1609e$)
     H3$ = GetRptHeaderFormat(H3l$, HDate$)
     H4$ = GetRptHeaderFormat(H4l$, HDate$)
     H5$ = GetRptHeaderFormat(H5l$, HDate$)
-    B31$ = GetRptHeaderFormat(H3l$, B31$)
+    B31$ = GetRptHeaderFormat("", B31$)
 
-'??? 取得報表Break欄位的格式
+    '??? 取得報表Break欄位的格式
     B1$ = GetRptHeaderFormat(B11$)
    
-'??? 取得續下頁及印表人的格式
+    '??? 取得續下頁及印表人的格式
     N1$ = GetRptFootFormat(HPerson$)
     N2$ = PrintUse(GetRptLineFormat("~"), HPerson$)
     
-'??? 取得區隔列的格式
+    '??? 取得區隔列的格式
     B2$ = GetRptLineFormat("-")
-    B3$ = GetRptLineFormat("#")
+    B3$ = GetRptLineFormat("~")
     H9$ = GetRptLineFormat("=")
+End Sub
+
+Sub SetReportCols()
+    '========================================================================
+    '*** 設定Q Screen中的Spd_Help vaSpread **********************************
+    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread上的欄位總數
+    '    參數三 : 是否允許User自訂排序欄位及其順序
+    '========================================================================
+    InitialCols tSpd_Help, 2, False
+    
+    '========================================================================
+    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
+    '    參數一 : Spread Type Name
+    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
+    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
+    '    參數四 : Optional - 設定程式預設排序欄位的順序
+    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
+    '    參數六 : Optional - 設定Break欄位的順序
+    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
+    '========================================================================
+    AddReportCol tSpd_Help, "A0801", , 1
+    AddReportCol tSpd_Help, "A0802", , 2
+    
+    '========================================================================
+    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread所在的Form Name
+    '    參數三 : vaSpread Name
+    '========================================================================
+    GetSpreadDefault tSpd_Help, "frm_EXAR01q", "Spd_Help"
+
+    '========================================================================
+    '*** 設定V Screen中的Spd_EXAR01 vaSpread *********************************
+    '??? 宣告Spread型態的Columns及Sorts的陣列個數,
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread上的欄位總數
+    '    參數三 : 是否允許User自訂排序欄位及其順序
+    '========================================================================
+    InitialCols tSpd_EXAR01, 11, False
+    
+    '========================================================================
+    '??? 設定vaSpread上的所有欄位及排序欄位至Spread Type中
+    '    參數一 : Spread Type Name
+    '    參數二 : 設定用來存取vaSpread上欄位的欄位名稱
+    '    參數三 : Optional - 設定隱藏欄位(0:顯示  1:暫時隱藏,預設值  2:永久隱藏)
+    '    參數四 : Optional - 設定程式預設排序欄位的順序
+    '    參數五 : Optional - 設定程式預設排序欄位的方向(1:遞增,預設值  2:遞減)
+    '    參數六 : Optional - 設定Break欄位的順序
+    '    參數七 : Optional - 設定Break欄位是否與其他欄位顯示於同一列上(True,預設值 / False)
+    '========================================================================
+    AddReportCol tSpd_EXAR01, "A1617", , 1, , 1
+    AddReportCol tSpd_EXAR01, "A1601", , 2
+    AddReportCol tSpd_EXAR01, "A1602"
+    AddReportCol tSpd_EXAR01, "A1614"
+    AddReportCol tSpd_EXAR01, "A1605"
+    AddReportCol tSpd_EXAR01, "A1606"
+    AddReportCol tSpd_EXAR01, "A1620"
+    AddReportCol tSpd_EXAR01, "A1621"
+    AddReportCol tSpd_EXAR01, "A1643"
+    AddReportCol tSpd_EXAR01, "credit"
+    AddReportCol tSpd_EXAR01, "Flag", 2
+    
+    '========================================================================
+    '??? 抓取User自訂報表之欄位顯示順序及排序欄位
+    '    參數一 : Spread Type Name
+    '    參數二 : vaSpread所在的Form Name
+    '    參數三 : vaSpread Name
+    '========================================================================
+    GetSpreadDefault tSpd_EXAR01, "frm_EXAR01", "Spd_EXAR01"
 End Sub
 
