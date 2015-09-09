@@ -342,12 +342,10 @@ Begin VB.Form Frm_EXAM02q
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            TextSave        =   ""
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            TextSave        =   ""
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
@@ -415,19 +413,15 @@ End Sub
 Private Function CheckRoutine_A0801() As Boolean
     CheckRoutine_A0801 = False
 
-'設定變數初始值
+    '設定變數初始值
     m_FieldError% = -1
     
-'增加想要做的檢查
+    '增加想要做的檢查
     If Trim$(Txt_A0801e) = "" Then Txt_A0801e = Txt_A0801s
     
     If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A0801s), Trim$(Txt_A0801e)) Then
-       '==================
-       'if from s to e
-       'do not focus back (since it's correct to entering from s to e)
-       '==================
        If ActiveControl.TabIndex = Txt_A0801e.TabIndex Then
-'若有錯誤, 將變數值設定為該Control之TabIndex
+          '若有錯誤, 將變數值設定為該Control之TabIndex
           m_FieldError% = Txt_A0801e.TabIndex
        Else
           m_FieldError% = Txt_A0801s.TabIndex
@@ -446,19 +440,19 @@ Private Function CheckRoutine_A0804() As Boolean
     m_FieldError% = -1
     
 '增加想要做的檢查
-    If Trim$(Txt_A0801e) = "" Then Txt_A0801e = Txt_A0801s
+    If Trim$(Txt_A0804e) = "" Then Txt_A0804e = Txt_A0804s
     
-    If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A0801s), Trim$(Txt_A0801e)) Then
+    If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A0804s), Trim$(Txt_A0804e)) Then
        '==================
        'if from s to e
        'do not focus back (since it's correct to entering from s to e)
        '==================
-       If ActiveControl.TabIndex = Txt_A0801e.TabIndex Then
+       If ActiveControl.TabIndex = Txt_A0804e.TabIndex Then
 '若有錯誤, 將變數值設定為該Control之TabIndex
-          m_FieldError% = Txt_A0801e.TabIndex
+          m_FieldError% = Txt_A0804e.TabIndex
        Else
-          m_FieldError% = Txt_A0801s.TabIndex
-          Txt_A0801s.SetFocus
+          m_FieldError% = Txt_A0804s.TabIndex
+          Txt_A0804s.SetFocus
        End If
        Exit Function
     End If
@@ -691,13 +685,13 @@ Private Sub Set_Property()
     ComboBox_Property Cbo_A0824, G_Font_Size, G_Font_Name
     
 '設Form中所有Command之標題及字形
-    Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
-    Command_Property Cmd_Ok, G_CmdSearch, G_Font_Name
-    Command_Property Cmd_Add, G_CmdAdd, G_Font_Name
-    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
+    Command_Property cmd_help, G_CmdHelp, G_Font_Name
+    Command_Property cmd_ok, G_CmdSearch, G_Font_Name
+    Command_Property cmd_add, G_CmdAdd, G_Font_Name
+    Command_Property cmd_exit, G_CmdExit, G_Font_Name
     
 '以下為標準指令, 不得修改
-    VSElastic_Property Vse_Background
+    VSElastic_Property Vse_background
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
@@ -807,29 +801,29 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
                 If ActiveControl.TabIndex = Txt_A0804s.TabIndex Then Exit Sub
                 If ActiveControl.TabIndex = Txt_A0804e.TabIndex Then Exit Sub
                 KeyCode = 0
-                If Cmd_Help.Visible = True And Cmd_Help.Enabled = True Then
-                   Cmd_Help.SetFocus
+                If cmd_help.Visible = True And cmd_help.Enabled = True Then
+                   cmd_help.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F2
                 KeyCode = 0
-                If Cmd_Ok.Visible = True And Cmd_Ok.Enabled = True Then
-                   Cmd_Ok.SetFocus
+                If cmd_ok.Visible = True And cmd_ok.Enabled = True Then
+                   cmd_ok.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F4
                 KeyCode = 0
-                If Cmd_Add.Visible = True And Cmd_Add.Enabled = True Then
-                   Cmd_Add.SetFocus
+                If cmd_add.Visible = True And cmd_add.Enabled = True Then
+                   cmd_add.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_ESCAPE
                 KeyCode = 0
-                If Cmd_Exit.Visible = True And Cmd_Exit.Enabled = True Then
-                   Cmd_Exit.SetFocus
+                If cmd_exit.Visible = True And cmd_exit.Enabled = True Then
+                   cmd_exit.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If

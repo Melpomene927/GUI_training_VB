@@ -1216,9 +1216,11 @@ Begin VB.Form frm_EXAM02
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -1703,7 +1705,7 @@ On Local Error GoTo My_Error
     Pnl_A0202.Caption = Trim(DY_A08.Fields("A0804") & "")
     Txt_A0805.text = Trim$(DateOut(DY_A08.Fields("A0805") & ""))
     Txt_A0806.text = Trim$(DateOut(DY_A08.Fields("A0806") & ""))
-    Txt_A0807.text = Trim$(Num(DY_A08.Fields("A0807")) & "")
+    Txt_A0807.text = Trim$(Word(DY_A08.Fields("A0807")) & "")
     Txt_A0808.text = Trim$(DateOut(DY_A08.Fields("A0808") & ""))
     Txt_A0809.text = Trim$(DY_A08.Fields("A0809") & "")
     Txt_A0810.text = Trim$(DY_A08.Fields("A0810") & "")
@@ -1763,7 +1765,7 @@ Dim A_A0824$
        InsertFields "A0804", Trim(Txt_A0804.text & ""), G_Data_String
        InsertFields "A0805", Trim(DateIn(Txt_A0805.text & "")), G_Data_String
        InsertFields "A0806", Trim(DateIn(Txt_A0806.text & "")), G_Data_String
-       InsertFields "A0807", Trim(Word(Txt_A0807.text & "")), G_Data_Numeric
+       InsertFields "A0807", Trim(Num(Txt_A0807.text & "")), G_Data_Numeric
        InsertFields "A0808", Trim(DateIn(Txt_A0808.text & "")), G_Data_String
        InsertFields "A0809", Trim(Txt_A0809.text & ""), G_Data_String
        InsertFields "A0810", Trim(Txt_A0810.text & ""), G_Data_String
@@ -1797,7 +1799,7 @@ Dim A_A0824$
        UpdateString "A0804", Trim(Txt_A0804.text & ""), G_Data_String
        UpdateString "A0805", Trim(DateIn(Txt_A0805.text & "")), G_Data_String
        UpdateString "A0806", Trim(DateIn(Txt_A0806.text & "")), G_Data_String
-       UpdateString "A0807", Trim(Word(Txt_A0807.text & "")), G_Data_String
+       UpdateString "A0807", Trim(Num(Txt_A0807.text & "")), G_Data_Numeric
        UpdateString "A0808", Trim(DateIn(Txt_A0808.text & "")), G_Data_String
        UpdateString "A0809", Trim(Txt_A0809.text & ""), G_Data_String
        UpdateString "A0810", Trim(Txt_A0810.text & ""), G_Data_String
