@@ -8,10 +8,10 @@ Begin VB.Form frm_EXAM02
    AutoRedraw      =   -1  'True
    BackColor       =   &H00E0FFFF&
    Caption         =   "員工基本資料管理"
-   ClientHeight    =   5070
+   ClientHeight    =   4755
    ClientLeft      =   5520
    ClientTop       =   2880
-   ClientWidth     =   9180
+   ClientWidth     =   10125
    BeginProperty Font 
       Name            =   "MS Sans Serif"
       Size            =   9.75
@@ -27,17 +27,17 @@ Begin VB.Form frm_EXAM02
    LinkTopic       =   "Form1"
    LockControls    =   -1  'True
    PaletteMode     =   1  'UseZOrder
-   ScaleHeight     =   5070
-   ScaleWidth      =   9180
+   ScaleHeight     =   4755
+   ScaleWidth      =   10125
    Begin VB.Frame Fra_A0822 
       Height          =   585
-      Left            =   5490
+      Left            =   5535
       TabIndex        =   34
-      Top             =   3105
-      Width           =   2085
+      Top             =   2970
+      Width           =   3120
       Begin Threed.SSOption Opt_A0822_M 
          Height          =   360
-         Left            =   135
+         Left            =   225
          TabIndex        =   20
          Top             =   180
          Width           =   810
@@ -59,7 +59,7 @@ Begin VB.Form frm_EXAM02
       End
       Begin Threed.SSOption Opt_A0822_N 
          Height          =   360
-         Left            =   1080
+         Left            =   1620
          TabIndex        =   21
          Top             =   180
          Width           =   810
@@ -82,15 +82,15 @@ Begin VB.Form frm_EXAM02
       End
    End
    Begin VsOcxLib.VideoSoftElastic Vse_background 
-      Height          =   4695
+      Height          =   4380
       Left            =   0
       TabIndex        =   63
       TabStop         =   0   'False
       Top             =   0
-      Width           =   9180
+      Width           =   10125
       _Version        =   327680
-      _ExtentX        =   16192
-      _ExtentY        =   8281
+      _ExtentX        =   17859
+      _ExtentY        =   7726
       _StockProps     =   70
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
@@ -110,9 +110,9 @@ Begin VB.Form frm_EXAM02
       Begin VB.Frame Fra_Help 
          BackColor       =   &H00FFFF80&
          Height          =   915
-         Left            =   7920
+         Left            =   8955
          TabIndex        =   65
-         Top             =   2520
+         Top             =   2205
          Visible         =   0   'False
          Width           =   855
          Begin FPSpread.vaSpread Spd_Help 
@@ -139,8 +139,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   20
          TabIndex        =   8
-         Top             =   1350
-         Width           =   1455
+         Top             =   1143
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0823 
          BackColor       =   &H00FFFFFF&
@@ -154,11 +154,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   3690
+         Left            =   4110
          MaxLength       =   20
          TabIndex        =   9
-         Top             =   1350
-         Width           =   1455
+         Top             =   1143
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0808 
          BackColor       =   &H00FFFFFF&
@@ -172,11 +172,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   6120
+         Left            =   6885
          MaxLength       =   8
          TabIndex        =   10
-         Top             =   1350
-         Width           =   1455
+         Top             =   1143
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0820 
          BackColor       =   &H00FFFFFF&
@@ -190,11 +190,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   6120
+         Left            =   6885
          MaxLength       =   8
          TabIndex        =   27
-         Top             =   4185
-         Width           =   1455
+         Top             =   3915
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0805 
          BackColor       =   &H00FFFFFF&
@@ -211,8 +211,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   8
          TabIndex        =   25
-         Top             =   4185
-         Width           =   1455
+         Top             =   3915
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0806 
          BackColor       =   &H00FFFFFF&
@@ -226,21 +226,21 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   3690
+         Left            =   4110
          MaxLength       =   8
          TabIndex        =   26
-         Top             =   4185
-         Width           =   1455
+         Top             =   3915
+         Width           =   1770
       End
       Begin VB.Frame Fra_A0821 
          Height          =   585
          Left            =   1305
          TabIndex        =   33
-         Top             =   3120
-         Width           =   2310
+         Top             =   2970
+         Width           =   3165
          Begin Threed.SSOption Opt_A0821_M 
             Height          =   360
-            Left            =   135
+            Left            =   270
             TabIndex        =   18
             Top             =   180
             Width           =   810
@@ -263,7 +263,7 @@ Begin VB.Form frm_EXAM02
          End
          Begin Threed.SSOption Opt_A0821_F 
             Height          =   360
-            Left            =   1125
+            Left            =   1575
             TabIndex        =   19
             Top             =   180
             Width           =   1035
@@ -296,11 +296,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   6120
+         Left            =   6885
          MaxLength       =   15
          TabIndex        =   15
-         Top             =   2430
-         Width           =   1455
+         Top             =   2241
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0819 
          BackColor       =   &H00FFFFFF&
@@ -314,11 +314,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   4320
+         Left            =   4770
          MaxLength       =   15
          TabIndex        =   17
-         Top             =   2790
-         Width           =   3255
+         Top             =   2610
+         Width           =   3885
       End
       Begin VB.TextBox Txt_A0817 
          BackColor       =   &H00FFFFFF&
@@ -332,22 +332,22 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   3690
+         Left            =   4110
          MaxLength       =   15
          TabIndex        =   14
-         Top             =   2430
-         Width           =   1455
+         Top             =   2241
+         Width           =   1770
       End
       Begin VB.ComboBox Cbo_A0824 
          Height          =   360
          IntegralHeight  =   0   'False
          ItemData        =   "EXAM02.frx":0572
-         Left            =   5940
+         Left            =   6885
          List            =   "EXAM02.frx":0574
          Style           =   2  'Dropdown List
          TabIndex        =   5
-         Top             =   540
-         Width           =   1635
+         Top             =   411
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0803 
          BackColor       =   &H00FFFFFF&
@@ -361,20 +361,20 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   5940
+         Left            =   6885
          MaxLength       =   12
          TabIndex        =   2
-         Top             =   180
-         Width           =   1635
+         Top             =   45
+         Width           =   1770
       End
       Begin Threed.SSPanel Pnl_A0602 
          Height          =   360
-         Left            =   1845
+         Left            =   2340
          TabIndex        =   36
-         Top             =   960
-         Width           =   1995
+         Top             =   780
+         Width           =   2085
          _Version        =   65536
-         _ExtentX        =   3519
+         _ExtentX        =   3678
          _ExtentY        =   635
          _StockProps     =   15
          BackColor       =   15790320
@@ -401,11 +401,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   6120
+         Left            =   6885
          MaxLength       =   8
          TabIndex        =   24
-         Top             =   3825
-         Width           =   1455
+         Top             =   3555
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0812 
          BackColor       =   &H00FFFFFF&
@@ -419,11 +419,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   3690
+         Left            =   4110
          MaxLength       =   20
          TabIndex        =   23
-         Top             =   3825
-         Width           =   1455
+         Top             =   3555
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0814 
          BackColor       =   &H00FFFFFF&
@@ -440,8 +440,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   20
          TabIndex        =   22
-         Top             =   3825
-         Width           =   1455
+         Top             =   3555
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0816 
          BackColor       =   &H00FFFFFF&
@@ -458,8 +458,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   15
          TabIndex        =   16
-         Top             =   2790
-         Width           =   1455
+         Top             =   2610
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0815 
          BackColor       =   &H00FFFFFF&
@@ -476,8 +476,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   15
          TabIndex        =   13
-         Top             =   2430
-         Width           =   1455
+         Top             =   2241
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0811 
          BackColor       =   &H00FFFFFF&
@@ -495,8 +495,8 @@ Begin VB.Form frm_EXAM02
          MaxLength       =   50
          TabIndex        =   12
          Text            =   " "
-         Top             =   2070
-         Width           =   6270
+         Top             =   1875
+         Width           =   7350
       End
       Begin VB.TextBox Txt_A0810 
          BackColor       =   &H00FFFFFF&
@@ -514,8 +514,8 @@ Begin VB.Form frm_EXAM02
          MaxLength       =   50
          TabIndex        =   11
          Text            =   " "
-         Top             =   1710
-         Width           =   6270
+         Top             =   1509
+         Width           =   7350
       End
       Begin VB.TextBox Txt_A0804 
          BackColor       =   &H00FFFFFF&
@@ -529,11 +529,11 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   5040
+         Left            =   5535
          MaxLength       =   40
          TabIndex        =   7
-         Top             =   960
-         Width           =   510
+         Top             =   780
+         Width           =   1050
       End
       Begin VB.TextBox Txt_A0825 
          BackColor       =   &H00FFFFFF&
@@ -550,8 +550,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   12
          TabIndex        =   6
-         Top             =   960
-         Width           =   510
+         Top             =   777
+         Width           =   1050
       End
       Begin VB.TextBox Txt_A0801 
          BackColor       =   &H00FFFFFF&
@@ -568,8 +568,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   6
          TabIndex        =   0
-         Top             =   180
-         Width           =   1005
+         Top             =   45
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0807 
          BackColor       =   &H00FFFFFF&
@@ -584,12 +584,12 @@ Begin VB.Form frm_EXAM02
          EndProperty
          Height          =   360
          IMEMode         =   3  'DISABLE
-         Left            =   3255
+         Left            =   4110
          MaxLength       =   40
          TabIndex        =   4
          Text            =   " "
-         Top             =   540
-         Width           =   1635
+         Top             =   411
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0826 
          BackColor       =   &H00FFFFFF&
@@ -606,8 +606,8 @@ Begin VB.Form frm_EXAM02
          Left            =   1305
          MaxLength       =   40
          TabIndex        =   3
-         Top             =   540
-         Width           =   1365
+         Top             =   411
+         Width           =   1770
       End
       Begin VB.TextBox Txt_A0802 
          BackColor       =   &H00FFFFFF&
@@ -621,17 +621,17 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   360
-         Left            =   3255
+         Left            =   4110
          MaxLength       =   12
          TabIndex        =   1
-         Top             =   180
-         Width           =   1635
+         Top             =   45
+         Width           =   1770
       End
       Begin Threed.SSCommand cmd_ok 
          Height          =   405
-         Left            =   7770
+         Left            =   8760
          TabIndex        =   31
-         Top             =   1500
+         Top             =   1320
          Width           =   1305
          _Version        =   65536
          _ExtentX        =   2302
@@ -651,9 +651,9 @@ Begin VB.Form frm_EXAM02
       End
       Begin Threed.SSCommand cmd_exit 
          Height          =   405
-         Left            =   7770
+         Left            =   8760
          TabIndex        =   32
-         Top             =   4140
+         Top             =   3870
          Width           =   1305
          _Version        =   65536
          _ExtentX        =   2302
@@ -673,12 +673,12 @@ Begin VB.Form frm_EXAM02
       End
       Begin Threed.SSCommand cmd_help 
          Height          =   405
-         Left            =   7770
+         Left            =   8760
          TabIndex        =   28
-         Top             =   150
+         Top             =   45
          Width           =   1305
          _Version        =   65536
-         _ExtentX        =   2293
+         _ExtentX        =   2302
          _ExtentY        =   714
          _StockProps     =   78
          Caption         =   "說明F1"
@@ -695,12 +695,12 @@ Begin VB.Form frm_EXAM02
       End
       Begin Threed.SSCommand Cmd_Next 
          Height          =   405
-         Left            =   7770
+         Left            =   8760
          TabIndex        =   30
-         Top             =   1050
+         Top             =   895
          Width           =   1305
          _Version        =   65536
-         _ExtentX        =   2293
+         _ExtentX        =   2302
          _ExtentY        =   714
          _StockProps     =   78
          Caption         =   "次頁F8"
@@ -717,12 +717,12 @@ Begin VB.Form frm_EXAM02
       End
       Begin Threed.SSCommand Cmd_Previous 
          Height          =   405
-         Left            =   7770
+         Left            =   8760
          TabIndex        =   29
-         Top             =   600
+         Top             =   470
          Width           =   1305
          _Version        =   65536
-         _ExtentX        =   2293
+         _ExtentX        =   2302
          _ExtentY        =   714
          _StockProps     =   78
          Caption         =   "前筆F7"
@@ -739,12 +739,12 @@ Begin VB.Form frm_EXAM02
       End
       Begin Threed.SSPanel Pnl_A0202 
          Height          =   360
-         Left            =   5580
+         Left            =   6570
          TabIndex        =   35
-         Top             =   960
-         Width           =   1995
+         Top             =   780
+         Width           =   2085
          _Version        =   65536
-         _ExtentX        =   3519
+         _ExtentX        =   3678
          _ExtentY        =   635
          _StockProps     =   15
          BackColor       =   15790320
@@ -773,8 +773,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   45
-         Top             =   1425
-         Width           =   1200
+         Top             =   1218
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0823 
          Caption         =   "職稱"
@@ -788,10 +788,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   3150
+         Left            =   3195
          TabIndex        =   46
-         Top             =   1425
-         Width           =   930
+         Top             =   1218
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0808 
          Caption         =   "生日"
@@ -805,10 +805,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   5625
+         Left            =   5895
          TabIndex        =   47
-         Top             =   1425
-         Width           =   930
+         Top             =   1218
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0820 
          Caption         =   "有效日期"
@@ -822,10 +822,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   5175
+         Left            =   5895
          TabIndex        =   62
-         Top             =   4260
-         Width           =   930
+         Top             =   3990
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0805 
          Caption         =   "到職日期"
@@ -841,8 +841,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   60
-         Top             =   4260
-         Width           =   930
+         Top             =   3990
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0806 
          Caption         =   "離職日期"
@@ -856,10 +856,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   2790
+         Left            =   3195
          TabIndex        =   61
-         Top             =   4260
-         Width           =   930
+         Top             =   3990
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0822 
          Caption         =   "婚姻狀況"
@@ -873,9 +873,9 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   4275
+         Left            =   4545
          TabIndex        =   56
-         Top             =   3375
+         Top             =   3240
          Width           =   930
       End
       Begin VB.Label Lbl_A0821 
@@ -892,8 +892,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   55
-         Top             =   3375
-         Width           =   660
+         Top             =   3240
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0818 
          Caption         =   "行動電話"
@@ -907,10 +907,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   5175
+         Left            =   5895
          TabIndex        =   52
-         Top             =   2505
-         Width           =   930
+         Top             =   2310
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0819 
          Caption         =   "Email Address"
@@ -924,9 +924,9 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   2880
+         Left            =   3195
          TabIndex        =   54
-         Top             =   2865
+         Top             =   2685
          Width           =   1425
       End
       Begin VB.Label Lbl_A0817 
@@ -941,9 +941,9 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   2880
+         Left            =   3195
          TabIndex        =   51
-         Top             =   2505
+         Top             =   2295
          Width           =   930
       End
       Begin VB.Label Lbl_A0824 
@@ -958,10 +958,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   4950
+         Left            =   5895
          TabIndex        =   42
-         Top             =   615
-         Width           =   930
+         Top             =   486
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0803 
          Caption         =   "英文姓名"
@@ -975,10 +975,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   4950
+         Left            =   5895
          TabIndex        =   39
-         Top             =   270
-         Width           =   1470
+         Top             =   120
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0813 
          Caption         =   "郵遞區號"
@@ -992,10 +992,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   5175
+         Left            =   5895
          TabIndex        =   59
-         Top             =   3900
-         Width           =   930
+         Top             =   3630
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0812 
          Caption         =   "城市"
@@ -1009,10 +1009,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   2880
+         Left            =   3195
          TabIndex        =   58
-         Top             =   3900
-         Width           =   930
+         Top             =   3630
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0814 
          Caption         =   "國家"
@@ -1028,8 +1028,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   57
-         Top             =   3900
-         Width           =   930
+         Top             =   3630
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0816 
          Caption         =   "連絡傳真"
@@ -1045,8 +1045,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   53
-         Top             =   2865
-         Width           =   930
+         Top             =   2685
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0825 
          Caption         =   "群組代號"
@@ -1062,8 +1062,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   43
-         Top             =   1035
-         Width           =   930
+         Top             =   852
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0802 
          Caption         =   "中文姓名"
@@ -1077,10 +1077,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   2340
+         Left            =   3195
          TabIndex        =   38
-         Top             =   270
-         Width           =   930
+         Top             =   120
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0811 
          Caption         =   "英文地址"
@@ -1096,8 +1096,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   49
-         Top             =   2145
-         Width           =   930
+         Top             =   1950
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0815 
          Caption         =   "連絡電話"
@@ -1113,8 +1113,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   50
-         Top             =   2505
-         Width           =   930
+         Top             =   2316
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0804 
          Caption         =   "部門代號"
@@ -1128,10 +1128,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   4050
+         Left            =   4545
          TabIndex        =   44
-         Top             =   1035
-         Width           =   975
+         Top             =   855
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0810 
          Caption         =   "中文地址"
@@ -1147,8 +1147,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   48
-         Top             =   1785
-         Width           =   930
+         Top             =   1584
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0807 
          Caption         =   "密碼"
@@ -1162,10 +1162,10 @@ Begin VB.Form frm_EXAM02
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   2715
+         Left            =   3195
          TabIndex        =   41
-         Top             =   615
-         Width           =   930
+         Top             =   486
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0826 
          Caption         =   "User ID"
@@ -1181,8 +1181,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   40
-         Top             =   615
-         Width           =   930
+         Top             =   486
+         Width           =   1245
       End
       Begin VB.Label Lbl_A0801 
          Caption         =   "員工編號"
@@ -1198,8 +1198,8 @@ Begin VB.Form frm_EXAM02
          Height          =   285
          Left            =   90
          TabIndex        =   37
-         Top             =   285
-         Width           =   930
+         Top             =   120
+         Width           =   1245
       End
    End
    Begin ComctlLib.StatusBar Sts_MsgLine 
@@ -1207,19 +1207,21 @@ Begin VB.Form frm_EXAM02
       Height          =   375
       Left            =   0
       TabIndex        =   64
-      Top             =   4695
-      Width           =   9180
-      _ExtentX        =   16193
+      Top             =   4380
+      Width           =   10125
+      _ExtentX        =   17859
       _ExtentY        =   661
       SimpleText      =   ""
       _Version        =   327682
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
@@ -1266,7 +1268,7 @@ Const m_NotMarried = 2
 Private Sub CBO_A0824_Prepare()
 On Local Error GoTo MyError
 Dim A_Sql$
-Dim DY_Tmp As Recordset
+Dim DY_TMP As Recordset
 
     '先清空Combo Box內容
     Cbo_A0824.Clear
@@ -1276,14 +1278,14 @@ Dim DY_Tmp As Recordset
     
     '開起檔案
     A_Sql$ = "Select A0101,A0102 From A01 ORDER BY A0101"
-    CreateDynasetODBC DB_ARTHGUI, DY_Tmp, A_Sql$, "DY_TMP", True
+    CreateDynasetODBC DB_ARTHGUI, DY_TMP, A_Sql$, "DY_TMP", True
 
     '將資料擺入Combo Box中
-    Do While Not DY_Tmp.EOF
-       Cbo_A0824.AddItem Format(Trim$(DY_Tmp.Fields("A0101") & ""), "!@@@") & Trim$(DY_Tmp.Fields("A0102") & "")
-       DY_Tmp.MoveNext
+    Do While Not DY_TMP.EOF
+       Cbo_A0824.AddItem Format(Trim$(DY_TMP.Fields("A0101") & ""), "!@@@") & Trim$(DY_TMP.Fields("A0102") & "")
+       DY_TMP.MoveNext
     Loop
-    DY_Tmp.Close
+    DY_TMP.Close
 
     '若Combo Box中有資料, 停在第一筆
     If Cbo_A0824.ListCount > 0 Then Cbo_A0824.ListIndex = 0
@@ -1310,7 +1312,7 @@ Private Function CheckRoutine_A0801() As Boolean
 
     '檢核資料是否已存在
     If G_AP_STATE = G_AP_STATE_ADD Then
-        If IsKeyExist() Then
+        If IsKeyExist(Txt_A0801) Then
              Sts_MsgLine.Panels(1) = G_Pnl_A0801$ & G_RecordExist
              m_FieldError% = Txt_A0801.TabIndex
              Txt_A0801.SetFocus
@@ -1335,6 +1337,26 @@ Private Function CheckRoutine_A0802() As Boolean
     End If
        
     CheckRoutine_A0802 = True
+End Function
+
+Private Function CheckRoutine_A0804() As Boolean
+    CheckRoutine_A0804 = False
+    m_FieldError% = -1
+    
+    If Trim$(Txt_A0804.text & "") = "" Then GoTo Check_Pass
+
+    '檢核資料是否不存在
+    If Not IsKeyExist(Txt_A0804) Then
+         Sts_MsgLine.Panels(1) = G_Pnl_A0804$ & G_RecordNotExist$
+         m_FieldError% = Txt_A0804.TabIndex
+         Pnl_A0202.Caption = ""
+         Txt_A0804.SetFocus
+    Else
+         Pnl_A0202.Caption = Trim(DY_A02.Fields("A0202") & "")
+    End If
+    
+Check_Pass:
+    CheckRoutine_A0804 = True
 End Function
 
 Private Function CheckRoutine_A0805() As Boolean
@@ -1446,6 +1468,27 @@ Private Function CheckRoutine_A0820() As Boolean
     CheckRoutine_A0820 = True
 End Function
 
+
+Private Function CheckRoutine_A0825() As Boolean
+    CheckRoutine_A0825 = False
+    m_FieldError% = -1
+    
+    If Trim(Txt_A0825.text & "") = "" Then GoTo Check_Pass
+    
+    '檢核資料是否不存在
+    If Not IsKeyExist(Txt_A0825) Then
+         Sts_MsgLine.Panels(1) = G_Pnl_A0825$ & G_RecordNotExist$
+         m_FieldError% = Txt_A0825.TabIndex
+         Txt_A0825.SetFocus
+         Pnl_A0602.Caption = ""
+    Else
+         Pnl_A0602.Caption = Trim(DY_A06.Fields("A0602") & "")
+    End If
+    
+Check_Pass:
+    CheckRoutine_A0825 = True
+End Function
+
 Private Sub ClearFieldsValue()
 '將欄位值清空
     Txt_A0801.text = ""
@@ -1479,10 +1522,10 @@ Private Sub ClearFieldsValue()
     Pnl_A0202.Caption = ""
 End Sub
 
-Private Sub DataPrepare_A02(Txt As TextBox)
+Private Sub DataPrepare_A02(txt As TextBox)
 'PrepareData for Txt_A0804
 Dim A_Sql$                  'SQL Message
-Dim DY_Tmp As Recordset     'Temporary Dynaset
+Dim DY_TMP As Recordset     'Temporary Dynaset
     Me.MousePointer = HOURGLASS
     
     '開起檔案
@@ -1490,15 +1533,15 @@ Dim DY_Tmp As Recordset     'Temporary Dynaset
     A_Sql$ = "Select A0201 ,A0202 From A02"
     
     'generate wildcard compare SQL Statement
-    If Txt.text <> "" Then
-        A_Sql$ = A_Sql$ & " Where A0201 Like '" & Txt.text & _
+    If txt.text <> "" Then
+        A_Sql$ = A_Sql$ & " Where A0201 Like '" & txt.text & _
             GetLikeStr(DB_ARTHGUI, True) & "'"
     End If
     A_Sql$ = A_Sql$ & " Order by A0201"
     
     'open dynaset of A02
-    CreateDynasetODBC DB_ARTHGUI, DY_Tmp, A_Sql$, "DY_TMP", True
-    If DY_Tmp.BOF And DY_Tmp.EOF Then
+    CreateDynasetODBC DB_ARTHGUI, DY_TMP, A_Sql$, "DY_TMP", True
+    If DY_TMP.BOF And DY_TMP.EOF Then
        Me.MousePointer = Default
        Sts_MsgLine.Panels(1) = G_NoReference
        Exit Sub
@@ -1518,29 +1561,29 @@ Dim DY_Tmp As Recordset     'Temporary Dynaset
          .Col = 1: .TypeHAlign = 2
     
          '將資料擺入Spread中
-         Do Until DY_Tmp.EOF
+         Do Until DY_TMP.EOF
             .MaxRows = .MaxRows + 1
             .Row = Spd_Help.MaxRows
             .Col = 1
-            .text = Trim(DY_Tmp.Fields("A0201") & "")
+            .text = Trim(DY_TMP.Fields("A0201") & "")
             .Col = 2
-            .text = Trim(DY_Tmp.Fields("A0202") & "")
-            DY_Tmp.MoveNext
+            .text = Trim(DY_TMP.Fields("A0202") & "")
+            DY_TMP.MoveNext
          Loop
-         DY_Tmp.Close
+         DY_TMP.Close
          
          '設定輔助視窗的顯示位置
-         SetHelpWindowPos Fra_Help, Spd_Help, 330, 90, 4305, 2025
-         .Tag = Txt.TabIndex    'set return control tab index
+         SetHelpWindowPos Fra_Help, Spd_Help, 330, 90, 8000, 2025
+         .Tag = txt.TabIndex    'set return control tab index
          .SetFocus
     End With
     Me.MousePointer = Default
 End Sub
 
-Private Sub DataPrepare_A06(Txt As TextBox)
+Private Sub DataPrepare_A06(txt As TextBox)
 'PrepareData for Txt_A0825
 Dim A_Sql$                  'SQL Message
-Dim DY_Tmp As Recordset     'Temporary Dynaset
+Dim DY_TMP As Recordset     'Temporary Dynaset
     Me.MousePointer = HOURGLASS
     
     '開起檔案
@@ -1548,15 +1591,15 @@ Dim DY_Tmp As Recordset     'Temporary Dynaset
     A_Sql$ = "Select A0601 ,A0602 From A06"
     
     'generate wildcard compare SQL Statement
-    If Txt.text <> "" Then
-       A_Sql$ = A_Sql$ & " Where A0601 Like '" & Txt.text & _
+    If txt.text <> "" Then
+       A_Sql$ = A_Sql$ & " Where A0601 Like '" & txt.text & _
            GetLikeStr(DB_ARTHGUI, True) & "'"
     End If
     A_Sql$ = A_Sql$ & " Order by A0601"
     
     'open dynaset of A06
-    CreateDynasetODBC DB_ARTHGUI, DY_Tmp, A_Sql$, "DY_TMP", True
-    If DY_Tmp.BOF And DY_Tmp.EOF Then
+    CreateDynasetODBC DB_ARTHGUI, DY_TMP, A_Sql$, "DY_TMP", True
+    If DY_TMP.BOF And DY_TMP.EOF Then
        Me.MousePointer = Default
        Sts_MsgLine.Panels(1) = G_NoReference
        Exit Sub
@@ -1576,20 +1619,20 @@ Dim DY_Tmp As Recordset     'Temporary Dynaset
          .Col = 1: .TypeHAlign = 2
     
          '將資料擺入Spread中
-         Do Until DY_Tmp.EOF
+         Do Until DY_TMP.EOF
             .MaxRows = .MaxRows + 1
             .Row = Spd_Help.MaxRows
             .Col = 1
-            .text = Trim(DY_Tmp.Fields("A0601") & "")
+            .text = Trim(DY_TMP.Fields("A0601") & "")
             .Col = 2
-            .text = Trim(DY_Tmp.Fields("A0602") & "")
-            DY_Tmp.MoveNext
+            .text = Trim(DY_TMP.Fields("A0602") & "")
+            DY_TMP.MoveNext
          Loop
-         DY_Tmp.Close
+         DY_TMP.Close
          
          '設定輔助視窗的顯示位置
-         SetHelpWindowPos Fra_Help, Spd_Help, 330, 90, 4305, 2025
-         .Tag = Txt.TabIndex    'set return control tab index
+         SetHelpWindowPos Fra_Help, Spd_Help, 330, 90, 8000, 2025
+         .Tag = txt.TabIndex    'set return control tab index
          .SetFocus
     End With
     Me.MousePointer = Default
@@ -1632,20 +1675,36 @@ Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = True
 End Function
 
-Private Function IsKeyExist() As Boolean
+Private Function IsKeyExist(txt As TextBox) As Boolean
 On Local Error GoTo My_Error
 Dim A_Sql$
-
     IsKeyExist = False
     
-    A_Sql$ = "Select A0801 From A08"
-    A_Sql$ = A_Sql$ & " where A0801='" & Trim(Txt_A0801) & "'"
-    A_Sql$ = A_Sql$ & " Order by A0801"
+    If txt.Name = "Txt_A0801" Then
+        A_Sql$ = "Select A0801 From A08"
+        A_Sql$ = A_Sql$ & " where A0801='" & Trim(txt.text) & "'"
+        A_Sql$ = A_Sql$ & " Order by A0801"
+        CreateDynasetODBC DB_ARTHGUI, DY_A081, A_Sql$, "DY_A081", True
+        If Not (DY_A081.BOF And DY_A081.EOF) Then IsKeyExist = True
+    End If
     
-    CreateDynasetODBC DB_ARTHGUI, DY_A081, A_Sql$, "DY_A081", True
-    If Not (DY_A081.BOF And DY_A081.EOF) Then IsKeyExist = True
+    If txt.Name = "Txt_A0804" Then
+        A_Sql$ = "Select A0201, A0202 From A02"
+        A_Sql$ = A_Sql$ & " where A0201='" & Trim(txt.text) & "'"
+        A_Sql$ = A_Sql$ & " Order by A0201"
+        CreateDynasetODBC DB_ARTHGUI, DY_A02, A_Sql$, "DY_A02", True
+        If Not (DY_A02.BOF And DY_A02.EOF) Then IsKeyExist = True
+    End If
+    
+    If txt.Name = "Txt_A0825" Then
+        A_Sql$ = "Select A0601, A0602 From A06"
+        A_Sql$ = A_Sql$ & " where A0601='" & Trim(txt.text) & "'"
+        A_Sql$ = A_Sql$ & " Order by A0601"
+        CreateDynasetODBC DB_ARTHGUI, DY_A06, A_Sql$, "DY_A06", True
+        If Not (DY_A06.BOF And DY_A06.EOF) Then IsKeyExist = True
+    End If
+    
     Exit Function
-    
 My_Error:
     retcode = AccessDBErrorMessage()
     If retcode = IDOK Then Resume
@@ -1765,7 +1824,7 @@ Dim A_A0824$
        InsertFields "A0804", Trim(Txt_A0804.text & ""), G_Data_String
        InsertFields "A0805", Trim(DateIn(Txt_A0805.text & "")), G_Data_String
        InsertFields "A0806", Trim(DateIn(Txt_A0806.text & "")), G_Data_String
-       InsertFields "A0807", Trim(Num(Txt_A0807.text & "")), G_Data_Numeric
+       InsertFields "A0807", Val(Num(Txt_A0807.text & "")), G_Data_Numeric
        InsertFields "A0808", Trim(DateIn(Txt_A0808.text & "")), G_Data_String
        InsertFields "A0809", Trim(Txt_A0809.text & ""), G_Data_String
        InsertFields "A0810", Trim(Txt_A0810.text & ""), G_Data_String
@@ -1799,7 +1858,7 @@ Dim A_A0824$
        UpdateString "A0804", Trim(Txt_A0804.text & ""), G_Data_String
        UpdateString "A0805", Trim(DateIn(Txt_A0805.text & "")), G_Data_String
        UpdateString "A0806", Trim(DateIn(Txt_A0806.text & "")), G_Data_String
-       UpdateString "A0807", Trim(Num(Txt_A0807.text & "")), G_Data_Numeric
+       UpdateString "A0807", Val(Num(Txt_A0807.text & "")), G_Data_Numeric
        UpdateString "A0808", Trim(DateIn(Txt_A0808.text & "")), G_Data_String
        UpdateString "A0809", Trim(Txt_A0809.text & ""), G_Data_String
        UpdateString "A0810", Trim(Txt_A0810.text & ""), G_Data_String
@@ -1838,7 +1897,7 @@ On Local Error GoTo My_Error
 Dim A_Sql$
 
     'A08
-    A_Sql$ = "Select A08.*, ISNULL(A01.A0102,'從缺') As A0102 From A08"
+    A_Sql$ = "Select A08.*, ISNULL(A01.A0102,'') As A0102 From A08"
     A_Sql$ = A_Sql$ & " LEFT JOIN A01 On A08.A0824 = A01.A0101"
     A_Sql$ = A_Sql$ & " where A0801='" & G_A0801$ & "'"
     A_Sql$ = A_Sql$ & " order by A0801"
@@ -1880,21 +1939,21 @@ End Function
 
 Sub SetButtonEnable(ByVal A_Enable%)
     If Not A_Enable% Then
-       Vse_Background.TabStop = True
-       cmd_previous.Tag = cmd_previous.Enabled
-       cmd_next.Tag = cmd_next.Enabled
-       Cmd_Ok.Tag = Cmd_Ok.Enabled
-       Cmd_Exit.Tag = Cmd_Exit.Enabled
+       Vse_background.TabStop = True
+       Cmd_Previous.Tag = Cmd_Previous.Enabled
+       Cmd_Next.Tag = Cmd_Next.Enabled
+       cmd_ok.Tag = cmd_ok.Enabled
+       cmd_exit.Tag = cmd_exit.Enabled
        
-       cmd_previous.Enabled = A_Enable%
-       cmd_next.Enabled = A_Enable%
-       Cmd_Ok.Enabled = A_Enable%
-       Cmd_Exit.Enabled = A_Enable%
+       Cmd_Previous.Enabled = A_Enable%
+       Cmd_Next.Enabled = A_Enable%
+       cmd_ok.Enabled = A_Enable%
+       cmd_exit.Enabled = A_Enable%
     Else
-       cmd_previous.Enabled = CBool(cmd_previous.Tag)
-       cmd_next.Enabled = CBool(cmd_next.Tag)
-       Cmd_Ok.Enabled = CBool(Cmd_Ok.Tag)
-       Cmd_Exit.Enabled = CBool(Cmd_Exit.Tag)
+       Cmd_Previous.Enabled = CBool(Cmd_Previous.Tag)
+       Cmd_Next.Enabled = CBool(Cmd_Next.Tag)
+       cmd_ok.Enabled = CBool(cmd_ok.Tag)
+       cmd_exit.Enabled = CBool(cmd_exit.Tag)
     End If
 End Sub
 
@@ -1903,27 +1962,27 @@ Sub SetCommand()
     Select Case G_AP_STATE
         Case G_AP_STATE_ADD
             'while Adding, Pkey(A0801) is allowed to input
-            Cmd_Help.Enabled = True
-            cmd_previous.Enabled = False
-            cmd_next.Enabled = False
-            Cmd_Ok.Enabled = True
-            Cmd_Exit.Enabled = True
+            cmd_help.Enabled = True
+            Cmd_Previous.Enabled = False
+            Cmd_Next.Enabled = False
+            cmd_ok.Enabled = True
+            cmd_exit.Enabled = True
             Txt_A0801.Enabled = True
         Case G_AP_STATE_UPDATE
             'while update, no meaning to change Pkey
-            Cmd_Help.Enabled = True
-            cmd_previous.Enabled = (G_ActiveRow# > 1)
-            cmd_next.Enabled = (G_ActiveRow# < G_MaxRows#)
-            Cmd_Ok.Enabled = True
-            Cmd_Exit.Enabled = True
+            cmd_help.Enabled = True
+            Cmd_Previous.Enabled = (G_ActiveRow# > 1)
+            Cmd_Next.Enabled = (G_ActiveRow# < G_MaxRows#)
+            cmd_ok.Enabled = True
+            cmd_exit.Enabled = True
             Txt_A0801.Enabled = False
         Case G_AP_STATE_DELETE
             'while delete, no meaning to change Pkey
-            Cmd_Help.Enabled = True
-            cmd_previous.Enabled = (G_ActiveRow# > 1)
-            cmd_next.Enabled = (G_ActiveRow# < G_MaxRows#)
-            Cmd_Ok.Enabled = True
-            Cmd_Exit.Enabled = True
+            cmd_help.Enabled = True
+            Cmd_Previous.Enabled = (G_ActiveRow# > 1)
+            Cmd_Next.Enabled = (G_ActiveRow# < G_MaxRows#)
+            cmd_ok.Enabled = True
+            cmd_exit.Enabled = True
             Txt_A0801.Enabled = False
      End Select
 End Sub
@@ -2008,14 +2067,14 @@ Private Sub Set_Property()
     Control_Property Opt_A0822_N, GetCaption("EXAM02", "NotMarried", "未婚")
     
 '設Form中所有Command之標題及字形
-    Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
-    Command_Property cmd_previous, G_CmdPrevious, G_Font_Name
-    Command_Property cmd_next, G_CmdNext, G_Font_Name
-    Command_Property Cmd_Ok, G_CmdOk, G_Font_Name
-    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
+    Command_Property cmd_help, G_CmdHelp, G_Font_Name
+    Command_Property Cmd_Previous, G_CmdPrevious, G_Font_Name
+    Command_Property Cmd_Next, G_CmdNext, G_Font_Name
+    Command_Property cmd_ok, G_CmdOk, G_Font_Name
+    Command_Property cmd_exit, G_CmdExit, G_Font_Name
 
 '以下為標準指令, 不得修改
-    VSElastic_Property Vse_Background
+    VSElastic_Property Vse_background
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
@@ -2272,36 +2331,36 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
                 If ActiveControl.TabIndex = Txt_A0804.TabIndex Then Exit Sub
                 If ActiveControl.TabIndex = Txt_A0825.TabIndex Then Exit Sub
                 KeyCode = 0
-                If Cmd_Help.Visible = True And Cmd_Help.Enabled = True Then
-                   Cmd_Help.SetFocus
+                If cmd_help.Visible = True And cmd_help.Enabled = True Then
+                   cmd_help.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F7
                 KeyCode = 0
-                If cmd_previous.Visible = True And cmd_previous.Enabled = True Then
-                   cmd_previous.SetFocus
+                If Cmd_Previous.Visible = True And Cmd_Previous.Enabled = True Then
+                   Cmd_Previous.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F8
                 KeyCode = 0
-                If cmd_next.Visible = True And cmd_next.Enabled = True Then
-                   cmd_next.SetFocus
+                If Cmd_Next.Visible = True And Cmd_Next.Enabled = True Then
+                   Cmd_Next.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F11
                 KeyCode = 0
-                If Cmd_Ok.Visible = True And Cmd_Ok.Enabled = True Then
-                   Cmd_Ok.SetFocus
+                If cmd_ok.Visible = True And cmd_ok.Enabled = True Then
+                   cmd_ok.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_ESCAPE
                 KeyCode = 0
-                If Cmd_Exit.Visible = True And Cmd_Exit.Enabled = True Then
-                   Cmd_Exit.SetFocus
+                If cmd_exit.Visible = True And cmd_exit.Enabled = True Then
+                   cmd_exit.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
@@ -2339,7 +2398,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     Cancel = True
-    If Cmd_Exit.Enabled Then Cmd_Exit.SetFocus: Cmd_Exit_Click
+    If cmd_exit.Enabled Then cmd_exit.SetFocus: Cmd_Exit_Click
 End Sub
 
 Private Sub Opt_A0821_F_Click(Value As Integer)
@@ -2423,8 +2482,9 @@ Private Sub Txt_A0801_LostFocus()
     
 '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0801.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
 '自我檢查
@@ -2440,8 +2500,9 @@ Private Sub Txt_A0802_LostFocus()
     
 '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0802.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
 '自我檢查
@@ -2463,16 +2524,24 @@ End Sub
 
 Private Sub Txt_A0804_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
-    If m_FieldError% <> -1 Then Exit Sub
     If KeyCode = KEY_F1 Then DataPrepare_A02 Txt_A0804
 End Sub
 
 Private Sub Txt_A0804_LostFocus()
-    TextHelpGotFocus
+    TextLostFocus
+    '判斷以下狀況發生時, 不須做任何處理
+    If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A0804.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+    '自我檢查
+    retcode = CheckRoutine_A0804()
 End Sub
 
 Private Sub Txt_A0804_GotFocus()
-    TextGotFocus
+    TextHelpGotFocus
 End Sub
 
 Private Sub Txt_A0805_GotFocus()
@@ -2484,8 +2553,9 @@ Private Sub Txt_A0805_LostFocus()
     
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0805.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
     '自我檢查
@@ -2500,8 +2570,9 @@ Private Sub Txt_A0806_LostFocus()
     TextLostFocus
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0806.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
     '自我檢查
@@ -2525,8 +2596,9 @@ Private Sub Txt_A0808_LostFocus()
     
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0808.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
     '自我檢查
@@ -2630,8 +2702,9 @@ Private Sub Txt_A0820_LostFocus()
     
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0820.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
     '自我檢查
@@ -2654,7 +2727,6 @@ End Sub
 
 Private Sub Txt_A0825_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
-    If m_FieldError% <> -1 Then Exit Sub
     If KeyCode = KEY_F1 Then DataPrepare_A06 Txt_A0825
 End Sub
 
@@ -2664,9 +2736,18 @@ End Sub
 
 Private Sub Txt_A0825_LostFocus()
     TextLostFocus
+    '判斷以下狀況發生時, 不須做任何處理
+    If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
+    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A0825.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+    '自我檢查
+    retcode = CheckRoutine_A0825()
 End Sub
 
 Private Sub Vse_background_GotFocus()
-    Vse_Background.TabStop = False
+    Vse_background.TabStop = False
 End Sub
 

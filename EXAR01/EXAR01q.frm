@@ -5,7 +5,7 @@ Object = "{2037E3AD-18D6-101C-8158-221E4B551F8E}#5.0#0"; "Vsocx32.OCX"
 Object = "{0BA686C6-F7D3-101A-993E-0000C0EF6F5E}#1.0#0"; "THREED32.OCX"
 Begin VB.Form frm_EXAR01q 
    Caption         =   "使用記錄列印"
-   ClientHeight    =   3480
+   ClientHeight    =   2895
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   7155
@@ -21,19 +21,20 @@ Begin VB.Form frm_EXAR01q
    Icon            =   "EXAR01q.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
-   ScaleHeight     =   3480
+   LockControls    =   -1  'True
+   ScaleHeight     =   2895
    ScaleWidth      =   7155
    StartUpPosition =   3  'Windows Default
    Begin VsOcxLib.VideoSoftElastic Vse_Background 
-      Height          =   3105
+      Height          =   2520
       Left            =   0
-      TabIndex        =   11
+      TabIndex        =   17
       TabStop         =   0   'False
       Top             =   0
       Width           =   7155
       _Version        =   327680
       _ExtentX        =   12621
-      _ExtentY        =   5477
+      _ExtentY        =   4445
       _StockProps     =   70
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
@@ -64,8 +65,8 @@ Begin VB.Form frm_EXAR01q
          Height          =   360
          Left            =   4005
          MaxLength       =   6
-         TabIndex        =   24
-         Top             =   1080
+         TabIndex        =   5
+         Top             =   900
          Width           =   1515
       End
       Begin VB.TextBox Txt_A1609s 
@@ -82,8 +83,8 @@ Begin VB.Form frm_EXAR01q
          Height          =   360
          Left            =   1575
          MaxLength       =   6
-         TabIndex        =   23
-         Top             =   1080
+         TabIndex        =   4
+         Top             =   900
          Width           =   1515
       End
       Begin VB.TextBox Txt_A1601e 
@@ -100,7 +101,7 @@ Begin VB.Form frm_EXAR01q
          Height          =   360
          Left            =   4005
          MaxLength       =   6
-         TabIndex        =   21
+         TabIndex        =   1
          Top             =   135
          Width           =   1515
       End
@@ -118,7 +119,7 @@ Begin VB.Form frm_EXAR01q
          Height          =   360
          Left            =   1575
          MaxLength       =   6
-         TabIndex        =   20
+         TabIndex        =   0
          Top             =   135
          Width           =   1515
       End
@@ -135,7 +136,7 @@ Begin VB.Form frm_EXAR01q
          EndProperty
          Height          =   825
          Left            =   5985
-         TabIndex        =   14
+         TabIndex        =   20
          Top             =   1485
          Visible         =   0   'False
          Width           =   825
@@ -143,7 +144,7 @@ Begin VB.Form frm_EXAR01q
             Height          =   495
             Left            =   90
             OleObjectBlob   =   "EXAR01q.frx":0342
-            TabIndex        =   0
+            TabIndex        =   15
             Top             =   180
             Width           =   615
          End
@@ -162,8 +163,8 @@ Begin VB.Form frm_EXAR01q
          Height          =   360
          Left            =   1575
          MaxLength       =   6
-         TabIndex        =   16
-         Top             =   615
+         TabIndex        =   2
+         Top             =   517
          Width           =   1515
       End
       Begin VB.TextBox Txt_A1617e 
@@ -180,15 +181,15 @@ Begin VB.Form frm_EXAR01q
          Height          =   360
          Left            =   4005
          MaxLength       =   6
-         TabIndex        =   15
-         Top             =   615
+         TabIndex        =   3
+         Top             =   517
          Width           =   1515
       End
       Begin ComctlLib.ProgressBar Prb_Percent 
          Height          =   210
          Left            =   1260
-         TabIndex        =   12
-         Top             =   1860
+         TabIndex        =   18
+         Top             =   1320
          Width           =   4305
          _ExtentX        =   7594
          _ExtentY        =   370
@@ -208,8 +209,8 @@ Begin VB.Form frm_EXAR01q
          EndProperty
          Height          =   1125
          Left            =   90
-         TabIndex        =   13
-         Top             =   1845
+         TabIndex        =   19
+         Top             =   1305
          Width           =   5505
          Begin VB.TextBox Txt_FileName 
             BackColor       =   &H00FFFFFF&
@@ -224,7 +225,7 @@ Begin VB.Form frm_EXAR01q
             EndProperty
             Height          =   360
             Left            =   150
-            TabIndex        =   5
+            TabIndex        =   10
             Text            =   " "
             Top             =   660
             Width           =   5235
@@ -232,7 +233,7 @@ Begin VB.Form frm_EXAR01q
          Begin Threed.SSOption Opt_File 
             Height          =   360
             Left            =   3060
-            TabIndex        =   3
+            TabIndex        =   8
             Top             =   270
             Width           =   1140
             _Version        =   65536
@@ -254,7 +255,7 @@ Begin VB.Form frm_EXAR01q
          Begin Threed.SSOption Opt_Scrn 
             Height          =   360
             Left            =   1485
-            TabIndex        =   2
+            TabIndex        =   7
             Top             =   270
             Width           =   1530
             _Version        =   65536
@@ -276,7 +277,7 @@ Begin VB.Form frm_EXAR01q
          Begin Threed.SSOption Opt_Printer 
             Height          =   360
             Left            =   150
-            TabIndex        =   1
+            TabIndex        =   6
             Top             =   270
             Width           =   1200
             _Version        =   65536
@@ -299,7 +300,7 @@ Begin VB.Form frm_EXAR01q
          Begin Threed.SSOption Opt_Excel 
             Height          =   360
             Left            =   4200
-            TabIndex        =   4
+            TabIndex        =   9
             Top             =   270
             Width           =   1185
             _Version        =   65536
@@ -322,7 +323,7 @@ Begin VB.Form frm_EXAR01q
       Begin Threed.SSCommand Cmd_Help 
          Height          =   405
          Left            =   5670
-         TabIndex        =   6
+         TabIndex        =   11
          Top             =   120
          Width           =   1425
          _Version        =   65536
@@ -344,8 +345,8 @@ Begin VB.Form frm_EXAR01q
       Begin Threed.SSCommand Cmd_Exit 
          Height          =   405
          Left            =   5670
-         TabIndex        =   9
-         Top             =   2550
+         TabIndex        =   14
+         Top             =   2010
          Width           =   1425
          _Version        =   65536
          _ExtentX        =   2514
@@ -366,7 +367,7 @@ Begin VB.Form frm_EXAR01q
       Begin Threed.SSCommand Cmd_Print 
          Height          =   405
          Left            =   5670
-         TabIndex        =   7
+         TabIndex        =   12
          Top             =   570
          Width           =   1425
          _Version        =   65536
@@ -388,7 +389,7 @@ Begin VB.Form frm_EXAR01q
       Begin Threed.SSCommand Cmd_Set 
          Height          =   405
          Left            =   5670
-         TabIndex        =   8
+         TabIndex        =   13
          Top             =   1020
          Width           =   1425
          _Version        =   65536
@@ -421,7 +422,7 @@ Begin VB.Form frm_EXAR01q
          Height          =   285
          Left            =   180
          TabIndex        =   26
-         Top             =   1155
+         Top             =   975
          Width           =   1560
       End
       Begin VB.Label Lbl_Sign 
@@ -440,7 +441,7 @@ Begin VB.Form frm_EXAR01q
          Index           =   1
          Left            =   3435
          TabIndex        =   25
-         Top             =   720
+         Top             =   592
          Width           =   300
       End
       Begin VB.Label Lbl_Sign 
@@ -458,7 +459,7 @@ Begin VB.Form frm_EXAR01q
          Height          =   285
          Index           =   0
          Left            =   3435
-         TabIndex        =   22
+         TabIndex        =   24
          Top             =   225
          Width           =   300
       End
@@ -475,7 +476,7 @@ Begin VB.Form frm_EXAR01q
          EndProperty
          Height          =   285
          Left            =   180
-         TabIndex        =   19
+         TabIndex        =   23
          Top             =   225
          Width           =   1560
       End
@@ -492,8 +493,8 @@ Begin VB.Form frm_EXAR01q
          EndProperty
          Height          =   285
          Left            =   180
-         TabIndex        =   18
-         Top             =   690
+         TabIndex        =   22
+         Top             =   592
          Width           =   1560
       End
       Begin VB.Label Lbl_Sign 
@@ -511,8 +512,8 @@ Begin VB.Form frm_EXAR01q
          Height          =   285
          Index           =   2
          Left            =   3435
-         TabIndex        =   17
-         Top             =   1170
+         TabIndex        =   21
+         Top             =   975
          Width           =   300
       End
    End
@@ -520,8 +521,8 @@ Begin VB.Form frm_EXAR01q
       Align           =   2  'Align Bottom
       Height          =   375
       Left            =   0
-      TabIndex        =   10
-      Top             =   3105
+      TabIndex        =   16
+      Top             =   2520
       Width           =   7155
       _ExtentX        =   12621
       _ExtentY        =   661
@@ -530,13 +531,9 @@ Begin VB.Form frm_EXAR01q
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            TextSave        =   ""
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            TextSave        =   ""
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -588,6 +585,75 @@ Sub BeforeUnloadForm()
     '關閉有所閞啟的Recordset及Database
     CloseFileDB
 End Sub
+
+Private Function CheckRoutine_A1601() As Boolean
+    CheckRoutine_A1601 = False
+
+    '設定變數初始值
+    m_FieldError% = -1
+    
+    '增加想要做的檢查
+    If Trim$(Txt_A1601e) = "" Then Txt_A1601e = Txt_A1601s
+    
+    If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A1601s), Trim$(Txt_A1601e)) Then
+       If ActiveControl.TabIndex = Txt_A1601e.TabIndex Then
+          '若有錯誤, 將變數值設定為該Control之TabIndex
+          m_FieldError% = Txt_A1601e.TabIndex
+       Else
+          m_FieldError% = Txt_A1601s.TabIndex
+          Txt_A1601s.SetFocus
+       End If
+       Exit Function
+    End If
+       
+    CheckRoutine_A1601 = True
+End Function
+
+Private Function CheckRoutine_A1609() As Boolean
+    CheckRoutine_A1609 = False
+
+    '設定變數初始值
+    m_FieldError% = -1
+    
+    '增加想要做的檢查
+    If Trim$(Txt_A1609e) = "" Then Txt_A1609e = Txt_A1609s
+    
+    If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A1609s), Trim$(Txt_A1609e)) Then
+       If ActiveControl.TabIndex = Txt_A1609e.TabIndex Then
+          '若有錯誤, 將變數值設定為該Control之TabIndex
+          m_FieldError% = Txt_A1609e.TabIndex
+       Else
+          m_FieldError% = Txt_A1609s.TabIndex
+          Txt_A1609s.SetFocus
+       End If
+       Exit Function
+    End If
+       
+    CheckRoutine_A1609 = True
+End Function
+
+Private Function CheckRoutine_A1617() As Boolean
+    CheckRoutine_A1617 = False
+
+    '設定變數初始值
+    m_FieldError% = -1
+    
+    '增加想要做的檢查
+    If Trim$(Txt_A1617e) = "" Then Txt_A1617e = Txt_A1617s
+    
+    If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A1617s), Trim$(Txt_A1617e)) Then
+       If ActiveControl.TabIndex = Txt_A1617e.TabIndex Then
+          '若有錯誤, 將變數值設定為該Control之TabIndex
+          m_FieldError% = Txt_A1617e.TabIndex
+       Else
+          m_FieldError% = Txt_A1617s.TabIndex
+          Txt_A1617s.SetFocus
+       End If
+       Exit Function
+    End If
+       
+    CheckRoutine_A1617 = True
+End Function
 
 Private Function CheckRoutine_FileName() As Boolean
     CheckRoutine_FileName = True
@@ -933,7 +999,7 @@ Private Sub Form_Activate()
     
     '將Form放置到螢幕的頂層
     frm_EXAR01q.ZOrder 0
-    If frm_EXAR01q.Visible Then Txt_A1617s.SetFocus
+    If frm_EXAR01q.Visible Then Txt_A1601s.SetFocus
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1117,6 +1183,78 @@ Private Sub Spd_Help_LostFocus()
     End Select
 End Sub
 
+Private Sub Txt_A1601e_GotFocus()
+    TextGotFocus
+End Sub
+
+Private Sub Txt_A1601e_LostFocus()
+    TextLostFocus
+    
+'判斷以下狀況發生時, 不須做任何處理
+    If Fra_Help.Visible = True Then Exit Sub
+    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1601e.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+'自我檢查
+    retcode = CheckRoutine_A1601()
+End Sub
+
+Private Sub Txt_A1601s_GotFocus()
+    TextGotFocus
+End Sub
+
+Private Sub Txt_A1601s_LostFocus()
+    TextLostFocus
+    
+'判斷以下狀況發生時, 不須做任何處理
+    If Fra_Help.Visible = True Then Exit Sub
+    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1601s.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+'自我檢查
+    retcode = CheckRoutine_A1601()
+End Sub
+
+Private Sub Txt_A1609e_GotFocus()
+    TextGotFocus
+End Sub
+
+Private Sub Txt_A1609e_LostFocus()
+    TextLostFocus
+    
+'判斷以下狀況發生時, 不須做任何處理
+    If Fra_Help.Visible = True Then Exit Sub
+    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1609e.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+'自我檢查
+    retcode = CheckRoutine_A1609()
+End Sub
+
+Private Sub Txt_A1609s_GotFocus()
+    TextGotFocus
+End Sub
+
+Private Sub Txt_A1609s_LostFocus()
+    TextLostFocus
+    
+'判斷以下狀況發生時, 不須做任何處理
+    If Fra_Help.Visible = True Then Exit Sub
+    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1609s.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+'自我檢查
+    retcode = CheckRoutine_A1609()
+End Sub
+
 Private Sub Txt_A1617e_DblClick()
     '若欄位有提供輔助資料,按下滑鼠, 所須處理之事項
     Txt_A1617e_KeyDown KEY_F1, 0
@@ -1134,14 +1272,15 @@ End Sub
 Private Sub Txt_A1617e_LostFocus()
     TextLostFocus
     
-''判斷以下狀況發生時, 不須做任何處理
-'    If Fra_Help.Visible = True Then Exit Sub
-'    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
-'    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617e.TabIndex Then Exit Sub
-'    ' ....
-'
-''自我檢查
-'    retcode = CheckRoutine_A1617()
+'判斷以下狀況發生時, 不須做任何處理
+    If Fra_Help.Visible = True Then Exit Sub
+    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617e.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+'自我檢查
+    retcode = CheckRoutine_A1617()
 End Sub
 
 Private Sub Txt_A1617s_DblClick()
@@ -1161,14 +1300,15 @@ End Sub
 Private Sub Txt_A1617s_LostFocus()
     TextLostFocus
     
-'判斷以下狀況發生時, 不須做任何處理
-'    If Fra_Help.Visible = True Then Exit Sub
-'    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
-'    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617s.TabIndex Then Exit Sub
-'    ' ....
-'
-''自我檢查
-'    retcode = CheckRoutine_A1617()
+'判斷以下狀況發生時 , 不須做任何處理
+    If Fra_Help.Visible = True Then Exit Sub
+    If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
+    If m_FieldError% <> -1 And m_FieldError% <> Txt_A1617s.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
+    ' ....
+
+'自我檢查
+    retcode = CheckRoutine_A1617()
 End Sub
 
 Private Sub Txt_FileName_GotFocus()

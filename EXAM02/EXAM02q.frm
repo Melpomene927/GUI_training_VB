@@ -342,10 +342,12 @@ Begin VB.Form Frm_EXAM02q
       BeginProperty Panels {0713E89E-850A-101B-AFC0-4210102A8DA7} 
          NumPanels       =   2
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            TextSave        =   ""
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
@@ -607,8 +609,8 @@ Dim A_A0802$                'txt
     
     '開啟資料
     'get the required Columns as SPEC
-    'Associated column A0102 relating A0824 display'從缺' if null
-    A_Sql$ = "Select A08.*, ISNULL(A01.A0102,'從缺') As A0102 From A08"
+    'Associated column A0102 relating A0824 display'' if null
+    A_Sql$ = "Select A08.*, ISNULL(A01.A0102,'') As A0102 From A08"
     A_Sql$ = A_Sql$ & " LEFT JOIN A01 On A01.A0101 = A08.A0824"
     A_Sql$ = A_Sql$ & " Where 1=1"
     
@@ -685,13 +687,13 @@ Private Sub Set_Property()
     ComboBox_Property Cbo_A0824, G_Font_Size, G_Font_Name
     
 '設Form中所有Command之標題及字形
-    Command_Property cmd_help, G_CmdHelp, G_Font_Name
-    Command_Property cmd_ok, G_CmdSearch, G_Font_Name
-    Command_Property cmd_add, G_CmdAdd, G_Font_Name
-    Command_Property cmd_exit, G_CmdExit, G_Font_Name
+    Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
+    Command_Property Cmd_Ok, G_CmdSearch, G_Font_Name
+    Command_Property Cmd_Add, G_CmdAdd, G_Font_Name
+    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
     
 '以下為標準指令, 不得修改
-    VSElastic_Property Vse_background
+    VSElastic_Property Vse_Background
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
@@ -801,29 +803,29 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
                 If ActiveControl.TabIndex = Txt_A0804s.TabIndex Then Exit Sub
                 If ActiveControl.TabIndex = Txt_A0804e.TabIndex Then Exit Sub
                 KeyCode = 0
-                If cmd_help.Visible = True And cmd_help.Enabled = True Then
-                   cmd_help.SetFocus
+                If Cmd_Help.Visible = True And Cmd_Help.Enabled = True Then
+                   Cmd_Help.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F2
                 KeyCode = 0
-                If cmd_ok.Visible = True And cmd_ok.Enabled = True Then
-                   cmd_ok.SetFocus
+                If Cmd_Ok.Visible = True And Cmd_Ok.Enabled = True Then
+                   Cmd_Ok.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F4
                 KeyCode = 0
-                If cmd_add.Visible = True And cmd_add.Enabled = True Then
-                   cmd_add.SetFocus
+                If Cmd_Add.Visible = True And Cmd_Add.Enabled = True Then
+                   Cmd_Add.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_ESCAPE
                 KeyCode = 0
-                If cmd_exit.Visible = True And cmd_exit.Enabled = True Then
-                   cmd_exit.SetFocus
+                If Cmd_Exit.Visible = True And Cmd_Exit.Enabled = True Then
+                   Cmd_Exit.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
@@ -942,7 +944,6 @@ End Sub
 
 Private Sub Txt_A0801e_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
-    If m_FieldError% <> -1 Then Exit Sub
     If KeyCode = KEY_F1 Then DataPrepare_A08 Txt_A0801e
 End Sub
 
@@ -957,6 +958,7 @@ Private Sub Txt_A0801e_LostFocus()
     If Fra_Help.Visible = True Then Exit Sub
     If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0801e.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
 '自我檢查
@@ -970,7 +972,6 @@ End Sub
 
 Private Sub Txt_A0801s_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
-    If m_FieldError% <> -1 Then Exit Sub
     If KeyCode = KEY_F1 Then DataPrepare_A08 Txt_A0801s
 End Sub
 
@@ -985,6 +986,7 @@ Private Sub Txt_A0801s_LostFocus()
     If Fra_Help.Visible = True Then Exit Sub
     If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0801s.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
 '自我檢查
@@ -1014,7 +1016,6 @@ End Sub
 
 Private Sub Txt_A0804e_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
-    If m_FieldError% <> -1 Then Exit Sub
     If KeyCode = KEY_F1 Then DataPrepare_A02 Txt_A0804e
 End Sub
 
@@ -1028,6 +1029,7 @@ Private Sub Txt_A0804e_LostFocus()
 '判斷以下狀況發生時, 不須做任何處理
     If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0804e.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
 '自我檢查
@@ -1041,7 +1043,6 @@ End Sub
 
 Private Sub Txt_A0804s_KeyDown(KeyCode As Integer, Shift As Integer)
 '若欄位有提供輔助資料,按下F1, 所須處理之事項
-    If m_FieldError% <> -1 Then Exit Sub
     If KeyCode = KEY_F1 Then DataPrepare_A02 Txt_A0804s
 End Sub
 
@@ -1055,6 +1056,7 @@ Private Sub Txt_A0804s_LostFocus()
 '判斷以下狀況發生時, 不須做任何處理
     If (TypeOf ActiveControl Is SSCommand) Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0804s.TabIndex Then Exit Sub
+    If Spd_Help.Visible = True Then Exit Sub
     ' ....
 
 '自我檢查

@@ -50,6 +50,7 @@ Global G_Pnl_A0201$
 Global G_Pnl_A0202$
 Global G_Pnl_A0601$
 Global G_Pnl_A0602$
+Global G_RecordNotExist$
 
 
 'Def 程式共用變數
@@ -99,6 +100,8 @@ Sub GetPanelCaption()
     G_Pnl_A0601$ = GetCaption("EXAM02", "A0601", "群組代號")
     G_Pnl_A0602$ = GetCaption("EXAM02", "A0602", "群組說明")
     
+    G_RecordNotExist$ = GetCaption("PgmMsg", "g_record_no_exist", "資料不存在! 請再查明!")
+    
 '取其他變數內含值
 '    G_Pnl_A1602$ = GetCaption("EXAM02", "bankname")
     G_Pnl_Dash$ = GetCaption("PanelDescpt", "dash", "～")
@@ -120,6 +123,6 @@ Sub Main()
                               ' 底圖檔名, 日期格式, ...
     GetPanelCaption           ' 抓取本程式已設定共用變數之內含值
     Load frm_EXAM02            ' 先將Detail畫面Load至Memory
-    frm_EXAm02q.Show           ' 首頁畫面顯示
+    Frm_EXAM02q.Show           ' 首頁畫面顯示
     Screen.MousePointer = Default
 End Sub

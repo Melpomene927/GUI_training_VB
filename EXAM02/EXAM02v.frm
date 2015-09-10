@@ -32,7 +32,7 @@ Begin VB.Form Frm_EXAM02v
    Begin VsOcxLib.VideoSoftElastic Vse_background 
       Height          =   6360
       Left            =   0
-      TabIndex        =   6
+      TabIndex        =   7
       TabStop         =   0   'False
       Top             =   0
       Width           =   9390
@@ -59,14 +59,14 @@ Begin VB.Form Frm_EXAM02v
          Height          =   6165
          Left            =   60
          OleObjectBlob   =   "EXAM02v.frx":0342
-         TabIndex        =   7
+         TabIndex        =   0
          Top             =   90
          Width           =   7755
       End
       Begin Threed.SSCommand cmd_delete 
          Height          =   405
          Left            =   7900
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   540
          Width           =   1425
          _Version        =   65536
@@ -78,7 +78,7 @@ Begin VB.Form Frm_EXAM02v
       Begin Threed.SSCommand cmd_add 
          Height          =   405
          Left            =   7900
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   990
          Width           =   1425
          _Version        =   65536
@@ -90,7 +90,7 @@ Begin VB.Form Frm_EXAM02v
       Begin Threed.SSCommand cmd_previous 
          Height          =   405
          Left            =   7905
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   1440
          Width           =   1425
          _Version        =   65536
@@ -102,7 +102,7 @@ Begin VB.Form Frm_EXAM02v
       Begin Threed.SSCommand cmd_next 
          Height          =   405
          Left            =   7905
-         TabIndex        =   4
+         TabIndex        =   5
          Top             =   1890
          Width           =   1425
          _Version        =   65536
@@ -114,7 +114,7 @@ Begin VB.Form Frm_EXAM02v
       Begin Threed.SSCommand cmd_exit 
          Height          =   405
          Left            =   7905
-         TabIndex        =   5
+         TabIndex        =   6
          Top             =   5850
          Width           =   1425
          _Version        =   65536
@@ -126,7 +126,7 @@ Begin VB.Form Frm_EXAM02v
       Begin Threed.SSCommand cmd_help 
          Height          =   405
          Left            =   7900
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   90
          Width           =   1425
          _Version        =   65536
@@ -207,8 +207,8 @@ Private Sub Set_Property()
     Command_Property cmd_help, G_CmdHelp, G_Font_Name
     Command_Property cmd_delete, G_CmdDel, G_Font_Name
     Command_Property cmd_add, G_CmdAdd, G_Font_Name
-    Command_Property cmd_previous, G_CmdPrvPage, G_Font_Name
-    Command_Property cmd_next, G_CmdNxtPage, G_Font_Name
+    Command_Property Cmd_Previous, G_CmdPrvPage, G_Font_Name
+    Command_Property Cmd_Next, G_CmdNxtPage, G_Font_Name
     Command_Property cmd_exit, G_CmdExit, G_Font_Name
     
 '設Form中Spread之屬性
@@ -424,7 +424,7 @@ Private Sub Cmd_Exit_Click()
     '隱藏目前畫面, 顯示Q畫面
     DoEvents
     Me.Hide
-    frm_EXAm02q.Show
+    Frm_EXAM02q.Show
 End Sub
 
 Private Sub Cmd_Help_Click()
@@ -434,19 +434,19 @@ Dim a$ 'use Variant type to catch return code
 End Sub
 
 Private Sub Cmd_Next_Click()
-    cmd_next.Enabled = False
+    Cmd_Next.Enabled = False
     Spd_EXAM02v.SetFocus
     SendKeys "{PgDn}"
     DoEvents
-    cmd_next.Enabled = True
+    Cmd_Next.Enabled = True
 End Sub
 
 Private Sub Cmd_Previous_Click()
-    cmd_previous.Enabled = False
+    Cmd_Previous.Enabled = False
     Spd_EXAM02v.SetFocus
     SendKeys "{PgUp}"
     DoEvents
-    cmd_previous.Enabled = True
+    Cmd_Previous.Enabled = True
 End Sub
 
 Private Sub Form_Activate()
@@ -464,7 +464,7 @@ Private Sub Form_Activate()
        If Not MoveDB2Spread() Then
           DoEvents
           Me.Hide
-          frm_EXAm02q.Show
+          Frm_EXAM02q.Show
           Exit Sub
        End If
        Sts_MsgLine.Panels(1) = G_Query_Ok
@@ -506,16 +506,16 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     
            Case KEY_F7
                 KeyCode = 0
-                If cmd_previous.Visible = True And cmd_previous.Enabled = True Then
-                   cmd_previous.SetFocus
+                If Cmd_Previous.Visible = True And Cmd_Previous.Enabled = True Then
+                   Cmd_Previous.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
     
            Case KEY_F8
                 KeyCode = 0
-                If cmd_next.Visible = True And cmd_next.Enabled = True Then
-                   cmd_next.SetFocus
+                If Cmd_Next.Visible = True And Cmd_Next.Enabled = True Then
+                   Cmd_Next.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
