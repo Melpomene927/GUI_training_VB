@@ -1268,7 +1268,7 @@ Const m_NotMarried = 2
 Private Sub CBO_A0824_Prepare()
 On Local Error GoTo MyError
 Dim A_Sql$
-Dim DY_TMP As Recordset
+Dim DY_Tmp As Recordset
 
     '先清空Combo Box內容
     Cbo_A0824.Clear
@@ -1278,14 +1278,14 @@ Dim DY_TMP As Recordset
     
     '開起檔案
     A_Sql$ = "Select A0101,A0102 From A01 ORDER BY A0101"
-    CreateDynasetODBC DB_ARTHGUI, DY_TMP, A_Sql$, "DY_TMP", True
+    CreateDynasetODBC DB_ARTHGUI, DY_Tmp, A_Sql$, "DY_TMP", True
 
     '將資料擺入Combo Box中
-    Do While Not DY_TMP.EOF
-       Cbo_A0824.AddItem Format(Trim$(DY_TMP.Fields("A0101") & ""), "!@@@") & Trim$(DY_TMP.Fields("A0102") & "")
-       DY_TMP.MoveNext
+    Do While Not DY_Tmp.EOF
+       Cbo_A0824.AddItem Format(Trim$(DY_Tmp.Fields("A0101") & ""), "!@@@") & Trim$(DY_Tmp.Fields("A0102") & "")
+       DY_Tmp.MoveNext
     Loop
-    DY_TMP.Close
+    DY_Tmp.Close
 
     '若Combo Box中有資料, 停在第一筆
     If Cbo_A0824.ListCount > 0 Then Cbo_A0824.ListIndex = 0
@@ -1522,10 +1522,10 @@ Private Sub ClearFieldsValue()
     Pnl_A0202.Caption = ""
 End Sub
 
-Private Sub DataPrepare_A02(txt As TextBox)
+Private Sub DataPrepare_A02(Txt As TextBox)
 'PrepareData for Txt_A0804
 Dim A_Sql$                  'SQL Message
-Dim DY_TMP As Recordset     'Temporary Dynaset
+Dim DY_Tmp As Recordset     'Temporary Dynaset
     Me.MousePointer = HOURGLASS
     
     '開起檔案
@@ -1533,15 +1533,15 @@ Dim DY_TMP As Recordset     'Temporary Dynaset
     A_Sql$ = "Select A0201 ,A0202 From A02"
     
     'generate wildcard compare SQL Statement
-    If txt.text <> "" Then
-        A_Sql$ = A_Sql$ & " Where A0201 Like '" & txt.text & _
+    If Txt.text <> "" Then
+        A_Sql$ = A_Sql$ & " Where A0201 Like '" & Txt.text & _
             GetLikeStr(DB_ARTHGUI, True) & "'"
     End If
     A_Sql$ = A_Sql$ & " Order by A0201"
     
     'open dynaset of A02
-    CreateDynasetODBC DB_ARTHGUI, DY_TMP, A_Sql$, "DY_TMP", True
-    If DY_TMP.BOF And DY_TMP.EOF Then
+    CreateDynasetODBC DB_ARTHGUI, DY_Tmp, A_Sql$, "DY_TMP", True
+    If DY_Tmp.BOF And DY_Tmp.EOF Then
        Me.MousePointer = Default
        Sts_MsgLine.Panels(1) = G_NoReference
        Exit Sub
@@ -1551,7 +1551,7 @@ Dim DY_TMP As Recordset     'Temporary Dynaset
          '設定輔助視窗(Spd_Help)的欄位屬性
          .UnitType = 2
          Spread_Property Spd_Help, 0, 2, WHITE, G_Font_Size, G_Font_Name
-         Spread_Col_Property Spd_Help, 1, TextWidth("X") * 6, G_Pnl_A0201$
+         Spread_Col_Property Spd_Help, 1, TextWidth("X") * 10, G_Pnl_A0201$
          Spread_Col_Property Spd_Help, 2, TextWidth("X") * 12, G_Pnl_A0201$
          Spread_DataType_Property Spd_Help, 1, SS_CELL_TYPE_EDIT, "", "", 6
          Spread_DataType_Property Spd_Help, 2, SS_CELL_TYPE_EDIT, "", "", 12
@@ -1561,29 +1561,29 @@ Dim DY_TMP As Recordset     'Temporary Dynaset
          .Col = 1: .TypeHAlign = 2
     
          '將資料擺入Spread中
-         Do Until DY_TMP.EOF
+         Do Until DY_Tmp.EOF
             .MaxRows = .MaxRows + 1
             .Row = Spd_Help.MaxRows
             .Col = 1
-            .text = Trim(DY_TMP.Fields("A0201") & "")
+            .text = Trim(DY_Tmp.Fields("A0201") & "")
             .Col = 2
-            .text = Trim(DY_TMP.Fields("A0202") & "")
-            DY_TMP.MoveNext
+            .text = Trim(DY_Tmp.Fields("A0202") & "")
+            DY_Tmp.MoveNext
          Loop
-         DY_TMP.Close
+         DY_Tmp.Close
          
          '設定輔助視窗的顯示位置
          SetHelpWindowPos Fra_Help, Spd_Help, 330, 90, 8000, 2025
-         .Tag = txt.TabIndex    'set return control tab index
+         .Tag = Txt.TabIndex    'set return control tab index
          .SetFocus
     End With
     Me.MousePointer = Default
 End Sub
 
-Private Sub DataPrepare_A06(txt As TextBox)
+Private Sub DataPrepare_A06(Txt As TextBox)
 'PrepareData for Txt_A0825
 Dim A_Sql$                  'SQL Message
-Dim DY_TMP As Recordset     'Temporary Dynaset
+Dim DY_Tmp As Recordset     'Temporary Dynaset
     Me.MousePointer = HOURGLASS
     
     '開起檔案
@@ -1591,15 +1591,15 @@ Dim DY_TMP As Recordset     'Temporary Dynaset
     A_Sql$ = "Select A0601 ,A0602 From A06"
     
     'generate wildcard compare SQL Statement
-    If txt.text <> "" Then
-       A_Sql$ = A_Sql$ & " Where A0601 Like '" & txt.text & _
+    If Txt.text <> "" Then
+       A_Sql$ = A_Sql$ & " Where A0601 Like '" & Txt.text & _
            GetLikeStr(DB_ARTHGUI, True) & "'"
     End If
     A_Sql$ = A_Sql$ & " Order by A0601"
     
     'open dynaset of A06
-    CreateDynasetODBC DB_ARTHGUI, DY_TMP, A_Sql$, "DY_TMP", True
-    If DY_TMP.BOF And DY_TMP.EOF Then
+    CreateDynasetODBC DB_ARTHGUI, DY_Tmp, A_Sql$, "DY_TMP", True
+    If DY_Tmp.BOF And DY_Tmp.EOF Then
        Me.MousePointer = Default
        Sts_MsgLine.Panels(1) = G_NoReference
        Exit Sub
@@ -1609,7 +1609,7 @@ Dim DY_TMP As Recordset     'Temporary Dynaset
          '設定輔助視窗(Spd_Help)的欄位屬性
          .UnitType = 2
          Spread_Property Spd_Help, 0, 2, WHITE, G_Font_Size, G_Font_Name
-         Spread_Col_Property Spd_Help, 1, TextWidth("X") * 3, G_Pnl_A0601$
+         Spread_Col_Property Spd_Help, 1, TextWidth("X") * 10, G_Pnl_A0601$
          Spread_Col_Property Spd_Help, 2, TextWidth("X") * 20, G_Pnl_A0602$
          Spread_DataType_Property Spd_Help, 1, SS_CELL_TYPE_EDIT, "", "", 3
          Spread_DataType_Property Spd_Help, 2, SS_CELL_TYPE_EDIT, "", "", 40
@@ -1619,20 +1619,20 @@ Dim DY_TMP As Recordset     'Temporary Dynaset
          .Col = 1: .TypeHAlign = 2
     
          '將資料擺入Spread中
-         Do Until DY_TMP.EOF
+         Do Until DY_Tmp.EOF
             .MaxRows = .MaxRows + 1
             .Row = Spd_Help.MaxRows
             .Col = 1
-            .text = Trim(DY_TMP.Fields("A0601") & "")
+            .text = Trim(DY_Tmp.Fields("A0601") & "")
             .Col = 2
-            .text = Trim(DY_TMP.Fields("A0602") & "")
-            DY_TMP.MoveNext
+            .text = Trim(DY_Tmp.Fields("A0602") & "")
+            DY_Tmp.MoveNext
          Loop
-         DY_TMP.Close
+         DY_Tmp.Close
          
          '設定輔助視窗的顯示位置
          SetHelpWindowPos Fra_Help, Spd_Help, 330, 90, 8000, 2025
-         .Tag = txt.TabIndex    'set return control tab index
+         .Tag = Txt.TabIndex    'set return control tab index
          .SetFocus
     End With
     Me.MousePointer = Default
@@ -1675,30 +1675,30 @@ Private Function IsAllFieldsCheck() As Boolean
     IsAllFieldsCheck = True
 End Function
 
-Private Function IsKeyExist(txt As TextBox) As Boolean
+Private Function IsKeyExist(Txt As TextBox) As Boolean
 On Local Error GoTo My_Error
 Dim A_Sql$
     IsKeyExist = False
     
-    If txt.Name = "Txt_A0801" Then
+    If Txt.Name = "Txt_A0801" Then
         A_Sql$ = "Select A0801 From A08"
-        A_Sql$ = A_Sql$ & " where A0801='" & Trim(txt.text) & "'"
+        A_Sql$ = A_Sql$ & " where A0801='" & Trim(Txt.text) & "'"
         A_Sql$ = A_Sql$ & " Order by A0801"
         CreateDynasetODBC DB_ARTHGUI, DY_A081, A_Sql$, "DY_A081", True
         If Not (DY_A081.BOF And DY_A081.EOF) Then IsKeyExist = True
     End If
     
-    If txt.Name = "Txt_A0804" Then
+    If Txt.Name = "Txt_A0804" Then
         A_Sql$ = "Select A0201, A0202 From A02"
-        A_Sql$ = A_Sql$ & " where A0201='" & Trim(txt.text) & "'"
+        A_Sql$ = A_Sql$ & " where A0201='" & Trim(Txt.text) & "'"
         A_Sql$ = A_Sql$ & " Order by A0201"
         CreateDynasetODBC DB_ARTHGUI, DY_A02, A_Sql$, "DY_A02", True
         If Not (DY_A02.BOF And DY_A02.EOF) Then IsKeyExist = True
     End If
     
-    If txt.Name = "Txt_A0825" Then
+    If Txt.Name = "Txt_A0825" Then
         A_Sql$ = "Select A0601, A0602 From A06"
-        A_Sql$ = A_Sql$ & " where A0601='" & Trim(txt.text) & "'"
+        A_Sql$ = A_Sql$ & " where A0601='" & Trim(Txt.text) & "'"
         A_Sql$ = A_Sql$ & " Order by A0601"
         CreateDynasetODBC DB_ARTHGUI, DY_A06, A_Sql$, "DY_A06", True
         If Not (DY_A06.BOF And DY_A06.EOF) Then IsKeyExist = True
@@ -1939,21 +1939,21 @@ End Function
 
 Sub SetButtonEnable(ByVal A_Enable%)
     If Not A_Enable% Then
-       Vse_background.TabStop = True
-       Cmd_Previous.Tag = Cmd_Previous.Enabled
-       Cmd_Next.Tag = Cmd_Next.Enabled
-       cmd_ok.Tag = cmd_ok.Enabled
-       cmd_exit.Tag = cmd_exit.Enabled
+       Vse_Background.TabStop = True
+       cmd_previous.Tag = cmd_previous.Enabled
+       cmd_next.Tag = cmd_next.Enabled
+       Cmd_Ok.Tag = Cmd_Ok.Enabled
+       Cmd_Exit.Tag = Cmd_Exit.Enabled
        
-       Cmd_Previous.Enabled = A_Enable%
-       Cmd_Next.Enabled = A_Enable%
-       cmd_ok.Enabled = A_Enable%
-       cmd_exit.Enabled = A_Enable%
+       cmd_previous.Enabled = A_Enable%
+       cmd_next.Enabled = A_Enable%
+       Cmd_Ok.Enabled = A_Enable%
+       Cmd_Exit.Enabled = A_Enable%
     Else
-       Cmd_Previous.Enabled = CBool(Cmd_Previous.Tag)
-       Cmd_Next.Enabled = CBool(Cmd_Next.Tag)
-       cmd_ok.Enabled = CBool(cmd_ok.Tag)
-       cmd_exit.Enabled = CBool(cmd_exit.Tag)
+       cmd_previous.Enabled = CBool(cmd_previous.Tag)
+       cmd_next.Enabled = CBool(cmd_next.Tag)
+       Cmd_Ok.Enabled = CBool(Cmd_Ok.Tag)
+       Cmd_Exit.Enabled = CBool(Cmd_Exit.Tag)
     End If
 End Sub
 
@@ -1962,27 +1962,27 @@ Sub SetCommand()
     Select Case G_AP_STATE
         Case G_AP_STATE_ADD
             'while Adding, Pkey(A0801) is allowed to input
-            cmd_help.Enabled = True
-            Cmd_Previous.Enabled = False
-            Cmd_Next.Enabled = False
-            cmd_ok.Enabled = True
-            cmd_exit.Enabled = True
+            Cmd_Help.Enabled = True
+            cmd_previous.Enabled = False
+            cmd_next.Enabled = False
+            Cmd_Ok.Enabled = True
+            Cmd_Exit.Enabled = True
             Txt_A0801.Enabled = True
         Case G_AP_STATE_UPDATE
             'while update, no meaning to change Pkey
-            cmd_help.Enabled = True
-            Cmd_Previous.Enabled = (G_ActiveRow# > 1)
-            Cmd_Next.Enabled = (G_ActiveRow# < G_MaxRows#)
-            cmd_ok.Enabled = True
-            cmd_exit.Enabled = True
+            Cmd_Help.Enabled = True
+            cmd_previous.Enabled = (G_ActiveRow# > 1)
+            cmd_next.Enabled = (G_ActiveRow# < G_MaxRows#)
+            Cmd_Ok.Enabled = True
+            Cmd_Exit.Enabled = True
             Txt_A0801.Enabled = False
         Case G_AP_STATE_DELETE
             'while delete, no meaning to change Pkey
-            cmd_help.Enabled = True
-            Cmd_Previous.Enabled = (G_ActiveRow# > 1)
-            Cmd_Next.Enabled = (G_ActiveRow# < G_MaxRows#)
-            cmd_ok.Enabled = True
-            cmd_exit.Enabled = True
+            Cmd_Help.Enabled = True
+            cmd_previous.Enabled = (G_ActiveRow# > 1)
+            cmd_next.Enabled = (G_ActiveRow# < G_MaxRows#)
+            Cmd_Ok.Enabled = True
+            Cmd_Exit.Enabled = True
             Txt_A0801.Enabled = False
      End Select
 End Sub
@@ -2067,14 +2067,14 @@ Private Sub Set_Property()
     Control_Property Opt_A0822_N, GetCaption("EXAM02", "NotMarried", "未婚")
     
 '設Form中所有Command之標題及字形
-    Command_Property cmd_help, G_CmdHelp, G_Font_Name
-    Command_Property Cmd_Previous, G_CmdPrevious, G_Font_Name
-    Command_Property Cmd_Next, G_CmdNext, G_Font_Name
-    Command_Property cmd_ok, G_CmdOk, G_Font_Name
-    Command_Property cmd_exit, G_CmdExit, G_Font_Name
+    Command_Property Cmd_Help, G_CmdHelp, G_Font_Name
+    Command_Property cmd_previous, G_CmdPrevious, G_Font_Name
+    Command_Property cmd_next, G_CmdNext, G_Font_Name
+    Command_Property Cmd_Ok, G_CmdOk, G_Font_Name
+    Command_Property Cmd_Exit, G_CmdExit, G_Font_Name
 
 '以下為標準指令, 不得修改
-    VSElastic_Property Vse_background
+    VSElastic_Property Vse_Background
     StatusBar_ProPerty Sts_MsgLine
 End Sub
 
@@ -2331,36 +2331,36 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
                 If ActiveControl.TabIndex = Txt_A0804.TabIndex Then Exit Sub
                 If ActiveControl.TabIndex = Txt_A0825.TabIndex Then Exit Sub
                 KeyCode = 0
-                If cmd_help.Visible = True And cmd_help.Enabled = True Then
-                   cmd_help.SetFocus
+                If Cmd_Help.Visible = True And Cmd_Help.Enabled = True Then
+                   Cmd_Help.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F7
                 KeyCode = 0
-                If Cmd_Previous.Visible = True And Cmd_Previous.Enabled = True Then
-                   Cmd_Previous.SetFocus
+                If cmd_previous.Visible = True And cmd_previous.Enabled = True Then
+                   cmd_previous.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F8
                 KeyCode = 0
-                If Cmd_Next.Visible = True And Cmd_Next.Enabled = True Then
-                   Cmd_Next.SetFocus
+                If cmd_next.Visible = True And cmd_next.Enabled = True Then
+                   cmd_next.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_F11
                 KeyCode = 0
-                If cmd_ok.Visible = True And cmd_ok.Enabled = True Then
-                   cmd_ok.SetFocus
+                If Cmd_Ok.Visible = True And Cmd_Ok.Enabled = True Then
+                   Cmd_Ok.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
            Case KEY_ESCAPE
                 KeyCode = 0
-                If cmd_exit.Visible = True And cmd_exit.Enabled = True Then
-                   cmd_exit.SetFocus
+                If Cmd_Exit.Visible = True And Cmd_Exit.Enabled = True Then
+                   Cmd_Exit.SetFocus
                    DoEvents
                    SendKeys "{Enter}"
                 End If
@@ -2398,7 +2398,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     Cancel = True
-    If cmd_exit.Enabled Then cmd_exit.SetFocus: Cmd_Exit_Click
+    If Cmd_Exit.Enabled Then Cmd_Exit.SetFocus: Cmd_Exit_Click
 End Sub
 
 Private Sub Opt_A0821_F_Click(Value As Integer)
@@ -2482,7 +2482,7 @@ Private Sub Txt_A0801_LostFocus()
     
 '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0801.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2500,7 +2500,7 @@ Private Sub Txt_A0802_LostFocus()
     
 '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0802.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2531,7 +2531,7 @@ Private Sub Txt_A0804_LostFocus()
     TextLostFocus
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0804.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2553,7 +2553,7 @@ Private Sub Txt_A0805_LostFocus()
     
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0805.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2570,7 +2570,7 @@ Private Sub Txt_A0806_LostFocus()
     TextLostFocus
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0806.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2596,7 +2596,7 @@ Private Sub Txt_A0808_LostFocus()
     
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0808.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2702,7 +2702,7 @@ Private Sub Txt_A0820_LostFocus()
     
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0820.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2738,7 +2738,7 @@ Private Sub Txt_A0825_LostFocus()
     TextLostFocus
     '判斷以下狀況發生時, 不須做任何處理
     If G_AP_STATE = G_AP_STATE_DELETE Then Exit Sub
-    If ActiveControl.TabIndex = cmd_exit.TabIndex Then Exit Sub
+    If ActiveControl.TabIndex = Cmd_Exit.TabIndex Then Exit Sub
     If m_FieldError% <> -1 And m_FieldError% <> Txt_A0825.TabIndex Then Exit Sub
     If Spd_Help.Visible = True Then Exit Sub
     ' ....
@@ -2748,6 +2748,6 @@ Private Sub Txt_A0825_LostFocus()
 End Sub
 
 Private Sub Vse_background_GotFocus()
-    Vse_background.TabStop = False
+    Vse_Background.TabStop = False
 End Sub
 

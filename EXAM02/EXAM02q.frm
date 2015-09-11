@@ -438,19 +438,15 @@ End Function
 Private Function CheckRoutine_A0804() As Boolean
     CheckRoutine_A0804 = False
 
-'設定變數初始值
+    '設定變數初始值
     m_FieldError% = -1
     
-'增加想要做的檢查
+    '增加想要做的檢查
     If Trim$(Txt_A0804e) = "" Then Txt_A0804e = Txt_A0804s
     
     If Not CheckDataRange(Sts_MsgLine, Trim$(Txt_A0804s), Trim$(Txt_A0804e)) Then
-       '==================
-       'if from s to e
-       'do not focus back (since it's correct to entering from s to e)
-       '==================
        If ActiveControl.TabIndex = Txt_A0804e.TabIndex Then
-'若有錯誤, 將變數值設定為該Control之TabIndex
+          '若有錯誤, 將變數值設定為該Control之TabIndex
           m_FieldError% = Txt_A0804e.TabIndex
        Else
           m_FieldError% = Txt_A0804s.TabIndex
@@ -489,7 +485,7 @@ Dim DY_Tmp As Recordset     'Temporary Dynaset
          '設定輔助視窗(Spd_Help)的欄位屬性
          .UnitType = 2
          Spread_Property Spd_Help, 0, 2, WHITE, G_Font_Size, G_Font_Name
-         Spread_Col_Property Spd_Help, 1, TextWidth("X") * 6, G_Pnl_A0201$
+         Spread_Col_Property Spd_Help, 1, TextWidth("X") * 10, G_Pnl_A0201$
          Spread_Col_Property Spd_Help, 2, TextWidth("X") * 12, G_Pnl_A0201$
          Spread_DataType_Property Spd_Help, 1, SS_CELL_TYPE_EDIT, "", "", 6
          Spread_DataType_Property Spd_Help, 2, SS_CELL_TYPE_EDIT, "", "", 12
